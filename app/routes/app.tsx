@@ -17,11 +17,11 @@ export default function Index() {
       <div className="flex">
         <div className="bg-slate-200 border-r-2 border-b-2 border-slate-300 p-2 w-80 flex justify-between gap-2">
           <h2 className="font-bold text-xl">Workspace 1</h2>
-          <button className="bg-slate-300 p-2 rounded-lg">
+          <button className="btn-icon">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="24"
+              height="24"
               fill="currentColor"
               className="bi bi-gear-fill"
               viewBox="0 0 16 16"
@@ -31,20 +31,20 @@ export default function Index() {
           </button>
         </div>
         <div className="bg-slate-200 border-b-2 border-slate-300 flex-1 p-2 flex gap-2 justify-between">
-          <Link to="/">Home</Link>
+          <div className="flex gap-2 ">
+            <Link className="rounded-full bg-slate-300 hover:bg-slate-400 flex items-center justify-center px-10 text-xl" to="/">Home</Link>
+            <Link className="rounded-full bg-slate-300 hover:bg-slate-400 flex items-center justify-center px-10 text-xl" to="/">Home</Link>
+            <Link className="rounded-full bg-slate-300 hover:bg-slate-400 flex items-center justify-center px-10 text-xl" to="/">Home</Link>
+          </div>
           <div className="flex gap-2">
-            <button className="bg-blue-600 flex items-center justify-center w-8 h-8 rounded-full text-white font-bold text-lg">
-              B
-            </button>
-            <button className="bg-red-600 flex items-center justify-center w-8 h-8 rounded-full text-white font-bold text-lg">
-              C
-            </button>
+            <button className="bg-blue-600 btn-user-icon">B</button>
+            <button className="bg-red-600 btn-user-icon">C</button>
             <span className="w-[2px] bg-slate-300"></span>
-            <button className="bg-slate-300 p-2 rounded-lg">
+            <button className="btn-icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
+                width="24"
+                height="24"
                 fill="currentColor"
                 className="bi bi-people-fill"
                 viewBox="0 0 16 16"
@@ -52,11 +52,11 @@ export default function Index() {
                 <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
               </svg>
             </button>
-            <button className="bg-slate-300 p-2 rounded-lg">
+            <button className="btn-icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
+                width="24"
+                height="24"
                 fill="currentColor"
                 className="bi bi-clock-history"
                 viewBox="0 0 16 16"
@@ -67,9 +67,7 @@ export default function Index() {
               </svg>
             </button>
             {/* <button className="bg-purple-600 flex items-center justify-center rounded-full text-white w-10 h-10 font-bold text-lg"> */}
-            <button className="bg-purple-600 flex items-center justify-center w-8 h-8 rounded-full text-white font-bold text-lg">
-              A
-            </button>
+            <button className="bg-purple-600 btn-user-icon">A</button>
           </div>
         </div>
       </div>
