@@ -36,7 +36,7 @@
     "node": ">=18.0.0"
   },
   "description": "- [Remix Docs](https://remix.run/docs)",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "remix.config.js",
   "keywords": [],
   "author": "",
