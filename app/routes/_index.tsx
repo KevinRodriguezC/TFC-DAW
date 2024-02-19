@@ -12,7 +12,7 @@ export default function Index() {
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <div className="bg-slate-200 border-b-2 border-slate-300 flex-1 p-2 flex gap-2 justify-between">
-        <Link to="/app">App</Link>
+        <h1 className="text-2xl font-bold self-center"><Link to="/app">TFC</Link></h1>
         <div className="flex gap-2">
           <div className="flex gap-2">
             <form action="/search" method="get" className="flex gap-2">
@@ -27,15 +27,7 @@ export default function Index() {
             <Link to="/app" className="btn-primary h-10">
               Workspace
             </Link>
-            <Link to="/logout" className="btn-secondary h-10">
-              Logout
-            </Link>
-            <Link to="/signup" className="btn-primary h-10">
-              Sign up
-            </Link>
-            <Link to="/login" className="btn-secondary h-10">
-              Log in
-            </Link>
+            <button className="bg-purple-600 btn-user-icon">A</button>
           </div>
         </div>
       </div>
