@@ -16,7 +16,7 @@
     }
 
     .btn-icon{
-        @apply hover:bg-slate-300 active:bg-slate-400 p-2 rounded-lg w-10 h-10 flex items-center justify-center text-slate-700 hover:text-black;
+        @apply hover:bg-slate-300 active:bg-slate-400 p-2 rounded-lg w-10 h-10 flex items-center justify-center text-slate-700 hover:text-black active:text-black;
     }
 
     .btn-user-icon{
