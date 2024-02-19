@@ -23,8 +23,12 @@
         @apply flex items-center justify-center w-10 h-10 rounded-full text-white font-bold text-lg;
     }
 
+    .navbarItem{
+      @apply p-2 bg-slate-200 rounded-md flex flex-col gap-2;
+    }
+
     .navbarItem.active{
-      @apply text-blue-800;
+      @apply bg-blue-600 text-white;
     }
   }
   

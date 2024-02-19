@@ -15,7 +15,7 @@ export default function Index() {
       style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}
     >
       <div className="flex">
-        <div className="bg-slate-200 border-r-2 border-b-2 border-slate-300 p-2 w-80 flex justify-between gap-2">
+        <div className="bg-slate-100 border-r-2 border-b-2 border-slate-200 p-2 w-80 flex justify-between gap-2">
           <h2 className="font-bold text-xl">Workspace 1</h2>
           <button className="btn-icon">
             <svg
@@ -30,7 +30,7 @@ export default function Index() {
             </svg>
           </button>
         </div>
-        <div className="bg-slate-200 border-b-2 border-slate-300 flex-1 p-2 flex gap-2 justify-between">
+        <div className="bg-slate-100 border-b-2 border-slate-200 flex-1 p-2 flex gap-2 justify-between">
           <div className="flex gap-2 ">
             <Link
               className="rounded-full bg-slate-300 hover:bg-slate-400 flex items-center justify-center px-10 text-xl"
@@ -87,7 +87,7 @@ export default function Index() {
         </div>
       </div>
       <div className="flex flex-1">
-        <div className="bg-slate-200 border-r-2 border-slate-300 p-2 w-80">
+        <div className="bg-slate-100 border-r-2 border-slate-200 p-2 w-80 flex flex-col gap-2">
           <div className="flex gap-2 align-middle">
             <div className="w-14 h-14 bg-green-600 rounded-full flex  justify-center items-center text-white">
               <svg
@@ -104,15 +104,60 @@ export default function Index() {
             </div>
             <h3 className="text-2xl self-center font-bold">Workspaces</h3>
           </div>
-          <ul className="flex flex-col">
+          <ul className="flex flex-col gap-2">
             <li>
-              <NavLink className="navbarItem" to="1">List one</NavLink>
+              <NavLink className="navbarItem" to="1">
+                <div className="p-2 flex gap-2 text-xl font-bold items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    fill="currentColor"
+                    className="bi bi-calendar-week"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z" />
+                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                  </svg>
+                  <div>List one</div>
+                </div>
+              </NavLink>
             </li>
             <li>
-              <NavLink className="navbarItem" to="2">List two</NavLink>
+              <NavLink className="navbarItem" to="2">
+              <div className="p-2 flex gap-2 text-xl font-bold items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    fill="currentColor"
+                    className="bi bi-calendar-week"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z" />
+                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                  </svg>
+                  <div>List two</div>
+                </div>
+              </NavLink>
             </li>
             <li>
-              <NavLink className="navbarItem" to="3">List three</NavLink>
+              <NavLink className="navbarItem" to="3">
+              <div className="p-2 flex gap-2 text-xl font-bold items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    fill="currentColor"
+                    className="bi bi-calendar-week"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z" />
+                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                  </svg>
+                  <div>List three</div>
+                </div>
+              </NavLink>
             </li>
           </ul>
         </div>
