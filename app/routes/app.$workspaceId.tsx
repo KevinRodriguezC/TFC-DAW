@@ -1,5 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
-import { Outlet, Link } from "@remix-run/react";
+import { Outlet, Link, NavLink } from "@remix-run/react";
 
 export const meta: MetaFunction = () => {
   return [
@@ -32,9 +32,24 @@ export default function Index() {
         </div>
         <div className="bg-slate-200 border-b-2 border-slate-300 flex-1 p-2 flex gap-2 justify-between">
           <div className="flex gap-2 ">
-            <Link className="rounded-full bg-slate-300 hover:bg-slate-400 flex items-center justify-center px-10 text-xl" to="/">Home</Link>
-            <Link className="rounded-full bg-slate-300 hover:bg-slate-400 flex items-center justify-center px-10 text-xl" to="/">Home</Link>
-            <Link className="rounded-full bg-slate-300 hover:bg-slate-400 flex items-center justify-center px-10 text-xl" to="/">Home</Link>
+            <Link
+              className="rounded-full bg-slate-300 hover:bg-slate-400 flex items-center justify-center px-10 text-xl"
+              to="/"
+            >
+              Home
+            </Link>
+            <Link
+              className="rounded-full bg-slate-300 hover:bg-slate-400 flex items-center justify-center px-10 text-xl"
+              to="/"
+            >
+              Home
+            </Link>
+            <Link
+              className="rounded-full bg-slate-300 hover:bg-slate-400 flex items-center justify-center px-10 text-xl"
+              to="/"
+            >
+              Home
+            </Link>
           </div>
           <div className="flex gap-2">
             <button className="bg-blue-600 btn-user-icon">B</button>
@@ -89,6 +104,17 @@ export default function Index() {
             </div>
             <h3 className="text-2xl self-center font-bold">Workspaces</h3>
           </div>
+          <ul className="flex flex-col">
+            <li>
+              <NavLink className="navbarItem" to="1">List one</NavLink>
+            </li>
+            <li>
+              <NavLink className="navbarItem" to="2">List two</NavLink>
+            </li>
+            <li>
+              <NavLink className="navbarItem" to="3">List three</NavLink>
+            </li>
+          </ul>
         </div>
         <Outlet />
       </div>
