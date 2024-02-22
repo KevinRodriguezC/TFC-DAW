@@ -1,7 +1,6 @@
 import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import { searchUsersByName } from "~/model/user";
 
 export const meta: MetaFunction = () => {
   return [
@@ -15,17 +14,16 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const q = url.searchParams.get("inputQuery");
   // const usersSearch = await searchUsersByName(q);
   const usersSearch = [
-    {'id':1},
-    {'id':2},
-    {'id':3},
-    {'id':4}
-  ]
+    { id: 1, username: "one", name: "Name", lastname: "Lastname" },
+    { id: 2, username: "two", name: "Name", lastname: "Lastname" },
+    { id: 3, username: "three", name: "Name", lastname: "Lastname" },
+    { id: 4, username: "four", name: "Name", lastname: "Lastname" },
+  ];
   return json({ usersSearch, q });
 };
 
 export default function Index() {
   const { usersSearch, q } = useLoaderData<typeof loader>();
-
 
   return (
     <div className="flex-1 flex flex-col">
@@ -36,7 +34,11 @@ export default function Index() {
         <div className="flex gap-2">
           <div className="flex gap-2">
             <form action="/search" method="get" className="flex gap-2">
-              <input className="form-control h-10" name="inputQuery" defaultValue={q || ""}/>
+              <input
+                className="form-control h-10"
+                name="inputQuery"
+                defaultValue={q || ""}
+              />
               <input
                 type="submit"
                 value="Search"
@@ -51,18 +53,20 @@ export default function Index() {
           </div>
         </div>
       </div>
-      <div className="flex flex-1 flex-col items-center justify-center">
-        Searchs for the term { q }
-        {usersSearch.length ?  (
-          <div>
-            {usersSearch.map((userInfo: any) => {
-              {userInfo.id}
-            })}
-          </div>
+      <div className="xl:mx-auto xl:max-w-[1020px] flex flex-col gap-4 m-4">
+        Searchs for the term {q}
+        {usersSearch.length ? (
+            usersSearch.map((userSearch: any) => (
+                <a
+                  href={ "/u/" + userSearch.username }
+                  className="bg-slate-100 py-2 px-4 flex flex-col gap-2 rounded-lg hover:bg-slate-200 active:bg-slate-300"
+                >
+                  <h2 className="text-xl font-bold">{userSearch.name}</h2>
+                  <h3>@{userSearch.username}</h3>
+                </a>
+            ))
         ) : (
-          <p>
-            No results
-          </p>
+          <p>No results</p>
         )}
       </div>
     </div>
