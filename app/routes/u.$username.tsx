@@ -34,8 +34,6 @@ async function getWorkspacesByUser(username: any) {
   return result;
 }
 
-// import invariant from "tiny-invariant"
-
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   // const url = new URL(request.url);
   // invariant(params.usernane, "User not found")
