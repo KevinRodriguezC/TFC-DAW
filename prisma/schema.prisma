@@ -11,12 +11,22 @@ datasource db{
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  email     String   @unique
-  username  String   @unique
-  name      String?
-  lastname  String
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  email      String   @unique
+  username   String   @unique
+  name       String?
+  lastname   String
+  workspaces UserOnWorkspaces[]
+}
+
+model UserOnWorkspaces{
+  id          Int       @id @default(autoincrement())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId Int
+  role        Int
 }
 
 model Workspace {
@@ -24,18 +34,23 @@ model Workspace {
   createdAt   DateTime @default(now())
   name        String
   description String
+  directories Directory[]
+  users       UserOnWorkspaces[]
 }
 
 model Directory {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  parent      Int
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  parent      Workspace @relation(fields: [parentId], references: [id])
+  parentId    Int
+  data        Data[]
 }
 
 model Data{
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  parent      Int
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  parent      Directory @relation(fields: [parentId], references: [id])
+  parentId    Int
   type        Int
   data        String
 }
