@@ -21,20 +21,20 @@ model User {
 
 model Workspace {
   id          Int      @id @default(autoincrement())
-  createdAt   Datetime @default(now())
+  createdAt   DateTime @default(now())
   name        String
   description String
 }
 
 model Directory {
   id          Int      @id @default(autoincrement())
-  createdAt   Datetime @default(now())
+  createdAt   DateTime @default(now())
   parent      Int
 }
 
 model Data{
-  id          Int      @it @default(autoincrement())
-  createdAt   Datetime @default(now())
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
   parent      Int
   type        Int
   data        String
