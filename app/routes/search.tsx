@@ -28,12 +28,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const q = url.searchParams.get("inputQuery");
   const usersSearch = await searchUsersByName(q);
-  // const usersSearch = [
-  //   { id: 1, username: "one", name: "Name", lastname: "Lastname" },
-  //   { id: 2, username: "two", name: "Name", lastname: "Lastname" },
-  //   { id: 3, username: "three", name: "Name", lastname: "Lastname" },
-  //   { id: 4, username: "four", name: "Name", lastname: "Lastname" },
-  // ];
   return json({ usersSearch, q });
 };
 
