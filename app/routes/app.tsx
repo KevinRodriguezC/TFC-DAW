@@ -35,7 +35,7 @@ export default function Index() {
       </div>
       <div className="flex flex-1 flex-col items-center justify-center">
         <p>Select a workspace</p>
-        <Link to="1">1</Link>
+        <Link to="/w/1">1</Link>
       </div>
     </div>
   );
