@@ -24,6 +24,17 @@ async function getWorkspacesById(id: number) {
   return result;
 }
 
+async function getDirectoriesByWorkspace(id: number) {
+  const result = await prisma.directory.findMany({
+    where: {
+      parentId: {
+        equals: id,
+      },
+    },
+  });
+  return result;
+}
+
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const workspaceId = params.workspaceId;
   if (!workspaceId) {
@@ -33,11 +44,12 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   if (!workspace) {
     throw new Error("Workspace not found");
   }
-  return json({ workspace });
+  const directories = await getDirectoriesByWorkspace(+workspaceId);
+  return json({ workspace, directories });
 };
 
 export default function Index() {
-  const { workspace } = useLoaderData<typeof loader>();
+  const { workspace, directories } = useLoaderData<typeof loader>();
 
   return (
     <div
@@ -135,66 +147,34 @@ export default function Index() {
             <h3 className="text-2xl self-center font-bold">Workspaces</h3>
           </div>
           <ul className="flex flex-col gap-2">
-            <li>
-              <NavLink className="navbarItem" to="1">
-                <div className="p-2 flex gap-2 text-xl font-bold items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    fill="currentColor"
-                    className="bi bi-calendar-week"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z" />
-                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-                  </svg>
-                  <div>List one</div>
-                </div>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink className="navbarItem" to="2">
-                <div className="p-2 flex gap-2 text-xl font-bold items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    fill="currentColor"
-                    className="bi bi-calendar-week"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z" />
-                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-                  </svg>
-                  <div>List two</div>
-                </div>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink className="navbarItem" to="3">
-                <div className="p-2 flex gap-2 text-xl font-bold items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    fill="currentColor"
-                    className="bi bi-calendar-week"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z" />
-                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-                  </svg>
-                  <div>List three</div>
-                </div>
-              </NavLink>
-            </li>
+            {directories.length  ? (
+              directories.map((directory: any) => (
+                <li>
+                  <NavLink className="navbarItem" to={"" + directory.id}> 
+                    <div className="p-2 flex gap-2 text-xl font-bold items-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        fill="currentColor"
+                        className="bi bi-calendar-week"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z" />
+                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                      </svg>
+                      <div>{directory.name}</div>
+                    </div>
+                  </NavLink>
+                </li>
+              ))
+            ) : (
+              <p>No directories</p>
+            )}
           </ul>
         </div>
         <Outlet />
-        <div className="container-secondary-bg border-l-2 container-secondary-border p-2 w-96 flex flex-col gap-2">
-
-        </div>
+        <div className="container-secondary-bg border-l-2 container-secondary-border p-2 w-96 flex flex-col gap-2"></div>
       </div>
     </div>
   );
