@@ -41,11 +41,11 @@ export default function Index() {
 
   return (
     <div
-      className="min-h-screen flex flex-col"
+      className="min-h-screen flex flex-col dark:text-white"
       style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}
     >
       <div className="flex">
-        <div className="bg-slate-100 border-r-2 border-b-2 border-slate-200 p-2 w-80 flex justify-between gap-2">
+        <div className="container-secondary-bg border-r-2 border-b-2 container-secondary-border p-2 w-80 flex justify-between gap-2">
           <h2 className="font-bold text-xl">{workspace.name}</h2>
           <button className="btn-icon">
             <svg
@@ -60,22 +60,22 @@ export default function Index() {
             </svg>
           </button>
         </div>
-        <div className="bg-slate-100 border-b-2 border-slate-200 flex-1 p-2 flex gap-2 justify-between">
+        <div className="container-secondary-bg border-b-2 container-secondary-border flex-1 p-2 flex gap-2 justify-between">
           <div className="flex gap-2 ">
             <Link
-              className="rounded-full bg-slate-300 hover:bg-slate-400 flex items-center justify-center px-10 text-xl"
+              className="rounded-full bg-slate-300 dark:bg-slate-900 hover:bg-slate-400 dark:hover:bg-slate-950 flex items-center justify-center px-10 text-xl"
               to="/"
             >
               Home
             </Link>
             <Link
-              className="rounded-full bg-slate-300 hover:bg-slate-400 flex items-center justify-center px-10 text-xl"
+              className="rounded-full bg-slate-300 dark:bg-slate-900 hover:bg-slate-400 dark:hover:bg-slate-950 flex items-center justify-center px-10 text-xl"
               to="/"
             >
               Home
             </Link>
             <Link
-              className="rounded-full bg-slate-300 hover:bg-slate-400 flex items-center justify-center px-10 text-xl"
+              className="rounded-full bg-slate-300 dark:bg-slate-900 hover:bg-slate-400 dark:hover:bg-slate-950 flex items-center justify-center px-10 text-xl"
               to="/"
             >
               Home
@@ -84,7 +84,7 @@ export default function Index() {
           <div className="flex gap-2">
             <button className="bg-blue-600 btn-user-icon">B</button>
             <button className="bg-red-600 btn-user-icon">C</button>
-            <span className="w-[2px] bg-slate-300"></span>
+            <span className="w-[2px] bg-slate-300 dark:bg-slate-900"></span>
             <button className="btn-icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -117,7 +117,7 @@ export default function Index() {
         </div>
       </div>
       <div className="flex flex-1">
-        <div className="bg-slate-100 border-r-2 border-slate-200 p-2 w-80 flex flex-col gap-2">
+        <div className="container-secondary-bg border-r-2 container-secondary-border p-2 w-80 flex flex-col gap-2">
           <div className="flex gap-2 align-middle">
             <div className="w-14 h-14 bg-green-600 rounded-full flex  justify-center items-center text-white">
               <svg
@@ -192,7 +192,7 @@ export default function Index() {
           </ul>
         </div>
         <Outlet />
-        <div className="bg-slate-100 border-l-2 border-slate-200 p-2 w-96 flex flex-col gap-2">
+        <div className="container-secondary-bg border-l-2 container-secondary-border p-2 w-96 flex flex-col gap-2">
 
         </div>
       </div>

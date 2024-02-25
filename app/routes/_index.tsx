@@ -10,8 +10,8 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <div className="bg-slate-200 border-b-2 border-slate-300 flex-1 p-2 flex gap-2 justify-between">
+    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }} className="dark:text-white min-h-screen flex flex-col">
+      <div className="container-secondary-bg border-b-2 container-secondary-border p-2 flex gap-2 justify-between">
         <h1 className="text-2xl font-bold self-center"><Link to="/app">TFC</Link></h1>
         <div className="flex gap-2">
           <div className="flex gap-2">
@@ -31,6 +31,7 @@ export default function Index() {
           </div>
         </div>
       </div>
+      <div className="container-primary-bg flex-1"> Hello world</div>
     </div>
   );
 }

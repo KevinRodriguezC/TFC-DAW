@@ -10,8 +10,8 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div className="flex-1 flex flex-col">
-      <div className="bg-slate-200 border-b-2 border-slate-300 flex-1 p-2 flex gap-2 justify-between">
+    <div className="flex-1 flex flex-col dark:text-white min-h-screen">
+      <div className="container-secondary-bg border-b-2 container-secondary-border p-2 flex gap-2 justify-between">
         <h1 className="text-2xl font-bold self-center">
           <Link to="/app">TFC</Link>
         </h1>
@@ -33,7 +33,7 @@ export default function Index() {
           </div>
         </div>
       </div>
-      <div className="flex flex-1 flex-col items-center justify-center">
+      <div className="flex flex-1 flex-col items-center justify-center container-primary-bg">
         <p>Select a workspace</p>
         <Link to="/w/1">1</Link>
       </div>

@@ -41,8 +41,8 @@ export default function Index() {
   const {data} = useLoaderData<typeof loader>();
 
   return (
-    <div className="flex-1 flex flex-col">
-      <div className="p-2 border-b-2 border-slate-100 ">{data.createdAt}</div>
+    <div className="container-primary-bg flex-1 flex flex-col">
+      <div className="p-2 border-b-2 container-primary-border">{data.createdAt}</div>
       <div className="flex flex-1 flex-col items-center justify-center">
         <p>Data info</p>
       </div>

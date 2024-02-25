@@ -35,8 +35,8 @@ export default function Index() {
   let { usersSearch, q } = useLoaderData<typeof loader>();
 
   return (
-    <div className="flex-1 flex flex-col">
-      <div className="bg-slate-200 border-b-2 border-slate-300 flex-1 p-2 flex gap-2 justify-between">
+    <div className="flex-1 flex flex-col container-primary-bg min-h-screen dark:text-white">
+      <div className="container-secondary-bg border-b-2 container-secondary-border p-2 flex gap-2 justify-between">
         <h1 className="text-2xl font-bold self-center">
           <Link to="/app">TFC</Link>
         </h1>
@@ -62,13 +62,13 @@ export default function Index() {
           </div>
         </div>
       </div>
-      <div className="xl:mx-auto xl:max-w-[1020px] flex flex-col gap-4 m-4">
+      <div className="xl:mx-auto xl:max-w-[1020px] flex flex-col gap-4 m-4 flex-1">
         Searchs for the term {q} {typeof usersSearch}
         {usersSearch.length ? (
           usersSearch.map((userSearch: any) => (
             <a
               href={"/u/" + userSearch.username}
-              className="bg-slate-100 py-2 px-4 flex flex-col gap-2 rounded-lg hover:bg-slate-200 active:bg-slate-300"
+              className="bg-slate-100 dark:bg-slate-800 py-2 px-4 flex flex-col gap-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-900 active:bg-slate-300 dark:active:bg-slate-950"
             >
               <h2 className="text-xl font-bold">{userSearch.name}</h2>
               <h3>@{userSearch.username}</h3>
