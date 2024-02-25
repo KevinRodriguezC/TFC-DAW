@@ -18,6 +18,7 @@ model User {
   name       String
   lastname   String?
   visibility Int
+  password   String
   workspaces UserOnWorkspaces[]
 }
 
