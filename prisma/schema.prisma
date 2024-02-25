@@ -15,8 +15,9 @@ model User {
   createdAt  DateTime @default(now())
   email      String   @unique
   username   String   @unique
-  name       String?
-  lastname   String
+  name       String
+  lastname   String?
+  visibility Int
   workspaces UserOnWorkspaces[]
 }
 
@@ -33,14 +34,17 @@ model Workspace {
   id          Int      @id @default(autoincrement())
   createdAt   DateTime @default(now())
   name        String
-  description String
+  description String?
   directories Directory[]
   users       UserOnWorkspaces[]
+  visibility  Int
 }
 
 model Directory {
   id          Int       @id @default(autoincrement())
   createdAt   DateTime  @default(now())
+  name        String
+  description String?
   parent      Workspace @relation(fields: [parentId], references: [id])
   parentId    Int
   data        Data[]
@@ -49,8 +53,19 @@ model Directory {
 model Data{
   id          Int       @id @default(autoincrement())
   createdAt   DateTime  @default(now())
+  name        String
   parent      Directory @relation(fields: [parentId], references: [id])
   parentId    Int
   type        Int
-  data        String
+  data        String?
+  atttribute  Attribute[]
+}
+
+model Attribute{
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  data        Data     @relation(fields: [dataId], references: [id])
+  dataId      Int
+  type        Int
+  value       String?
 }
