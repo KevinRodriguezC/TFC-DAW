@@ -18,9 +18,9 @@ export default function Header({username}: {username: any}) {
               <Link to="/app" className="btn-primary h-10">
                 Workspace
               </Link>
-              <button className="bg-purple-600 btn-user-icon">
+              <Link to="/logout" className="bg-purple-600 btn-user-icon">
                 {username}
-              </button>
+              </Link>
             </>
           ) : (
             <>

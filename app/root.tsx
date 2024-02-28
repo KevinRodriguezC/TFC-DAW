@@ -1,5 +1,5 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -8,12 +8,21 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { json } from "@remix-run/node";
+
+import { getSession, commitSession } from "./sessions";
 
 import stylesheet from "~/tailwind.css";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
+
+export async function Loader({ request }: LoaderFunctionArgs){
+  const session = await getSession(request.headers.get("Cookie"));
+  let userId = session.get("userId")
+  return json({ userId })
+}
 
 export default function App() {
   return (
