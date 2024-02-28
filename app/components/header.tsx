@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
 
-export function Header(user: any) {
+export default function Header({username}: {username: any}) {
   return (
     <div className="container-secondary-bg border-b-2 container-secondary-border p-2 flex gap-2 justify-between">
       <h1 className="text-2xl font-bold self-center">
@@ -13,13 +13,13 @@ export function Header(user: any) {
             <input type="submit" value="Search" className="btn-primary h-10" />
           </form>
           <div className="bg-slate-300 dark:bg-slate-900 w-[2px]"></div>
-          {user ? (
+          {username ? (
             <>
               <Link to="/app" className="btn-primary h-10">
                 Workspace
               </Link>
               <button className="bg-purple-600 btn-user-icon">
-                {user.name}
+                {username}
               </button>
             </>
           ) : (
@@ -30,7 +30,6 @@ export function Header(user: any) {
               <Link to="/signup" className="btn-primary h-10">
                 Create an account
               </Link>
-              <button className="bg-purple-600 btn-user-icon">A</button>
             </>
           )}
         </div>
