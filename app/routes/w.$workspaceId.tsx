@@ -15,11 +15,15 @@ export const meta: MetaFunction = () => {
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const workspaceId = params.workspaceId;
   if (!workspaceId) {
-    throw new Error("Workspace not found");
+    throw new Response("Workspace not found", { status: 404});
   }
-  const workspace = await getWorkspaceById(+workspaceId);
+  const workspaceIdNumber = + workspaceId;
+  if(!workspaceIdNumber){
+    throw new Response("Workspace not found", { status: 404});
+  }
+  const workspace = await getWorkspaceById(workspaceIdNumber);
   if (!workspace) {
-    throw new Error("Workspace not found");
+    throw new Response("Workspace not found", { status: 404});
   }
   const directories = await getDirectoriesByWorkspace(+workspaceId);
   return json({ workspace, directories });
