@@ -13,12 +13,6 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
 
-export async function Loader({ request }: LoaderFunctionArgs){
-  const session = await getSession(request.headers.get("Cookie"));
-  let userId = session.get("userId")
-  return json({ userId })
-}
-
 export default function App() {
   return (
     <html lang="en">
