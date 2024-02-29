@@ -28,7 +28,7 @@
     }
 
     .navbarItem.active{
-      @apply outline-4 outline-blue-600 outline text-white;
+      @apply outline-4 outline-blue-600 outline;
     }
 
     .container-primary-bg{
