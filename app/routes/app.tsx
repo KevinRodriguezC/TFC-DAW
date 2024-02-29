@@ -43,6 +43,7 @@ export default function Index() {
         ) : (
           <p>No results</p>
         )}
+        <Link to="/w/new">New workspace</Link>
       </div>
     </div>
   );
