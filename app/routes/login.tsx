@@ -73,7 +73,7 @@ export default function Login() {
 
   return (
     <div className="flex flex-col dark:text-white min-h-screen">
-      <Header username={null}/>
+      <Header username={null} />
       <div className="flex flex-col dark:text-white flex-1 container-secondary-bg justify-center items-center">
         <form
           className="container-primary-bg container-secondary-border border-2 rounded-md p-4 flex flex-col gap-4"

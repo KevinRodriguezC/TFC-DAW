@@ -1,6 +1,6 @@
 import type { MetaFunction, ActionFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
-import { Outlet, Link } from "@remix-run/react";
+import { Link } from "@remix-run/react";
 
 import { getSession, destroySession } from "../sessions";
 

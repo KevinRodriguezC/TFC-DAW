@@ -1,4 +1,3 @@
-import { cssBundleHref } from "@remix-run/css-bundle";
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import {
   Links,
@@ -8,12 +7,8 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import { json } from "@remix-run/node";
-
-import { getSession, commitSession } from "./sessions";
 
 import stylesheet from "~/tailwind.css";
-
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];

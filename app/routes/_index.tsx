@@ -1,10 +1,10 @@
 import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { json } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+
+import { getSession } from "../sessions";
 
 import Header from "../components/header";
-// import { loader } from "./login";
-import { json } from "@remix-run/node";
-import { getSession, commitSession } from "../sessions";
 
 export const meta: MetaFunction = () => {
   return [

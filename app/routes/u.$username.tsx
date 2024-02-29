@@ -1,8 +1,8 @@
 import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import { PrismaClient } from "@prisma/client";
 
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const meta: MetaFunction = () => {
@@ -59,13 +59,13 @@ export default function Index() {
       <h4>@{user.username}</h4>
       {workspaces ? (
         workspaces.map((workspace: any) => (
-          <a
-            href={"/w/" + workspace.id}
+          <Link
+            to={"/w/" + workspace.id}
             className="bg-slate-100 dark:bg-slate-800 py-2 px-4 flex flex-col gap-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-900 active:bg-slate-300 dark:active:bg-slate-950"
           >
             <h2 className="text-xl font-bold">{workspace.name}</h2>
             <h3>{workspace.description}</h3>
-          </a>
+          </Link>
         ))
       ) : (
         <p>No workspaces</p>

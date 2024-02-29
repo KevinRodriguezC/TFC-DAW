@@ -4,7 +4,6 @@ import { json } from "@remix-run/node";
 import Header from "../components/header";
 
 import { PrismaClient } from "@prisma/client";
-
 const prisma = new PrismaClient();
 
 export const meta: MetaFunction = () => {
