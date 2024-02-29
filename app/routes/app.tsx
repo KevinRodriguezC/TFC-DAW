@@ -4,6 +4,8 @@ import { Link, useLoaderData } from "@remix-run/react";
 
 import { getSession } from "../sessions";
 
+import { getWorkspacesByUser } from "~/model/workspace";
+
 import Header from "../components/header";
 
 export const meta: MetaFunction = () => {
@@ -13,21 +15,34 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export async function loader({ request }: LoaderFunctionArgs){
+export async function loader({ request }: LoaderFunctionArgs) {
   const session = await getSession(request.headers.get("Cookie"));
-  let userId = session.get("userId")
-  return json({ userId })
+  let userId = session.get("userId");
+  let workspaces = await getWorkspacesByUser(userId);
+  return json({ userId, workspaces });
 }
 
 export default function Index() {
-  const { userId } = useLoaderData<typeof loader>()
+  const { userId, workspaces } = useLoaderData<typeof loader>();
 
   return (
     <div className="flex-1 flex flex-col dark:text-white min-h-screen">
-      <Header username={userId}/>
-      <div className="flex flex-1 flex-col items-center justify-center container-primary-bg">
+      <Header username={userId} />
+      <div className="xl:mx-auto xl:w-[1020px] flex flex-col gap-4 m-4 flex-1">
         <p>Select a workspace</p>
-        <Link to="/w/1">1</Link>
+        {workspaces.length ? (
+          workspaces.map((workspace: any) => (
+            <Link
+              to={"/w/" + workspace.id}
+              className="bg-slate-100 dark:bg-slate-800 py-2 px-4 flex flex-col gap-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-900 active:bg-slate-300 dark:active:bg-slate-950"
+            >
+              <h2 className="text-xl font-bold">{workspace.name}</h2>
+              <h3>{workspace.description}</h3>
+            </Link>
+          ))
+        ) : (
+          <p>No results</p>
+        )}
       </div>
     </div>
   );

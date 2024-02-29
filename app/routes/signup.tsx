@@ -3,8 +3,7 @@ import { json } from "@remix-run/node";
 
 import Header from "../components/header";
 
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { createUser } from "~/model/user";
 
 export const meta: MetaFunction = () => {
   return [
@@ -14,17 +13,7 @@ export const meta: MetaFunction = () => {
 };
 
 export async function action({ request }: ActionFunctionArgs) {
-  const user = await prisma.user.create({
-    data: {
-      email: "example@mail.com",
-      username: "1",
-      name: "1",
-      lastname: "1",
-      visibility: 0,
-      password: "password",
-    },
-  });
-
+  const user = createUser("example@mail.com", "username", "name", "lastname", "password")
   return json({});
 }
 

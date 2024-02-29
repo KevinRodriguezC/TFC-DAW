@@ -1,8 +1,5 @@
 import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { Link, Outlet } from "@remix-run/react";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
 
 export const meta: MetaFunction = () => {
   return [

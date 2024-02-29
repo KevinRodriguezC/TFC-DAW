@@ -2,9 +2,8 @@ import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Outlet, Link, NavLink, useLoaderData } from "@remix-run/react";
 
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { getWorkspaceById } from "~/model/workspace";
+import { getDirectoriesByWorkspace } from "~/model/directory";
 
 export const meta: MetaFunction = () => {
   return [
@@ -13,34 +12,12 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-async function getWorkspacesById(id: number) {
-  const result = await prisma.workspace.findFirst({
-    where: {
-      id: {
-        equals: id,
-      },
-    },
-  });
-  return result;
-}
-
-async function getDirectoriesByWorkspace(id: number) {
-  const result = await prisma.directory.findMany({
-    where: {
-      parentId: {
-        equals: id,
-      },
-    },
-  });
-  return result;
-}
-
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const workspaceId = params.workspaceId;
   if (!workspaceId) {
     throw new Error("Workspace not found");
   }
-  const workspace = await getWorkspacesById(+workspaceId);
+  const workspace = await getWorkspaceById(+workspaceId);
   if (!workspace) {
     throw new Error("Workspace not found");
   }

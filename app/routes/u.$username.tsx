@@ -2,8 +2,8 @@ import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { getWorkspacesByUser } from "~/model/workspace";
+import { getUserByUsername } from "~/model/user";
 
 export const meta: MetaFunction = () => {
   return [
@@ -12,33 +12,11 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-async function getUserByName(username: any) {
-  const result = await prisma.user.findFirst({
-    where: {
-      username: {
-        contains: username,
-      },
-    },
-  });
-  return result;
-}
-
-async function getWorkspacesByUser(username: any) {
-  const result = await prisma.workspace.findMany({
-    // where: {
-    //   admin: {
-    //     contains: username,
-    //   },
-    // },
-  });
-  return result;
-}
-
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   // const url = new URL(request.url);
   // invariant(params.usernane, "User not found")
   const username = params.username;
-  const user = await getUserByName(username);
+  const user = await getUserByUsername(username);
   if (!user) {
     throw new Error("User not found");
   }

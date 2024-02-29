@@ -1,26 +1,11 @@
 import type { MetaFunction } from "@remix-run/node";
 
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
-
 export const meta: MetaFunction = () => {
   return [
     { title: "New Remix App" },
     { name: "description", content: "Welcome to Remix!" },
   ];
 };
-
-async function getWorkspaceDirectories(id: number) {
-  const result = await prisma.directory.findFirst({
-    where: {
-      parent: {
-        equals: id,
-      },
-    },
-  });
-  return result;
-}
 
 export default function Index() {
   return (

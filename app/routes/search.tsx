@@ -2,8 +2,7 @@ import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { searchUsers } from "~/model/search";
 
 export const meta: MetaFunction = () => {
   return [
@@ -12,36 +11,10 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-async function searchUsersByName(q: any) {
-  const result = await prisma.user.findMany({
-    where: {
-      OR: [
-        {
-          username: {
-            contains: q,
-          },
-        },
-        {
-          name: {
-            contains: q,
-          },
-        },
-        {
-          lastname: {
-            contains: q,
-          },
-        },
-      ],
-    },
-  });
-  console.log(result);
-  return result;
-}
-
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const q = url.searchParams.get("inputQuery");
-  const usersSearch = await searchUsersByName(q);
+  const usersSearch = await searchUsers(q);
   return json({ usersSearch, q });
 };
 

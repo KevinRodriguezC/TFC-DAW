@@ -3,9 +3,7 @@ import { json } from "@remix-run/node";
 
 import { useLoaderData } from "@remix-run/react";
 
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { getDirectoryInfo } from "~/model/directory";
 
 export const meta: MetaFunction = () => {
   return [
@@ -13,17 +11,6 @@ export const meta: MetaFunction = () => {
     { name: "description", content: "Welcome to Remix!" },
   ];
 };
-
-async function getDirectoryInfo(id: number) {
-  const result = await prisma.directory.findFirst({
-    where: {
-      id: {
-        equals: id,
-      },
-    },
-  });
-  return result;
-}
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const directoryId = params.dataId;
