@@ -14,7 +14,27 @@ export const meta: MetaFunction = () => {
 };
 
 export async function action({ request }: ActionFunctionArgs) {
-  const user = createUser("example@mail.com", "username", "name", "lastname", "password")
+  const formData = await request.formData();
+  let email = formData.get("email");
+  let username = formData.get("username");
+  let name = formData.get("name");
+  let lastname = formData.get("lastname");
+  let password = formData.get("password");
+  if (
+    !email ||
+    !username ||
+    !name ||
+    !lastname ||
+    !password ||
+    typeof email != "string" ||
+    typeof username != "string" ||
+    typeof name != "string" ||
+    typeof lastname != "string" ||
+    typeof password != "string"
+  ) {
+    throw new Response("Error", { status: 400 });
+  }
+  const user = createUser(email, username, name, lastname, password);
   return json({});
 }
 
@@ -37,8 +57,18 @@ export default function Index() {
           <input type="text" className="form-control" name="lastname" />
           <label htmlFor="password">Password</label>
           <input type="password" className="form-control" name="password" />
-          <p>Already have an account, <Link to="/login" className="  text-blue-800 underline">login</Link>.</p>
-          <input type="submit" value="Create an account" className="btn-primary" />
+          <p>
+            Already have an account,{" "}
+            <Link to="/login" className="  text-blue-800 underline">
+              login
+            </Link>
+            .
+          </p>
+          <input
+            type="submit"
+            value="Create an account"
+            className="btn-primary"
+          />
         </form>
       </div>
     </div>

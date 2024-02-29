@@ -8,6 +8,8 @@ import { Link, useLoaderData } from "@remix-run/react";
 
 import { getSession, commitSession } from "../sessions";
 
+import { getUserByUsername } from "~/model/user";
+
 export const meta: MetaFunction = () => {
   return [
     { title: "App" },
@@ -15,9 +17,10 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-function validateCredentials(username: any, password: any) {
-  if (username == "user" && password == "password") {
-    return "1";
+async function validateCredentials(username: any, password: any) {
+  let user = await getUserByUsername(username)
+  if (user && password == user.password) {
+    return user;
   } else {
     return null;
   }
@@ -45,9 +48,9 @@ export async function action({ request }: ActionFunctionArgs) {
   const username = form.get("email");
   const password = form.get("password");
 
-  const userId = await validateCredentials(username, password);
+  const user = await validateCredentials(username, password);
 
-  if (userId == null) {
+  if (user == null) {
     session.flash("error", "Invalid username/password");
 
     return redirect("/login", {
@@ -57,7 +60,9 @@ export async function action({ request }: ActionFunctionArgs) {
     });
   }
 
-  session.set("userId", userId);
+  console.log(user.id)
+
+  session.set("userId", "" + user.id);
 
   return redirect("/", {
     headers: {

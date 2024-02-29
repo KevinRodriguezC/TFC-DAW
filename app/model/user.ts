@@ -5,7 +5,7 @@ export async function getUserByUsername(username: any) {
   return await prisma.user.findFirst({
     where: {
       username: {
-        contains: username,
+        equals: username,
       },
     },
   });
