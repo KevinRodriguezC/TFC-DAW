@@ -38,7 +38,7 @@ export default function Index() {
       style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}
     >
       <div className="flex">
-        <div className="container-secondary-bg border-r-2 border-b-2 container-secondary-border p-2 w-80 flex justify-between gap-2">
+        <div className="container-secondary-bg border-r-2 border-b-2 container-secondary-border p-2 w-80 flex justify-between items-center gap-2">
           <h2 className="font-bold text-xl">{workspace.name}</h2>
           <button className="btn-icon">
             <svg
