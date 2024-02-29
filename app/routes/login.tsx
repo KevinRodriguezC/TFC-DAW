@@ -4,11 +4,9 @@ import type {
   ActionFunctionArgs,
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 
 import { getSession, commitSession } from "../sessions";
-
-import Header from "../components/header";
 
 export const meta: MetaFunction = () => {
   return [
@@ -72,19 +70,19 @@ export default function Login() {
   const { error } = useLoaderData<typeof loader>();
 
   return (
-    <div className="flex flex-col dark:text-white min-h-screen">
-      <Header username={null} />
+    <div className="flex flex-col dark:text-white min-h-screen bg-slate-200">
       <div className="flex flex-col dark:text-white flex-1 container-secondary-bg justify-center items-center">
         <form
-          className="container-primary-bg container-secondary-border border-2 rounded-md p-4 flex flex-col gap-4"
+          className="container-primary-bg container-secondary-border border-2 rounded-md p-4 flex flex-col gap-4 min-w-96"
           method="POST"
         >
-          <h1 className="text-2xl">Log in</h1>
+          <h1 className="text-3xl font-bold">Log in</h1>
           <label htmlFor="email">Email</label>
           <input type="text" className="form-control" name="email" />
           <label htmlFor="email">Password</label>
           <input type="password" className="form-control" name="password" />
-          <input type="submit" value="Login" />
+          <p>Don't have an account, <Link to="/signup" className="  text-blue-800 underline">create an accont</Link>.</p>
+          <input type="submit" value="Login" className="btn-primary"/>
         </form>
       </div>
     </div>

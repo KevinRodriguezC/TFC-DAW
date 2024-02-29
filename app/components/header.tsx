@@ -24,7 +24,7 @@ export default function Header({username}: {username: any}) {
             </>
           ) : (
             <>
-              <Link to="/login" className="btn-primary h-10">
+              <Link to="/login" className="btn-secondary h-10">
                 Login
               </Link>
               <Link to="/signup" className="btn-primary h-10">
