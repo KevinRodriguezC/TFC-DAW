@@ -1,4 +1,5 @@
 import { Link } from "@remix-run/react";
+import { UserDropdown } from "./userDropdown";
 
 export default function Header({username}: {username: any}) {
   return (
@@ -18,9 +19,7 @@ export default function Header({username}: {username: any}) {
               <Link to="/app" className="btn-primary h-10">
                 Workspace
               </Link>
-              <Link to="/logout" className="bg-purple-600 btn-user-icon">
-                {username}
-              </Link>
+              <UserDropdown username={username}></UserDropdown>
             </>
           ) : (
             <>
