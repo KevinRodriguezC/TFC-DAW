@@ -7,7 +7,7 @@ export function UserDropdown({ username }: { username: any }) {
       <Menu.Button className="btn-user-icon bg-purple-600">
         {username}
       </Menu.Button>
-      <Menu.Items className="absolute top-16 right-1 p-2 bg-slate-100 border-slate-200 border-2 rounded-2xl flex flex-col gap-2 min-w-72">
+      <Menu.Items className="absolute top-16 right-1 p-2 bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-900 border-2 rounded-2xl flex flex-col gap-2 min-w-72">
         <div className="flex gap-2">
           <div className="btn-user-icon bg-purple-600 gap-2">{username}</div>
           <div className="flex flex-col">
