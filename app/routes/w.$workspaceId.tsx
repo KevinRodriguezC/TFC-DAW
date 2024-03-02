@@ -156,7 +156,6 @@ export default function Index() {
               <p>No directories</p>
             )}
           </ul>
-          <MyToggle></MyToggle>
           <MyCombobox></MyCombobox>
         </div>
         <Outlet />

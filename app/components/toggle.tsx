@@ -1,16 +1,24 @@
 import { useState } from "react";
 import { Switch } from "@headlessui/react";
 
-export function MyToggle() {
+export function Toogle({
+  inputName,
+  defaultValue,
+}: {
+  inputName: string;
+  defaultValue: boolean;
+}) {
   const [enabled, setEnabled] = useState(false);
 
   return (
     <Switch
       checked={enabled}
+      defaultChecked={defaultValue}
       onChange={setEnabled}
       className={`${
         enabled ? "bg-blue-600" : "bg-slate-300"
       } relative inline-flex h-6 w-11 items-center rounded-full transition`}
+      name={inputName}
     >
       <span className="sr-only">Enable notifications</span>
       <span

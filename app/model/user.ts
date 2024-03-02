@@ -11,6 +11,14 @@ export async function getUserByUsername(username: any) {
   });
 }
 
+export async function getUserInfo(id: any) {
+  return await prisma.user.findFirst({
+    where: {
+      id: id,
+    },
+  });
+}
+
 export async function createUser(
   email: string,
   username: string,
@@ -26,6 +34,24 @@ export async function createUser(
       lastname: lastname,
       visibility: 0,
       password: password,
+    },
+  });
+}
+
+export async function updateUser(
+  id: number,
+  name: string,
+  lastname: string,
+  visibility: number
+) {
+  return await prisma.user.update({
+    where: {
+      id: id,
+    },
+    data: {
+      name: name,
+      lastname: lastname,
+      visibility: visibility,
     },
   });
 }
