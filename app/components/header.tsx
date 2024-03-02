@@ -1,7 +1,7 @@
 import { Link } from "@remix-run/react";
 import { UserDropdown } from "./userDropdown";
 
-export default function Header({username}: {username: any}) {
+export default function Header({ username }: { username: any }) {
   return (
     <div className="container-secondary-bg border-b-2 container-secondary-border p-2 flex gap-2 justify-between">
       <h1 className="text-2xl font-bold self-center">

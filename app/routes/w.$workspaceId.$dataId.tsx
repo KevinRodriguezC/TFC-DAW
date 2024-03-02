@@ -1,7 +1,12 @@
 import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 
-import { Link, isRouteErrorResponse, useLoaderData, useRouteError } from "@remix-run/react";
+import {
+  Link,
+  isRouteErrorResponse,
+  useLoaderData,
+  useRouteError,
+} from "@remix-run/react";
 
 import { getDirectoryInfo } from "~/model/directory";
 
@@ -18,7 +23,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     throw new Response("Directory not found", { status: 404 });
   }
   const directoryInfoNumber = +directoryId;
-  if(!directoryInfoNumber){
+  if (!directoryInfoNumber) {
     throw new Response("Directory not found", { status: 404 });
   }
   const data = await getDirectoryInfo(+directoryId);

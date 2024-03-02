@@ -30,9 +30,7 @@ export default function LogoutRoute() {
             method="post"
             className="container-primary-bg container-secondary-border border-2 rounded-md p-4 flex flex-col gap-4 min-w-96"
           >
-            <h2 className="">
-              Are you sure you want to log out?
-            </h2>
+            <h2 className="">Are you sure you want to log out?</h2>
             <div className="flex gap-2 justify-end">
               <Link to="/" className="btn-secondary">
                 Never mind

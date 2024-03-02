@@ -16,12 +16,16 @@ export async function getWorkspaceById(id: number) {
   return result;
 }
 
-export async function createWorkspace(name: string, description:string, visibility:number){
+export async function createWorkspace(
+  name: string,
+  description: string,
+  visibility: number
+) {
   return await prisma.workspace.create({
     data: {
       name: name,
       description: description,
-      visibility: visibility
-    }
-  })
+      visibility: visibility,
+    },
+  });
 }

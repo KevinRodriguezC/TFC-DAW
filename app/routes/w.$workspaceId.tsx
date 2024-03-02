@@ -18,15 +18,15 @@ export const meta: MetaFunction = () => {
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const workspaceId = params.workspaceId;
   if (!workspaceId) {
-    throw new Response("Workspace not found", { status: 404});
+    throw new Response("Workspace not found", { status: 404 });
   }
-  const workspaceIdNumber = + workspaceId;
-  if(!workspaceIdNumber){
-    throw new Response("Workspace not found", { status: 404});
+  const workspaceIdNumber = +workspaceId;
+  if (!workspaceIdNumber) {
+    throw new Response("Workspace not found", { status: 404 });
   }
   const workspace = await getWorkspaceById(workspaceIdNumber);
   if (!workspace) {
-    throw new Response("Workspace not found", { status: 404});
+    throw new Response("Workspace not found", { status: 404 });
   }
   const directories = await getDirectoriesByWorkspace(+workspaceId);
   return json({ workspace, directories });
@@ -131,10 +131,10 @@ export default function Index() {
             <h3 className="text-2xl self-center font-bold">Workspaces</h3>
           </div>
           <ul className="flex flex-col gap-2">
-            {directories.length  ? (
+            {directories.length ? (
               directories.map((directory: any) => (
                 <li>
-                  <NavLink className="navbarItem" to={"" + directory.id}> 
+                  <NavLink className="navbarItem" to={"" + directory.id}>
                     <div className="p-2 flex gap-2 text-xl font-bold items-center">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

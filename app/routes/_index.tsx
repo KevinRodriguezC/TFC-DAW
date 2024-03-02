@@ -13,18 +13,21 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export async function loader({ request }: LoaderFunctionArgs){
+export async function loader({ request }: LoaderFunctionArgs) {
   const session = await getSession(request.headers.get("Cookie"));
-  let userId = session.get("userId")
-  return json({ userId })
+  let userId = session.get("userId");
+  return json({ userId });
 }
 
 export default function Index() {
-  const { userId } = useLoaderData<typeof loader>()
+  const { userId } = useLoaderData<typeof loader>();
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }} className="dark:text-white min-h-screen flex flex-col">
-      <Header username={userId}/>
+    <div
+      style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}
+      className="dark:text-white min-h-screen flex flex-col"
+    >
+      <Header username={userId} />
       <div className="container-primary-bg flex-1 flex flex-col">
         <h1 className="text-2xl">Hello world</h1>
       </div>

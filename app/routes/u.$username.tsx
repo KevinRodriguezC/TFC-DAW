@@ -27,8 +27,6 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 export default function Index() {
   let { user, workspaces } = useLoaderData<typeof loader>();
 
-
-  
   return (
     <>
       <h2>

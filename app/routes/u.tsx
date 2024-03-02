@@ -18,10 +18,7 @@ export default function Index() {
         <div className="flex gap-2">
           <div className="flex gap-2">
             <form action="/search" method="get" className="flex gap-2">
-              <input
-                className="form-control h-10"
-                name="inputQuery"
-              />
+              <input className="form-control h-10" name="inputQuery" />
               <input
                 type="submit"
                 value="Search"
@@ -37,7 +34,7 @@ export default function Index() {
         </div>
       </div>
       <div className="xl:mx-auto xl:w-[1020px] flex flex-col gap-4 m-4 flex-1">
-        < Outlet/>
+        <Outlet />
       </div>
     </div>
   );

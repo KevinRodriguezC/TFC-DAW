@@ -18,7 +18,7 @@ export const meta: MetaFunction = () => {
 };
 
 async function validateCredentials(username: any, password: any) {
-  let user = await getUserByUsername(username)
+  let user = await getUserByUsername(username);
   if (user && password == user.password) {
     return user;
   } else {
@@ -60,7 +60,7 @@ export async function action({ request }: ActionFunctionArgs) {
     });
   }
 
-  console.log(user.id)
+  console.log(user.id);
 
   session.set("userId", "" + user.id);
 
@@ -86,8 +86,14 @@ export default function Login() {
           <input type="text" className="form-control" name="email" />
           <label htmlFor="email">Password</label>
           <input type="password" className="form-control" name="password" />
-          <p>Don't have an account, <Link to="/signup" className="  text-blue-800 underline">create an accont</Link>.</p>
-          <input type="submit" value="Login" className="btn-primary"/>
+          <p>
+            Don't have an account,{" "}
+            <Link to="/signup" className="  text-blue-800 underline">
+              create an accont
+            </Link>
+            .
+          </p>
+          <input type="submit" value="Login" className="btn-primary" />
         </form>
       </div>
     </div>
