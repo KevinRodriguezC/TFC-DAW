@@ -35,10 +35,10 @@ export default function Index() {
 
   return (
     <div
-      className="min-h-screen flex flex-col dark:text-white"
+      className="h-screen flex flex-col dark:text-white"
       style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}
     >
-      <div className="flex">
+      <div className="flex overflow-hidden">
         <div className="container-secondary-bg border-r-2 border-b-2 container-secondary-border p-2 w-80 flex justify-between items-center gap-2">
           <h2 className="font-bold text-xl">{workspace.name}</h2>
           <button className="btn-icon">
@@ -110,8 +110,8 @@ export default function Index() {
           </div>
         </div>
       </div>
-      <div className="flex flex-1">
-        <div className="container-secondary-bg border-r-2 container-secondary-border p-2 w-80 flex flex-col gap-2">
+      <div className="flex flex-1 overflow-hidden">
+        <div className="container-secondary-bg border-r-2 container-secondary-border p-2 w-80 flex flex-col gap-2 overflow-y-auto">
           <div className="flex gap-2 align-middle">
             <div className="w-14 h-14 bg-green-600 rounded-full flex  justify-center items-center text-white">
               <svg
