@@ -20,3 +20,16 @@ export async function getDirectoryInfo(id: number) {
     },
   });
 }
+
+export async function createDirectory(
+  workspaceId: number,
+  directoryName: string
+) {
+  return await prisma.directory.create({
+    data: {
+      name: directoryName,
+      description: "",
+      parentId: workspaceId,
+    },
+  });
+}

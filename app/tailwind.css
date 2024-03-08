@@ -65,8 +65,7 @@
   }
 
   .btn-header-secondary {
-    @apply 
-      bg-slate-200
+    @apply bg-slate-200
       hover:bg-slate-300
       active:bg-slate-400
       dark:bg-slate-700
@@ -120,5 +119,13 @@
 
   .container-secondary-border {
     @apply border-slate-200 dark:border-slate-900;
+  }
+
+  .radioItem {
+    @apply py-2 px-4 bg-slate-100 dark:bg-slate-800 rounded-md block cursor-pointer;
+  }
+
+  .radioItemSelected {
+    @apply bg-blue-600 text-white;
   }
 }

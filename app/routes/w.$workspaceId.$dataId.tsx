@@ -61,7 +61,14 @@ export default function Index() {
 
   return (
     <div className="container-primary-bg flex-1 flex flex-col">
-      <div className="p-2 border-b-2 container-primary-border">{data.name}</div>
+      <div className="p-2 border-b-2 container-primary-border flex justify-between items-center">
+        <h2>{data.name}</h2>
+        <div>
+          <Link to="delete" className="btn-danger">
+            Delete
+          </Link>
+        </div>
+      </div>
       <div className="flex flex-1 flex-col items-center justify-center">
         <p>{data.description}</p>
       </div>
