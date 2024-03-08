@@ -4,9 +4,7 @@ import { Outlet, Link, NavLink, useLoaderData } from "@remix-run/react";
 
 import { getWorkspaceById } from "~/model/workspace";
 import { getDirectoriesByWorkspace } from "~/model/directory";
-import { MyToggle } from "~/components/toggle";
 import { UserDropdown } from "~/components/userDropdown";
-import { MyCombobox } from "~/components/combobox";
 
 export const meta: MetaFunction = () => {
   return [
@@ -156,7 +154,9 @@ export default function Index() {
               <p>No directories</p>
             )}
           </ul>
-          <MyCombobox></MyCombobox>
+          <Link to="new" className="btn-primary">
+            New
+          </Link>
         </div>
         <Outlet />
         <div className="container-secondary-bg border-l-2 container-secondary-border p-2 w-96 flex flex-col gap-2"></div>
