@@ -1,4 +1,18 @@
-import type { MetaFunction } from "@remix-run/node";
+import type {
+  MetaFunction,
+  LoaderFunctionArgs,
+  ActionFunctionArgs,
+} from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
+
+import {
+  Link,
+  isRouteErrorResponse,
+  useLoaderData,
+  useRouteError,
+} from "@remix-run/react";
+
+import { deleteDirectory, getDirectoryInfo } from "~/model/directory";
 
 export const meta: MetaFunction = () => {
   return [
@@ -7,12 +21,42 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+export async function action({ params, request }: ActionFunctionArgs) {
+  const dataId = params.dataId;
+  if (!dataId || !+dataId) {
+    throw new Response("Error", { status: 400 });
+  }
+  deleteDirectory(+dataId);
+
+  return redirect("../../");
+}
+
+export const loader = async ({ params }: LoaderFunctionArgs) => {
+  const directoryId = params.dataId;
+  if (!directoryId) {
+    throw new Response("Directory not found", { status: 404 });
+  }
+  const directoryInfoNumber = +directoryId;
+  if (!directoryInfoNumber) {
+    throw new Response("Directory not found", { status: 404 });
+  }
+  const data = await getDirectoryInfo(+directoryId);
+  if (!data) {
+    throw new Response("Directory not found", { status: 404 });
+  }
+  return json({ data });
+};
+
 export default function Index() {
+  const { data } = useLoaderData<typeof loader>();
+
   return (
     <div className="container-primary-bg flex-1 flex flex-col">
-      <div className="p-2 border-b-2 container-primary-border">Hello world</div>
       <div className="flex flex-1 flex-col items-center justify-center">
-        <p>No data selected</p>
+        <p>Are you sure you want do delete {data.name}?</p>
+        <form method="POST">
+          <input type="submit" className="btn-danger" value="Yes"></input>
+        </form>
       </div>
     </div>
   );

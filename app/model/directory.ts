@@ -33,3 +33,11 @@ export async function createDirectory(
     },
   });
 }
+
+export async function deleteDirectory(directoryId: number) {
+  return await prisma.directory.delete({
+    where: {
+      id: directoryId,
+    },
+  });
+}
