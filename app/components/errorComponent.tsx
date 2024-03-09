@@ -2,7 +2,7 @@ import { isRouteErrorResponse } from "@remix-run/react";
 
 export default function ErrorComponent(error: any) {
   return (
-    <div className="flex-1 p-4 flex flex-col gap-4 items-center justify-center bg-red-100 text-red-950">
+    <div className="flex-1 p-4 flex flex-col gap-4 items-center justify-center bg-red-100 dark:bg-slate-950 text-red-950 dark:text-red-100">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="128"
