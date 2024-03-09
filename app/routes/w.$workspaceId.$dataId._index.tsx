@@ -1,7 +1,12 @@
-import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import type {
+  MetaFunction,
+  LoaderFunctionArgs,
+  ActionFunctionArgs,
+} from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 
 import {
+  Form,
   Link,
   isRouteErrorResponse,
   useLoaderData,
@@ -9,7 +14,7 @@ import {
 } from "@remix-run/react";
 import ErrorComponent from "~/components/errorComponent";
 
-import { getDirectoryInfo } from "~/model/directory";
+import { getDirectoryInfo, updateDirectory } from "~/model/directory";
 
 export const meta: MetaFunction = () => {
   return [
@@ -34,6 +39,25 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   return json({ data });
 };
 
+export async function action({ params, request }: ActionFunctionArgs) {
+  const dataId = params.dataId;
+  const formData = await request.formData();
+  const name = formData.get("name");
+  const description = formData.get("description");
+  if (
+    !dataId ||
+    !+dataId ||
+    !name ||
+    typeof name != "string" ||
+    typeof description != "string"
+  ) {
+    throw new Response("Error", { status: 400 });
+  }
+  updateDirectory(+dataId, name, description);
+
+  return redirect("");
+}
+
 export function ErrorBoundary() {
   let error = useRouteError();
   console.log(error);
@@ -44,18 +68,33 @@ export default function Index() {
   const { data } = useLoaderData<typeof loader>();
 
   return (
-    <div className="container-primary-bg flex-1 flex flex-col">
-      <div className="p-2 border-b-2 container-primary-border flex justify-between items-center">
-        <h2>{data.name}</h2>
-        <div>
+    <Form
+      className="container-primary-bg flex-1 flex flex-col"
+      method="POST"
+      key={data.id}
+    >
+      <div className="border-b-2 container-primary-border flex items-stretch">
+        <input
+          type="text"
+          name="name"
+          defaultValue={data.name}
+          className="data-input flex-1"
+        />
+        <div className="flex gap-2 p-2">
+          <input type="submit" value="Save" className="btn-primary" />
           <Link to="delete" className="btn-danger">
             Delete
           </Link>
         </div>
       </div>
+      <textarea
+        name="description"
+        className="data-input"
+        defaultValue={data.description ? data.description : ""}
+      ></textarea>
       <div className="flex flex-1 flex-col items-center justify-center">
-        <p>{data.description}</p>
+        Lorem ipsum
       </div>
-    </div>
+    </Form>
   );
 }

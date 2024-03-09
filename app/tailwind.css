@@ -128,4 +128,8 @@
   .radioItemSelected {
     @apply bg-blue-600 text-white;
   }
+
+  .data-input {
+    @apply bg-transparent p-2 hover:bg-black/25 focus:outline-none;
+  }
 }

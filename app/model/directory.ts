@@ -34,6 +34,22 @@ export async function createDirectory(
   });
 }
 
+export async function updateDirectory(
+  directoryId: number,
+  name: string,
+  description: string = ""
+) {
+  return await prisma.directory.update({
+    where: {
+      id: directoryId,
+    },
+    data: {
+      name: name,
+      description: description,
+    },
+  });
+}
+
 export async function deleteDirectory(directoryId: number) {
   return await prisma.directory.delete({
     where: {
