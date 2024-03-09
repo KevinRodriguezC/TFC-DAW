@@ -27,9 +27,9 @@ export async function action({ params, request }: ActionFunctionArgs) {
   ) {
     throw new Response("Error", { status: 400 });
   }
-  createDirectory(+workspaceId, workspaceName);
+  const newDirectory = await createDirectory(+workspaceId, workspaceName);
 
-  return redirect("");
+  return redirect("../" + newDirectory.id);
 }
 
 export default function Index() {
