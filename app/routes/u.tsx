@@ -1,5 +1,12 @@
 import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { Link, Outlet, json, useLoaderData } from "@remix-run/react";
+import {
+  Link,
+  Outlet,
+  json,
+  useLoaderData,
+  useRouteError,
+} from "@remix-run/react";
+import ErrorPage from "~/components/errorPage";
 import Header from "~/components/header";
 import { getUserInfo } from "~/model/user";
 import { getSession } from "~/sessions";
@@ -27,6 +34,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
     visibility: userArray.visibility == 0 ? false : true,
   };
   return json({ userId, userInfo });
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+  console.log(error);
+  return <ErrorPage error={error} />;
 }
 
 export default function Index() {

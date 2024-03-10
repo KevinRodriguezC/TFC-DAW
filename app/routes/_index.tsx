@@ -1,10 +1,12 @@
 import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData, useRouteError } from "@remix-run/react";
 
 import { getSession } from "../sessions";
 
 import Header from "../components/header";
+import { ButtonLink } from "~/components/buttonLink";
+import ErrorPage from "~/components/errorPage";
 
 export const meta: MetaFunction = () => {
   return [
@@ -29,7 +31,23 @@ export default function Index() {
     >
       <Header username={userId} />
       <div className="container-primary-bg flex-1 flex flex-col">
-        <h1 className="text-2xl">Hello world</h1>
+        <div className=" self-center max-w-5xl flex flex-col gap-6 mt-10 m">
+          <h1 className="  text-7xl font-bold">Lorem ipsum</h1>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi,
+            libero aliquam beatae enim aperiam quas ipsum neque! Facere nobis
+            veritatis accusantium, rem quod modi, numquam perspiciatis esse ut
+            iusto optio? Lorem ipsum dolor sit, amet consectetur adipisicing
+            elit. Asperiores beatae necessitatibus velit molestias mollitia.
+            Ipsam voluptatem officiis in quam cumque, recusandae mollitia,
+            repellendus corporis ad, rerum aspernatur eius praesentium eaque!
+          </p>
+          {/* <Link to="signup" className="btn-primary self-start">
+            {" "}
+            Create an account
+          </Link> */}
+          <ButtonLink to="signup">Create an account</ButtonLink>
+        </div>
       </div>
     </div>
   );

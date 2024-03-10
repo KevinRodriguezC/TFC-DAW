@@ -1,6 +1,7 @@
 import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
+import { UserCardInfo } from "~/components/userCardInfo";
 
 import { searchUsers } from "~/model/search";
 
@@ -53,16 +54,10 @@ export default function Index() {
         <h2 className="text-xl">Searchs for the term "{q}"</h2>
         {usersSearch.length ? (
           usersSearch.map((userSearch: any) => (
-            <Link
-              to={"/u/" + userSearch.username}
-              className="bg-slate-100 dark:bg-slate-800 p-2 flex gap-2 rounded-full items-center hover:bg-slate-200 dark:hover:bg-slate-900 active:bg-slate-300 dark:active:bg-slate-950"
-            >
-              <div className="bg-blue-600 rounded-full w-10 h-10"></div>
-              <h2 className="text-xl font-bold">
-                {userSearch.name} {userSearch.lastname}
-              </h2>
-              <h3>@{userSearch.username}</h3>
-            </Link>
+            <UserCardInfo
+              name={userSearch.name + " " + userSearch.lastname}
+              username={userSearch.username}
+            />
           ))
         ) : (
           <p>No results</p>
