@@ -1,8 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export async function getWorkspacesByUser(user: any) {
-  return await prisma.workspace.findMany();
+export async function getWorkspacesByUser(userId: number) {
+  return await prisma.userOnWorkspaces.findMany({
+    where: {
+      userId: {
+        equals: userId,
+      },
+    },
+    include: {
+      workspace: true,
+    },
+  });
 }
 
 export async function getWorkspaceById(id: number) {
@@ -17,15 +26,23 @@ export async function getWorkspaceById(id: number) {
 }
 
 export async function createWorkspace(
+  admin: number,
   name: string,
   description: string,
   visibility: number
 ) {
-  return await prisma.workspace.create({
+  const workspace = await prisma.workspace.create({
     data: {
       name: name,
       description: description,
       visibility: visibility,
+    },
+  });
+  await prisma.userOnWorkspaces.create({
+    data: {
+      userId: admin,
+      workspaceId: workspace.id,
+      role: 0,
     },
   });
 }

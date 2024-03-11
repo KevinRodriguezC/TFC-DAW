@@ -18,7 +18,14 @@ export const meta: MetaFunction = () => {
 export async function loader({ request }: LoaderFunctionArgs) {
   const session = await getSession(request.headers.get("Cookie"));
   let userId = session.get("userId");
-  let workspaces = await getWorkspacesByUser(userId);
+  if (!userId || !+userId) {
+    throw new Response("Error", { status: 500 });
+  }
+  const userWorkspaces = await getWorkspacesByUser(+userId);
+  let workspaces = [];
+  for (let i = 0; i < userWorkspaces.length; i++) {
+    workspaces.push(userWorkspaces[i].workspace);
+  }
   return json({ userId, workspaces });
 }
 

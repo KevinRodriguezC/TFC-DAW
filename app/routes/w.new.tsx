@@ -20,18 +20,22 @@ export const meta: MetaFunction = () => {
 };
 
 export async function action({ params, request }: ActionFunctionArgs) {
+  const session = await getSession(request.headers.get("Cookie"));
+  let userId = session.get("userId");
   const formData = await request.formData();
   let workspaceName = formData.get("workspaceName");
   let workspaceDescription = formData.get("workspaceDescription");
   if (
     !workspaceName ||
     !workspaceDescription ||
+    !userId ||
     typeof workspaceName != "string" ||
-    typeof workspaceDescription != "string"
+    typeof workspaceDescription != "string" ||
+    !+userId
   ) {
     throw new Response("Error", { status: 400 });
   }
-  createWorkspace(workspaceName, workspaceDescription, 0);
+  createWorkspace(+userId, workspaceName, workspaceDescription, 0);
 
   return redirect("/app");
 }
