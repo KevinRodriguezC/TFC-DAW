@@ -110,8 +110,10 @@
       py-2
       px-4
       gap-2
-      focus:outline-none
-      focus:border-blue-600;
+      focus:border-blue-600
+      focus:outline
+      focus:outline-2
+      focus:outline-blue-600;
   }
 
   .btn-icon {
