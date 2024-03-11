@@ -23,10 +23,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
   let { userId, userInfo } = await getUserSession(
     await getSession(request.headers.get("Cookie"))
   );
-  let userArray = await getUserInfo(+userId);
-  if (!userArray) {
-    throw new Response("Error");
-  }
+  // let userArray = await getUserInfo(+userId);
+  // if (!userArray) {
+  //   throw new Response("Error");
+  // }
   // let userInfo = {
   //   name: userArray.name,
   //   lastname: userArray.lastname ? userArray.lastname : "",

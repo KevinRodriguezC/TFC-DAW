@@ -112,10 +112,18 @@ export default function Index() {
               </svg>
             </button>
             {/* <button className="bg-purple-600 flex items-center justify-center rounded-full text-white w-10 h-10 font-bold text-lg"> */}
-            <UserDropdown
-              username={userInfo.username}
-              name={userInfo.name}
-            ></UserDropdown>
+            {userInfo && userInfo.username && userInfo.name ? (
+              <UserDropdown username={userInfo.username} name={userInfo.name} />
+            ) : (
+              <>
+                <Link to="/login" className="btn-secondary h-10">
+                  Login
+                </Link>
+                <Link to="/signup" className="btn-primary h-10">
+                  Create an account
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
