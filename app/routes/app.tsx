@@ -7,6 +7,8 @@ import { getSession } from "../sessions";
 import { getWorkspacesByUser } from "~/model/workspace";
 
 import Header from "../components/header";
+import { getUserSession } from "~/getUserSession";
+import { MainContainer } from "~/components/mainContainer";
 
 export const meta: MetaFunction = () => {
   return [
@@ -16,25 +18,23 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const session = await getSession(request.headers.get("Cookie"));
-  let userId = session.get("userId");
-  if (!userId || !+userId) {
-    throw new Response("Error", { status: 500 });
-  }
+  const { userId, userInfo } = await getUserSession(
+    await getSession(request.headers.get("Cookie"))
+  );
   const userWorkspaces = await getWorkspacesByUser(+userId);
   let workspaces = [];
   for (let i = 0; i < userWorkspaces.length; i++) {
     workspaces.push(userWorkspaces[i].workspace);
   }
-  return json({ userId, workspaces });
+  return json({ userInfo, workspaces });
 }
 
 export default function Index() {
-  const { userId, workspaces } = useLoaderData<typeof loader>();
+  const { userInfo, workspaces } = useLoaderData<typeof loader>();
 
   return (
-    <div className="flex-1 flex flex-col dark:text-white dark:bg-slate-700 min-h-screen">
-      <Header username={userId} />
+    <MainContainer>
+      <Header username={userInfo.username} name={userInfo.name} />
       <div className="xl:mx-auto xl:w-[1020px] flex flex-col gap-4 m-4 flex-1">
         <p>Select a workspace</p>
         {workspaces.length ? (
@@ -52,6 +52,6 @@ export default function Index() {
         )}
         <Link to="/w/new">New workspace</Link>
       </div>
-    </div>
+    </MainContainer>
   );
 }

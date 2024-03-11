@@ -20,7 +20,11 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   if (!user) {
     throw new Error("User not found");
   }
-  const workspaces = await getWorkspacesByUser(user.username);
+  const userWorkspaces = await getWorkspacesByUser(user.id);
+  let workspaces = [];
+  for (let i = 0; i < userWorkspaces.length; i++) {
+    workspaces.push(userWorkspaces[i].workspace);
+  }
   return json({ user, workspaces });
 };
 

@@ -12,6 +12,7 @@ import Header from "../components/header";
 import { Switch } from "@headlessui/react";
 import { Toogle } from "~/components/toggle";
 import { getUserInfo, updateUser } from "~/model/user";
+import { MainContainer } from "~/components/mainContainer";
 
 export const meta: MetaFunction = () => {
   return [
@@ -64,22 +65,20 @@ export async function loader({ request }: LoaderFunctionArgs) {
     throw new Response("Error");
   }
   let userInfo = {
+    username: userArray.username,
     name: userArray.name,
     lastname: userArray.lastname ? userArray.lastname : "",
     visibility: userArray.visibility == 0 ? false : true,
   };
-  return json({ userId, userInfo });
+  return json({ userInfo });
 }
 
 export default function Settings() {
-  const { userId, userInfo } = useLoaderData<typeof loader>();
+  const { userInfo } = useLoaderData<typeof loader>();
 
   return (
-    <div
-      style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}
-      className="dark:text-white min-h-screen flex flex-col"
-    >
-      <Header username={userId} />
+    <MainContainer>
+      <Header username={userInfo.username} name={userInfo.name} />
       <div className="xl:mx-auto xl:w-[1020px] flex flex-col gap-4 m-4 flex-1">
         <form method="post" className="flex flex-col gap-2 p-2">
           <h2 className="text-2xl">Account settings</h2>
@@ -111,6 +110,6 @@ export default function Settings() {
           <input className="btn-primary" type="submit" value="Save changes" />
         </form>
       </div>
-    </div>
+    </MainContainer>
   );
 }

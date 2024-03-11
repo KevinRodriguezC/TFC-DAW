@@ -7,6 +7,9 @@ import { getSession } from "../sessions";
 import Header from "../components/header";
 import { ButtonLink } from "~/components/buttonLink";
 import ErrorPage from "~/components/errorPage";
+import { getUserInfo } from "~/model/user";
+import { MainContainer } from "~/components/mainContainer";
+import { getUserSession } from "~/getUserSession";
 
 export const meta: MetaFunction = () => {
   return [
@@ -16,20 +19,18 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const session = await getSession(request.headers.get("Cookie"));
-  let userId = session.get("userId");
-  return json({ userId });
+  let { userInfo } = await getUserSession(
+    await getSession(request.headers.get("Cookie"))
+  );
+  return json({ userInfo });
 }
 
 export default function Index() {
-  const { userId } = useLoaderData<typeof loader>();
+  const { userInfo } = useLoaderData<typeof loader>();
 
   return (
-    <div
-      style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}
-      className="dark:text-white min-h-screen flex flex-col"
-    >
-      <Header username={userId} />
+    <MainContainer>
+      <Header username={userInfo.username} name={userInfo.name} />
       <div className="container-primary-bg flex-1 flex flex-col">
         <div className=" self-center max-w-5xl flex flex-col gap-6 mt-10 m">
           <h1 className="  text-7xl font-bold">Lorem ipsum</h1>
@@ -49,6 +50,6 @@ export default function Index() {
           <ButtonLink to="signup">Create an account</ButtonLink>
         </div>
       </div>
-    </div>
+    </MainContainer>
   );
 }

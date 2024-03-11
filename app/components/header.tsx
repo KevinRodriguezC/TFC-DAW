@@ -1,7 +1,13 @@
-import { Link } from "@remix-run/react";
+import { Form, Link } from "@remix-run/react";
 import { UserDropdown } from "./userDropdown";
 
-export default function Header({ username }: { username: any }) {
+export default function Header({
+  username,
+  name,
+}: {
+  username: string | null;
+  name: string | null;
+}) {
   return (
     <div className="container-secondary-bg border-b-2 container-secondary-border p-2 flex gap-2 justify-between">
       <h1 className="text-2xl font-bold self-center">
@@ -9,17 +15,17 @@ export default function Header({ username }: { username: any }) {
       </h1>
       <div className="flex gap-2">
         <div className="flex gap-2">
-          <form action="/search" method="get" className="flex gap-2">
+          <Form action="/search" method="get" className="flex gap-2">
             <input className="form-control h-10" name="inputQuery" />
             <input type="submit" value="Search" className="btn-primary h-10" />
-          </form>
+          </Form>
           <div className="bg-slate-300 dark:bg-slate-900 w-[2px]"></div>
-          {username ? (
+          {username && name ? (
             <>
               <Link to="/app" className="btn-primary h-10">
                 Workspace
               </Link>
-              <UserDropdown username={username}></UserDropdown>
+              <UserDropdown username={username} name={name} />
             </>
           ) : (
             <>

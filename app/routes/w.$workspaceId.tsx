@@ -5,6 +5,9 @@ import { Outlet, Link, NavLink, useLoaderData } from "@remix-run/react";
 import { getWorkspaceById } from "~/model/workspace";
 import { getDirectoriesByWorkspace } from "~/model/directory";
 import { UserDropdown } from "~/components/userDropdown";
+import { getUserInfo } from "~/model/user";
+import { getUserSession } from "~/getUserSession";
+import { getSession } from "~/sessions";
 
 export const meta: MetaFunction = () => {
   return [
@@ -13,7 +16,10 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const loader = async ({ params }: LoaderFunctionArgs) => {
+export const loader = async ({ request, params }: LoaderFunctionArgs) => {
+  const { userInfo } = await getUserSession(
+    await getSession(request.headers.get("Cookie"))
+  );
   const workspaceId = params.workspaceId;
   if (!workspaceId) {
     throw new Response("Workspace not found", { status: 404 });
@@ -27,11 +33,11 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     throw new Response("Workspace not found", { status: 404 });
   }
   const directories = await getDirectoriesByWorkspace(+workspaceId);
-  return json({ workspace, directories });
+  return json({ userInfo, workspace, directories });
 };
 
 export default function Index() {
-  const { workspace, directories } = useLoaderData<typeof loader>();
+  const { userInfo, workspace, directories } = useLoaderData<typeof loader>();
 
   return (
     <div
@@ -106,7 +112,10 @@ export default function Index() {
               </svg>
             </button>
             {/* <button className="bg-purple-600 flex items-center justify-center rounded-full text-white w-10 h-10 font-bold text-lg"> */}
-            <UserDropdown username="A"></UserDropdown>
+            <UserDropdown
+              username={userInfo.username}
+              name={userInfo.name}
+            ></UserDropdown>
           </div>
         </div>
       </div>
