@@ -8,6 +8,7 @@ import { UserDropdown } from "~/components/userDropdown";
 import { getUserInfo } from "~/model/user";
 import { getUserSession } from "~/getUserSession";
 import { getSession } from "~/sessions";
+import { useTranslation } from "react-i18next";
 
 export const meta: MetaFunction = () => {
   return [
@@ -38,6 +39,8 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 
 export default function Index() {
   const { userInfo, workspace, directories } = useLoaderData<typeof loader>();
+
+  const { t } = useTranslation();
 
   return (
     <div
@@ -117,10 +120,10 @@ export default function Index() {
             ) : (
               <>
                 <Link to="/login" className="btn-secondary h-10">
-                  Login
+                  {t("login")}
                 </Link>
                 <Link to="/signup" className="btn-primary h-10">
-                  Create an account
+                  {t("create_an_account")}
                 </Link>
               </>
             )}
@@ -143,33 +146,33 @@ export default function Index() {
                 <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v2H1V3a1 1 0 0 1 1-1zM1 13V6h4v8H2a1 1 0 0 1-1-1m5 1V6h9v7a1 1 0 0 1-1 1z" />
               </svg>
             </div>
-            <h3 className="text-2xl self-center font-bold">Workspaces</h3>
+            <h3 className="text-2xl self-center font-bold">
+              {t("Workspaces")}
+            </h3>
           </div>
           <ul className="flex flex-col gap-2">
-            {directories.length ? (
-              directories.map((directory: any) => (
-                <li>
-                  <NavLink className="navbarItem" to={"" + directory.id}>
-                    <div className="p-2 flex gap-2 text-xl font-bold items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="32"
-                        height="32"
-                        fill="currentColor"
-                        className="bi bi-calendar-week"
-                        viewBox="0 0 16 16"
-                      >
-                        <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z" />
-                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-                      </svg>
-                      <div>{directory.name}</div>
-                    </div>
-                  </NavLink>
-                </li>
-              ))
-            ) : (
-              <p>No directories</p>
-            )}
+            {directories.length
+              ? directories.map((directory: any) => (
+                  <li>
+                    <NavLink className="navbarItem" to={"" + directory.id}>
+                      <div className="p-2 flex gap-2 text-xl font-bold items-center">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="32"
+                          height="32"
+                          fill="currentColor"
+                          className="bi bi-calendar-week"
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z" />
+                          <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                        </svg>
+                        <div>{directory.name}</div>
+                      </div>
+                    </NavLink>
+                  </li>
+                ))
+              : t("no_directorioes")}
           </ul>
           <Link to="new" className="btn-primary">
             New

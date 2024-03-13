@@ -10,6 +10,7 @@ import ErrorPage from "~/components/errorPage";
 import { getUserInfo } from "~/model/user";
 import { MainContainer } from "~/components/mainContainer";
 import { getUserSession } from "~/getUserSession";
+import { useTranslation } from "react-i18next";
 
 export const meta: MetaFunction = () => {
   return [
@@ -28,6 +29,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function Index() {
   const { userInfo } = useLoaderData<typeof loader>();
 
+  const { t } = useTranslation();
+
+  // const t = useTranslation();
   return (
     <MainContainer>
       <Header username={userInfo.username} name={userInfo.name} />
@@ -47,7 +51,7 @@ export default function Index() {
             {" "}
             Create an account
           </Link> */}
-          <ButtonLink to="signup">Create an account</ButtonLink>
+          <ButtonLink to="signup">{t("create_an_account")}</ButtonLink>
         </div>
       </div>
     </MainContainer>

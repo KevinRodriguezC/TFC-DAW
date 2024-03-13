@@ -9,6 +9,7 @@ import { getWorkspacesByUser } from "~/model/workspace";
 import Header from "../components/header";
 import { getUserSession } from "~/getUserSession";
 import { MainContainer } from "~/components/mainContainer";
+import { useTranslation } from "react-i18next";
 
 export const meta: MetaFunction = () => {
   return [
@@ -32,11 +33,13 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function Index() {
   const { userInfo, workspaces } = useLoaderData<typeof loader>();
 
+  const { t } = useTranslation();
+
   return (
     <MainContainer>
       <Header username={userInfo.username} name={userInfo.name} />
       <div className="xl:mx-auto xl:w-[1020px] flex flex-col gap-4 m-4 flex-1">
-        <p>Select a workspace</p>
+        <p>{t("select_a_workspace")}</p>
         {workspaces.length ? (
           workspaces.map((workspace: any) => (
             <Link
@@ -48,9 +51,9 @@ export default function Index() {
             </Link>
           ))
         ) : (
-          <p>No results</p>
+          <p>{t("no_results")}</p>
         )}
-        <Link to="/w/new">New workspace</Link>
+        <Link to="/w/new">{t("new_workspace")}</Link>
       </div>
     </MainContainer>
   );

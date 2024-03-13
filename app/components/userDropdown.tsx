@@ -1,5 +1,6 @@
 import { Menu } from "@headlessui/react";
 import { Link } from "@remix-run/react";
+import { useTranslation } from "react-i18next";
 
 export function UserDropdown({
   username,
@@ -8,6 +9,8 @@ export function UserDropdown({
   username: string;
   name: string;
 }) {
+  const { t } = useTranslation();
+
   return (
     <Menu>
       <Menu.Button className="btn-user-icon bg-purple-600">
@@ -26,28 +29,28 @@ export function UserDropdown({
         <Menu.Item>
           {({ active }) => (
             <Link className="btn-header-secondary" to="/">
-              Home
+              {t("home")}
             </Link>
           )}
         </Menu.Item>
         <Menu.Item>
           {({ active }) => (
             <Link className="btn-header-secondary" to="/settings">
-              Manage account
+              {t("manage_account")}
             </Link>
           )}
         </Menu.Item>
         <Menu.Item>
           {({ active }) => (
             <Link className="btn-header-secondary" to="/u">
-              View profile
+              {t("view_profile")}
             </Link>
           )}
         </Menu.Item>
         <Menu.Item>
           {({ active }) => (
             <Link className="btn-danger" to="/logout">
-              logout
+              {t("logout")}
             </Link>
           )}
         </Menu.Item>
