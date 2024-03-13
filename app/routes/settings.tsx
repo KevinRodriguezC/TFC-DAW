@@ -14,6 +14,12 @@ import { Toogle } from "~/components/toggle";
 import { getUserInfo, updateUser } from "~/model/user";
 import { MainContainer } from "~/components/mainContainer";
 import { useTranslation } from "react-i18next";
+import i18n from "./../i18n";
+
+const lngs = {
+  en: { nativeName: "English" },
+  es: { nativeName: "Español" },
+};
 
 export const meta: MetaFunction = () => {
   return [
@@ -109,6 +115,21 @@ export default function Settings() {
               inputName="visibility"
               defaultValue={userInfo.visibility}
             ></Toogle>
+          </div>
+          <label>{t("language")}</label>
+          <div className="flex gap-2">
+            {Object.keys(lngs).map((lng) => (
+              <button
+                type="button"
+                className="btn-primary"
+                key={lng}
+                onClick={() => {
+                  i18n.changeLanguage(lng);
+                }}
+              >
+                {lngs[lng].nativeName}
+              </button>
+            ))}
           </div>
           <input className="btn-primary" type="submit" value="Save changes" />
         </form>

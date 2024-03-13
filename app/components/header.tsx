@@ -1,12 +1,6 @@
 import { Form, Link } from "@remix-run/react";
 import { UserDropdown } from "./userDropdown";
 import { useTranslation } from "react-i18next";
-import i18n from "./../i18n";
-
-const lngs = {
-  en: { nativeName: "English" },
-  es: { nativeName: "Español" },
-};
 
 export default function Header({
   username,
@@ -32,17 +26,6 @@ export default function Header({
               className="btn-primary h-10"
             />
           </Form>
-          {Object.keys(lngs).map((lng) => (
-            <button
-              type="submit"
-              key={lng}
-              onClick={() => {
-                i18n.changeLanguage(lng);
-              }}
-            >
-              {lngs[lng].nativeName}
-            </button>
-          ))}
           <div className="bg-slate-300 dark:bg-slate-900 w-[2px]"></div>
           {username && name ? (
             <UserDropdown username={username} name={name} />
