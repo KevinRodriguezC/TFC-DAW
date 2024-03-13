@@ -12,6 +12,7 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
+import { useTranslation } from "react-i18next";
 import ErrorComponent from "~/components/errorComponent";
 
 import { getDirectoryInfo, updateDirectory } from "~/model/directory";
@@ -67,6 +68,8 @@ export function ErrorBoundary() {
 export default function Index() {
   const { data } = useLoaderData<typeof loader>();
 
+  const { t } = useTranslation();
+
   return (
     <Form
       className="container-primary-bg flex-1 flex flex-col"
@@ -81,9 +84,9 @@ export default function Index() {
           className="data-input flex-1"
         />
         <div className="flex gap-2 p-2">
-          <input type="submit" value="Save" className="btn-primary" />
+          <input type="submit" value={t("save")} className="btn-primary" />
           <Link to="delete" className="btn-danger">
-            Delete
+            {t("delete")}
           </Link>
         </div>
       </div>

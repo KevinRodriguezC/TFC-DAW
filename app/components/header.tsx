@@ -45,12 +45,7 @@ export default function Header({
           ))}
           <div className="bg-slate-300 dark:bg-slate-900 w-[2px]"></div>
           {username && name ? (
-            <>
-              <Link to="/app" className="btn-primary h-10">
-                {t("workspaces")}
-              </Link>
-              <UserDropdown username={username} name={name} />
-            </>
+            <UserDropdown username={username} name={name} />
           ) : (
             <>
               <Link to="/login" className="btn-secondary h-10">

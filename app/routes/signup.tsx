@@ -5,6 +5,7 @@ import Header from "../components/header";
 
 import { createUser } from "~/model/user";
 import { Link } from "@remix-run/react";
+import { useTranslation } from "react-i18next";
 
 export const meta: MetaFunction = () => {
   return [
@@ -39,6 +40,8 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export default function Index() {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col dark:text-white min-h-screen">
       <div className="flex flex-1 flex-col dark:text-white container-secondary-bg justify-center items-center">
@@ -46,27 +49,27 @@ export default function Index() {
           method="post"
           className="container-primary-bg container-secondary-border border-2 rounded-md p-4 flex flex-col gap-2 min-w-96"
         >
-          <h1 className="text-3xl font-bold">Sign up</h1>
-          <label htmlFor="email">Email</label>
+          <h1 className="text-3xl font-bold">{t("create_an_account")}</h1>
+          <label htmlFor="email">{t("email")}</label>
           <input type="text" className="form-control" name="email" />
-          <label htmlFor="username">Username</label>
+          <label htmlFor="username">{t("username")}</label>
           <input type="text" className="form-control" name="username" />
-          <label htmlFor="name">Name</label>
+          <label htmlFor="name">{t("name")}</label>
           <input type="text" className="form-control" name="name" />
-          <label htmlFor="lastname">Lastname</label>
+          <label htmlFor="lastname">{t("lastname")}</label>
           <input type="text" className="form-control" name="lastname" />
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">{t("password")}</label>
           <input type="password" className="form-control" name="password" />
           <p>
-            Already have an account,{" "}
+            {t("already_have_an_account")},{" "}
             <Link to="/login" className="  text-blue-800 underline">
-              login
+              {t("log_in")}
             </Link>
             .
           </p>
           <input
             type="submit"
-            value="Create an account"
+            value={t("create_an_account")}
             className="btn-primary"
           />
         </form>

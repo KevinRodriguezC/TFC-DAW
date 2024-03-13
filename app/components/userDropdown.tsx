@@ -28,6 +28,13 @@ export function UserDropdown({
         </div>
         <Menu.Item>
           {({ active }) => (
+            <Link className="btn-header-secondary" to="/app">
+              {t("workspaces")}
+            </Link>
+          )}
+        </Menu.Item>
+        <Menu.Item>
+          {({ active }) => (
             <Link className="btn-header-secondary" to="/">
               {t("home")}
             </Link>

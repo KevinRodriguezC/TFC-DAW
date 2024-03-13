@@ -11,6 +11,7 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
+import { useTranslation } from "react-i18next";
 
 import { deleteDirectory, getDirectoryInfo } from "~/model/directory";
 
@@ -50,12 +51,18 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 export default function Index() {
   const { data } = useLoaderData<typeof loader>();
 
+  const { t } = useTranslation();
+
   return (
     <div className="container-primary-bg flex-1 flex flex-col">
       <div className="flex flex-1 flex-col items-center justify-center">
-        <p>Are you sure you want do delete {data.name}?</p>
+        <p>
+          {t("are_you_sure_you_want_to_delete_directory", {
+            directoryName: data.name,
+          })}
+        </p>
         <form method="POST">
-          <input type="submit" className="btn-danger" value="Yes"></input>
+          <input type="submit" className="btn-danger" value={t("yes")}></input>
         </form>
       </div>
     </div>

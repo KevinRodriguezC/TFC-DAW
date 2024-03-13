@@ -9,6 +9,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { getSession, commitSession } from "../sessions";
 
 import { getUserByUsername } from "~/model/user";
+import { useTranslation } from "react-i18next";
 
 export const meta: MetaFunction = () => {
   return [
@@ -74,6 +75,8 @@ export async function action({ request }: ActionFunctionArgs) {
 export default function Login() {
   const { error } = useLoaderData<typeof loader>();
 
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col dark:text-white min-h-screen bg-slate-200">
       <div className="flex flex-col dark:text-white flex-1 container-secondary-bg justify-center items-center">
@@ -81,19 +84,19 @@ export default function Login() {
           className="container-primary-bg container-secondary-border border-2 rounded-md p-4 flex flex-col gap-4 min-w-96"
           method="POST"
         >
-          <h1 className="text-3xl font-bold">Log in</h1>
-          <label htmlFor="email">Email</label>
+          <h1 className="text-3xl font-bold">{t("log_in")}</h1>
+          <label htmlFor="email">{t("username")}</label>
           <input type="text" className="form-control" name="email" />
-          <label htmlFor="email">Password</label>
+          <label htmlFor="email">{t("password")}</label>
           <input type="password" className="form-control" name="password" />
           <p>
-            Don't have an account,{" "}
+            {t("dont_have_an_account")},{" "}
             <Link to="/signup" className="  text-blue-800 underline">
-              create an accont
+              {t("create_an_account")}
             </Link>
             .
           </p>
-          <input type="submit" value="Login" className="btn-primary" />
+          <input type="submit" value={t("log_in")} className="btn-primary" />
         </form>
       </div>
     </div>

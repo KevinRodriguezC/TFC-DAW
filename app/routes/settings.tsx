@@ -13,6 +13,7 @@ import { Switch } from "@headlessui/react";
 import { Toogle } from "~/components/toggle";
 import { getUserInfo, updateUser } from "~/model/user";
 import { MainContainer } from "~/components/mainContainer";
+import { useTranslation } from "react-i18next";
 
 export const meta: MetaFunction = () => {
   return [
@@ -76,13 +77,15 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function Settings() {
   const { userInfo } = useLoaderData<typeof loader>();
 
+  const { t } = useTranslation();
+
   return (
     <MainContainer>
       <Header username={userInfo.username} name={userInfo.name} />
       <div className="xl:mx-auto xl:w-[1020px] flex flex-col gap-4 m-4 flex-1">
         <form method="post" className="flex flex-col gap-2 p-2">
-          <h2 className="text-2xl">Account settings</h2>
-          <label htmlFor="name">Name</label>
+          <h2 className="text-2xl">{t("account_settings")}</h2>
+          <label htmlFor="name">{t("name")}</label>
           <input
             type="text"
             name="name"
@@ -90,17 +93,17 @@ export default function Settings() {
             defaultValue={userInfo.name}
             required
           />
-          <label htmlFor="lastname">Lastname</label>
+          <label htmlFor="lastname">{t("lastname")}</label>
           <input
             type="text"
             name="lastname"
             className="form-control"
             defaultValue={userInfo.lastname}
           />
-          <label>Visibility</label>
+          <label>{t("visibility")}</label>
           <div className="flex p-2 bg-slate-100 rounded-md items-center pointer">
             <label className="flex-1" htmlFor="visibility">
-              Public profile
+              {t("public_profile")}
             </label>
             <Toogle
               inputName="visibility"

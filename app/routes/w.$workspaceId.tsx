@@ -69,19 +69,19 @@ export default function Index() {
               className="rounded-full bg-slate-300 dark:bg-slate-900 hover:bg-slate-400 dark:hover:bg-slate-950 flex items-center justify-center px-10 text-xl"
               to="/"
             >
-              Home
+              {t("home")}
             </Link>
             <Link
               className="rounded-full bg-slate-300 dark:bg-slate-900 hover:bg-slate-400 dark:hover:bg-slate-950 flex items-center justify-center px-10 text-xl"
               to="/"
             >
-              Home
+              {t("home")}
             </Link>
             <Link
               className="rounded-full bg-slate-300 dark:bg-slate-900 hover:bg-slate-400 dark:hover:bg-slate-950 flex items-center justify-center px-10 text-xl"
               to="/"
             >
-              Home
+              {t("home")}
             </Link>
           </div>
           <div className="flex gap-2">
@@ -147,7 +147,7 @@ export default function Index() {
               </svg>
             </div>
             <h3 className="text-2xl self-center font-bold">
-              {t("Workspaces")}
+              {t("workspaces")}
             </h3>
           </div>
           <ul className="flex flex-col gap-2">
@@ -172,10 +172,10 @@ export default function Index() {
                     </NavLink>
                   </li>
                 ))
-              : t("no_directorioes")}
+              : t("no_directories")}
           </ul>
           <Link to="new" className="btn-primary">
-            New
+            {t("new_directory")}
           </Link>
         </div>
         <Outlet />

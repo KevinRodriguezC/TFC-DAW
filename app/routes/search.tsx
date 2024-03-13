@@ -1,6 +1,7 @@
 import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
+import { useTranslation } from "react-i18next";
 import Header from "~/components/header";
 import { MainContainer } from "~/components/mainContainer";
 import { UserCardInfo } from "~/components/userCardInfo";
@@ -29,11 +30,13 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function Index() {
   let { usersSearch, q, userInfo } = useLoaderData<typeof loader>();
 
+  const { t } = useTranslation();
+
   return (
     <MainContainer>
       <Header username={userInfo.username} name={userInfo.name} />
       <div className="xl:mx-auto xl:w-[1020px] flex flex-col gap-4 m-4 flex-1">
-        <h2 className="text-xl">Searchs for the term "{q}"</h2>
+        <h2 className="text-xl">{t("results_for_the_term", { term: q })}</h2>
         {usersSearch.length ? (
           usersSearch.map((userSearch: any) => (
             <UserCardInfo
@@ -42,7 +45,7 @@ export default function Index() {
             />
           ))
         ) : (
-          <p>No results</p>
+          <p>{t("no_results")}</p>
         )}
       </div>
     </MainContainer>
