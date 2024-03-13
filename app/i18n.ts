@@ -47,6 +47,8 @@ i18next
           account_settings: "Account settings",
           visibility: "Visibility",
           public_profile: "Public profile",
+          participants: "Participants",
+          manage_invitations: "Manage invitations",
         },
       },
       es: {
@@ -87,6 +89,8 @@ i18next
           account_settings: "Configuración de la cuenta",
           visibility: "Visibilidad",
           public_profile: "Perfil público",
+          participants: "Participantes",
+          manage_invitations: "Gestionar invitaciones",
         },
       },
     },

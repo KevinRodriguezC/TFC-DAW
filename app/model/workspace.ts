@@ -46,3 +46,16 @@ export async function createWorkspace(
     },
   });
 }
+
+export async function getWorkspaceUsers(workspaceId: number) {
+  return await prisma.userOnWorkspaces.findMany({
+    where: {
+      workspaceId: {
+        equals: workspaceId,
+      },
+    },
+    include: {
+      user: true,
+    },
+  });
+}

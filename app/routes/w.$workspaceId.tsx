@@ -2,13 +2,14 @@ import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Outlet, Link, NavLink, useLoaderData } from "@remix-run/react";
 
-import { getWorkspaceById } from "~/model/workspace";
+import { getWorkspaceById, getWorkspaceUsers } from "~/model/workspace";
 import { getDirectoriesByWorkspace } from "~/model/directory";
 import { UserDropdown } from "~/components/userDropdown";
 import { getUserInfo } from "~/model/user";
 import { getUserSession } from "~/getUserSession";
 import { getSession } from "~/sessions";
 import { useTranslation } from "react-i18next";
+import { UserCardInfo } from "~/components/userCardInfo";
 
 export const meta: MetaFunction = () => {
   return [
@@ -30,15 +31,21 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
     throw new Response("Workspace not found", { status: 404 });
   }
   const workspace = await getWorkspaceById(workspaceIdNumber);
-  if (!workspace) {
+  const workspaceUsers = await getWorkspaceUsers(workspaceIdNumber);
+  if (!workspace || !workspaceUsers) {
     throw new Response("Workspace not found", { status: 404 });
   }
+  let users = [];
+  for (let i = 0; i < workspaceUsers.length; i++) {
+    users.push(workspaceUsers[i].user);
+  }
   const directories = await getDirectoriesByWorkspace(+workspaceId);
-  return json({ userInfo, workspace, directories });
+  return json({ userInfo, workspace, directories, users });
 };
 
 export default function Index() {
-  const { userInfo, workspace, directories } = useLoaderData<typeof loader>();
+  const { userInfo, workspace, directories, users } =
+    useLoaderData<typeof loader>();
 
   const { t } = useTranslation();
 
@@ -179,7 +186,38 @@ export default function Index() {
           </Link>
         </div>
         <Outlet />
-        <div className="container-secondary-bg border-l-2 container-secondary-border p-2 w-96 flex flex-col gap-2"></div>
+        <div className="container-secondary-bg border-l-2 container-secondary-border p-2 w-96 flex flex-col gap-2">
+          <div className="flex gap-2 align-middle">
+            <div className="w-14 h-14 bg-blue-600 rounded-full flex  justify-center items-center text-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                fill="currentColor"
+                className="bi bi-people-fill"
+                viewBox="0 0 16 16"
+              >
+                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
+              </svg>
+            </div>
+            <h3 className="text-2xl self-center font-bold">
+              {t("participants")}
+            </h3>
+          </div>
+          {users.length ? (
+            users.map((workspaceUser: any) => (
+              <UserCardInfo
+                username={workspaceUser.username}
+                name={workspaceUser.name}
+              />
+            ))
+          ) : (
+            <></>
+          )}
+          <Link to="" className="btn-primary">
+            {t("manage_invitations")}
+          </Link>
+        </div>
       </div>
     </div>
   );
