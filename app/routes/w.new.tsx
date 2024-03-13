@@ -12,6 +12,7 @@ import { createWorkspace } from "~/model/workspace";
 
 import Header from "../components/header";
 import { useTranslation } from "react-i18next";
+import { getUserSession } from "~/getUserSession";
 
 export const meta: MetaFunction = () => {
   return [
@@ -42,19 +43,20 @@ export async function action({ params, request }: ActionFunctionArgs) {
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const session = await getSession(request.headers.get("Cookie"));
-  let userId = session.get("userId");
-  return json({ userId });
+  let { userInfo } = await getUserSession(
+    await getSession(request.headers.get("Cookie"))
+  );
+  return json({ userInfo });
 }
 
 export default function Index() {
-  const { userId } = useLoaderData<typeof loader>();
+  let { userInfo } = useLoaderData<typeof loader>();
 
   const { t } = useTranslation();
 
   return (
     <div className="flex-1 flex flex-col dark:text-white dark:bg-slate-700 min-h-screen">
-      <Header username={userId} />
+      <Header username={userInfo.username} name={userInfo.name}></Header>
       <div className="xl:mx-auto xl:w-[1020px] flex flex-col gap-4 m-4 flex-1">
         <form method="POST" className="flex flex-col gap-2">
           <label htmlFor="workspaceName">{t("name")}</label>
