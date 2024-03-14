@@ -16,8 +16,10 @@ import { useTranslation } from "react-i18next";
 import { deleteDirectory, getDirectoryInfo } from "~/model/directory";
 
 export const meta: MetaFunction = () => {
+  const { t } = useTranslation();
+
   return [
-    { title: "New Remix App" },
+    { title: t("delete_directory") + " | TFC App" },
     { name: "description", content: "Welcome to Remix!" },
   ];
 };

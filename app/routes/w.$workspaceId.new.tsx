@@ -10,8 +10,10 @@ import { MyRadioGroup } from "~/components/radioSelect";
 import { createDirectory } from "~/model/directory";
 
 export const meta: MetaFunction = () => {
+  const { t } = useTranslation();
+
   return [
-    { title: "New Remix App" },
+    { title: t("new_directory") + " | TFC App" },
     { name: "description", content: "Welcome to Remix!" },
   ];
 };

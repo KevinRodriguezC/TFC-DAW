@@ -13,8 +13,8 @@ import { useTranslation } from "react-i18next";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: "Log in | TFC App" },
+    { name: "description", content: "Log in page" },
   ];
 };
 
@@ -60,8 +60,6 @@ export async function action({ request }: ActionFunctionArgs) {
       },
     });
   }
-
-  console.log(user.id);
 
   session.set("userId", "" + user.id);
 

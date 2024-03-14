@@ -11,12 +11,14 @@ import { getSession } from "~/sessions";
 import { useTranslation } from "react-i18next";
 import { UserCardInfo } from "~/components/userCardInfo";
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: "App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
-};
+// export const meta: MetaFunction = () => {
+//   const { t } = useTranslation();
+
+//   return [
+//     { title: t("workspace") + " | TFC App" },
+//     { name: "description", content: "Workspace" },
+//   ];
+// };
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const { userInfo } = await getUserSession(

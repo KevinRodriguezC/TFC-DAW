@@ -9,10 +9,6 @@ export async function getUserSession(session: any) {
     if (!userQueryInfo) {
       throw new Response("Error", { status: 500 });
     }
-    console.log({
-      username: userQueryInfo.username,
-      name: userQueryInfo.name + " " + userQueryInfo.lastname,
-    });
     return {
       userId,
       userInfo: {

@@ -4,10 +4,13 @@ import { Link, useLoaderData } from "@remix-run/react";
 
 import { getWorkspacesByUser } from "~/model/workspace";
 import { getUserByUsername } from "~/model/user";
+import { useTranslation } from "react-i18next";
 
 export const meta: MetaFunction = () => {
+  const { t } = useTranslation();
+
   return [
-    { title: "New Remix App" },
+    { title: t("user_info") + " | TFC App" },
     { name: "description", content: "Welcome to Remix!" },
   ];
 };

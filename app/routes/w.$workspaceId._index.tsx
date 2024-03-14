@@ -1,8 +1,11 @@
 import type { MetaFunction } from "@remix-run/node";
+import { useTranslation } from "react-i18next";
 
 export const meta: MetaFunction = () => {
+  const { t } = useTranslation();
+
   return [
-    { title: "New Remix App" },
+    { title: t("workspace") + " | TFC App" },
     { name: "description", content: "Welcome to Remix!" },
   ];
 };

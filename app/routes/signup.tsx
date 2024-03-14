@@ -8,6 +8,8 @@ import { Link } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 
 export const meta: MetaFunction = () => {
+  const { t } = useTranslation();
+
   return [
     { title: "App" },
     { name: "description", content: "Welcome to Remix!" },

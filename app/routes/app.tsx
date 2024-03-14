@@ -12,9 +12,11 @@ import { MainContainer } from "~/components/mainContainer";
 import { useTranslation } from "react-i18next";
 
 export const meta: MetaFunction = () => {
+  const { t } = useTranslation();
+
   return [
-    { title: "App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: t("workspaces") + " | TFC App" },
+    { name: "description", content: "Workspaces" },
   ];
 };
 

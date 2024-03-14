@@ -11,8 +11,12 @@ import { searchUsers } from "~/model/search";
 import { getSession } from "~/sessions";
 
 export const meta: MetaFunction = () => {
+  // let { q } = useLoaderData<typeof loader>();
+
+  const { t } = useTranslation();
+
   return [
-    { title: "New Remix App" },
+    { title: t("search_results") + " | TFC App" },
     { name: "description", content: "Welcome to Remix!" },
   ];
 };

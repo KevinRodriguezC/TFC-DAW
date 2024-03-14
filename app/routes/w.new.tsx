@@ -15,8 +15,10 @@ import { useTranslation } from "react-i18next";
 import { getUserSession } from "~/getUserSession";
 
 export const meta: MetaFunction = () => {
+  const { t } = useTranslation();
+
   return [
-    { title: "App" },
+    { title: t("new_workspace") + " | TFC App" },
     { name: "description", content: "Welcome to Remix!" },
   ];
 };

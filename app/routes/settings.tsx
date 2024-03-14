@@ -22,8 +22,10 @@ const lngs = {
 };
 
 export const meta: MetaFunction = () => {
+  const { t } = useTranslation();
+
   return [
-    { title: "New Remix App" },
+    { title: t("settings") + " | TFC App" },
     { name: "description", content: "Welcome to Remix!" },
   ];
 };

@@ -18,8 +18,10 @@ import ErrorComponent from "~/components/errorComponent";
 import { getDirectoryInfo, updateDirectory } from "~/model/directory";
 
 export const meta: MetaFunction = () => {
+  const { t } = useTranslation();
+
   return [
-    { title: "New Remix App" },
+    { title: t("directory") + " | TFC App" },
     { name: "description", content: "Welcome to Remix!" },
   ];
 };
