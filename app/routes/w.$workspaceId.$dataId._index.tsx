@@ -83,7 +83,7 @@ export default function Index() {
           type="text"
           name="name"
           defaultValue={data.name}
-          className="data-input flex-1"
+          className="data-input text-xl font-bold flex-1"
         />
         <div className="flex gap-2 p-2">
           <input type="submit" value={t("save")} className="btn-primary" />
@@ -94,12 +94,9 @@ export default function Index() {
       </div>
       <textarea
         name="description"
-        className="data-input"
+        className="data-input flex-1 resize-none"
         defaultValue={data.description ? data.description : ""}
       ></textarea>
-      <div className="flex flex-1 flex-col items-center justify-center">
-        Lorem ipsum
-      </div>
     </Form>
   );
 }
