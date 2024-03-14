@@ -13,6 +13,7 @@ import {
   useRouteError,
 } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
+import { JSX } from "react/jsx-runtime";
 import ErrorComponent from "~/components/errorComponent";
 
 import { getDirectoryInfo, updateDirectory } from "~/model/directory";
@@ -72,6 +73,26 @@ export default function Index() {
 
   const { t } = useTranslation();
 
+  let saveIcon = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      className="bi bi-floppy-fill"
+      viewBox="0 0 16 16"
+    >
+      <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z" />
+      <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z" />
+    </svg>
+  );
+
+  function renderTosString(
+    saveIcon: JSX.Element
+  ): string | number | readonly string[] | undefined {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <Form
       className="container-primary-bg flex-1 flex flex-col"
@@ -88,7 +109,16 @@ export default function Index() {
         <div className="flex gap-2 p-2">
           <input type="submit" value={t("save")} className="btn-primary" />
           <Link to="delete" className="btn-danger">
-            {t("delete")}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-trash-fill"
+              viewBox="0 0 16 16"
+            >
+              <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+            </svg>
           </Link>
         </div>
       </div>

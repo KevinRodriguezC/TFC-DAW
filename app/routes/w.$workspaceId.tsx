@@ -59,7 +59,7 @@ export default function Index() {
       <div className="flex overflow-hidden">
         <div className="container-secondary-bg border-r-2 border-b-2 container-secondary-border p-2 w-80 flex justify-between items-center gap-2">
           <h2 className="font-bold text-xl">{workspace.name}</h2>
-          <button className="btn-icon">
+          <Link to="settings" className="btn-icon">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -70,28 +70,16 @@ export default function Index() {
             >
               <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
             </svg>
-          </button>
+          </Link>
         </div>
         <div className="container-secondary-bg border-b-2 container-secondary-border flex-1 p-2 flex gap-2 justify-between">
           <div className="flex gap-2 ">
-            <Link
+            {/* <Link
               className="rounded-full bg-slate-300 dark:bg-slate-900 hover:bg-slate-400 dark:hover:bg-slate-950 flex items-center justify-center px-10 text-xl"
               to="/"
             >
               {t("home")}
-            </Link>
-            <Link
-              className="rounded-full bg-slate-300 dark:bg-slate-900 hover:bg-slate-400 dark:hover:bg-slate-950 flex items-center justify-center px-10 text-xl"
-              to="/"
-            >
-              {t("home")}
-            </Link>
-            <Link
-              className="rounded-full bg-slate-300 dark:bg-slate-900 hover:bg-slate-400 dark:hover:bg-slate-950 flex items-center justify-center px-10 text-xl"
-              to="/"
-            >
-              {t("home")}
-            </Link>
+            </Link> */}
           </div>
           <div className="flex gap-2">
             <button className="bg-blue-600 btn-user-icon">B</button>
@@ -142,11 +130,11 @@ export default function Index() {
       <div className="flex flex-1 overflow-hidden">
         <div className="container-secondary-bg border-r-2 container-secondary-border p-2 w-80 flex flex-col gap-2 overflow-y-auto">
           <div className="flex gap-2 align-middle">
-            <div className="w-14 h-14 bg-green-600 rounded-full flex  justify-center items-center text-white">
+            <div className="rounded-md p-2 flex bg-slate-200 dark:bg-slate-900 justify-center items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
+                width="16"
+                height="16"
                 fill="currentColor"
                 className="bi bi-window-sidebar"
                 viewBox="0 0 16 16"
@@ -155,20 +143,20 @@ export default function Index() {
                 <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v2H1V3a1 1 0 0 1 1-1zM1 13V6h4v8H2a1 1 0 0 1-1-1m5 1V6h9v7a1 1 0 0 1-1 1z" />
               </svg>
             </div>
-            <h3 className="text-2xl self-center font-bold">
-              {t("workspaces")}
+            <h3 className="text-md self-center font-bold">
+              {t("directories")}
             </h3>
           </div>
-          <ul className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-2 flex-1">
             {directories.length
               ? directories.map((directory: any) => (
                   <li>
                     <NavLink className="navbarItem" to={"" + directory.id}>
-                      <div className="p-2 flex gap-2 text-xl font-bold items-center">
+                      <div className="flex gap-2 p-2 bg-blue-600 text-white rounded-md">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          width="32"
-                          height="32"
+                          width="16"
+                          height="16"
                           fill="currentColor"
                           className="bi bi-calendar-week"
                           viewBox="0 0 16 16"
@@ -176,25 +164,38 @@ export default function Index() {
                           <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z" />
                           <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
                         </svg>
-                        <div>{directory.name}</div>
                       </div>
+                      <div>{directory.name}</div>
                     </NavLink>
                   </li>
                 ))
               : t("no_directories")}
           </ul>
-          <Link to="new" className="btn-primary">
+          <Link to="new" className="btn-primary flex gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-plus-lg"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fillRule="evenodd"
+                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
+              />
+            </svg>
             {t("new_directory")}
           </Link>
         </div>
         <Outlet />
         <div className="container-secondary-bg border-l-2 container-secondary-border p-2 w-96 flex flex-col gap-2">
           <div className="flex gap-2 align-middle">
-            <div className="w-14 h-14 bg-blue-600 rounded-full flex  justify-center items-center text-white">
+            <div className="rounded-md p-2 flex bg-slate-200 dark:bg-slate-900 justify-center items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
+                width="16"
+                height="16"
                 fill="currentColor"
                 className="bi bi-people-fill"
                 viewBox="0 0 16 16"
@@ -202,21 +203,37 @@ export default function Index() {
                 <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
               </svg>
             </div>
-            <h3 className="text-2xl self-center font-bold">
+            <h3 className="text-md self-center font-bold">
               {t("participants")}
             </h3>
           </div>
-          {users.length ? (
-            users.map((workspaceUser: any) => (
-              <UserCardInfo
-                username={workspaceUser.username}
-                name={workspaceUser.name}
-              />
-            ))
-          ) : (
-            <></>
-          )}
+          <div className="flex flex-col gap-2 flex-1">
+            {users.length ? (
+              users.map((workspaceUser: any) => (
+                <Link
+                  to={"u/" + workspaceUser.username}
+                  className="flex p-2 gap-2 bg-slate-200 dark:bg-slate-900 hover:bg-slate-300 dark:hover:bg-slate-950 rounded-full cursor-pointer"
+                >
+                  <div className="bg-blue-600 rounded-full size-8"></div>
+                  {workspaceUser.username}
+                  {workspaceUser.name}
+                </Link>
+              ))
+            ) : (
+              <></>
+            )}
+          </div>
           <Link to="" className="btn-primary">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-person-fill-gear"
+              viewBox="0 0 16 16"
+            >
+              <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
+            </svg>
             {t("manage_invitations")}
           </Link>
         </div>

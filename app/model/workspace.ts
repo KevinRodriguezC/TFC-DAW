@@ -47,6 +47,22 @@ export async function createWorkspace(
   });
 }
 
+export async function updateWorkspace(
+  workspaceId: number,
+  workspaceName: string,
+  workspaceDescription = ""
+) {
+  return await prisma.workspace.update({
+    where: {
+      id: workspaceId,
+    },
+    data: {
+      name: workspaceName,
+      description: workspaceDescription,
+    },
+  });
+}
+
 export async function getWorkspaceUsers(workspaceId: number) {
   return await prisma.userOnWorkspaces.findMany({
     where: {
