@@ -1,38 +1,32 @@
-# Welcome to Remix!
+# TFC
 
-- [Remix Docs](https://remix.run/docs)
+## Introducción
 
-## Development
+Esto es el proyecto de final de grado, consiste en una aplicación de gestión de notas, tareas y calendario enfocada en la facilidad de uso.
 
-From your terminal:
+## Tecnologías
 
-```sh
-npm run dev
-```
+La aplicación usa:
 
-This starts your app in development mode, rebuilding assets on file changes.
+### Backend:
 
-## Deployment
+NodeJS con Remix y MySQL
 
-First, build your app for production:
+### Fronted:
 
-```sh
-npm run build
-```
+React con TailwindCSS
 
-Then run the app in production mode:
+## Instalación y ejecución del proyecto
 
-```sh
-npm start
-```
+### Para ejecutar el proyecto:
 
-Now you'll need to pick a host to deploy it to.
+- Descarga el proyecto.
+- Instalar NodeJS
+- Ejecutar `npm install` para instalar todas las dependencias.
+- Ejecutar `npm run dev` para ejecutar el proyecto.
 
-### DIY
+### Para instalar la base de datos
 
-If you're familiar with deploying node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `remix build`
-
-- `build/`
-- `public/build/`
+- Descarga e instala XAMPP
+- Introduce el nombre de usuario y la contraseña de la base de datos en prisma/schema.prisma en la opción de datasource url.
+- Migra la base de datos de prisma con: `npx prisma migrate dev --name init`
