@@ -2,6 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+/* * {
+  scrollbar-color: #94a3b8 #1e293b;
+} */
+/* width */
+::-webkit-scrollbar {
+  width: 16px;
+  @apply bg-slate-700;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  @apply bg-slate-700;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 border-4 border-solid border-slate-700 rounded-full cursor-auto;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400 border-2;
+}
+
+::-webkit-scrollbar-thumb:active {
+  @apply bg-blue-300;
+}
+
 @layer components {
   .btn-primary {
     @apply bg-blue-600
