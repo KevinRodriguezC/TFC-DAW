@@ -55,6 +55,7 @@ i18next
           workspace: "Workspace",
           directory: "Directory",
           delete_directory: "Delete directory",
+          you: "You",
         },
       },
       es: {
@@ -103,6 +104,7 @@ i18next
           workspace: "Espacio de trabajo",
           directory: "Directorio",
           delete_directory: "Borrar directorio",
+          you: "Tu",
         },
       },
     },

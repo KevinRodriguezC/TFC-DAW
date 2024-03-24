@@ -39,7 +39,11 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   }
   let users = [];
   for (let i = 0; i < workspaceUsers.length; i++) {
-    users.push(workspaceUsers[i].user);
+    users.push({
+      username: workspaceUsers[i].user.username,
+      name: workspaceUsers[i].user.name,
+      lastname: workspaceUsers[i].user.lastname,
+    });
   }
   const directories = await getDirectoriesByWorkspace(+workspaceId);
   return json({ userInfo, workspace, directories, users });
@@ -217,6 +221,13 @@ export default function Index() {
                   <div className="bg-blue-600 rounded-full size-8"></div>
                   {workspaceUser.username}
                   {workspaceUser.name}
+                  {userInfo.username == workspaceUser.username ? (
+                    <div className="bg-blue-600 text-white rounded-full px-3 self-center">
+                      {t("you")}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                 </NavLink>
               ))
             ) : (
