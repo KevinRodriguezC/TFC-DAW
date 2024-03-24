@@ -250,4 +250,12 @@
       border-transparent
       focus:border-blue-700;
   }
+
+  .participantLink {
+    @apply flex p-2 gap-2 bg-slate-200 dark:bg-slate-900 hover:bg-slate-300 dark:hover:bg-slate-950 rounded-full cursor-pointer;
+  }
+
+  .participantLink.active {
+    @apply outline-blue-600 outline outline-4;
+  }
 }

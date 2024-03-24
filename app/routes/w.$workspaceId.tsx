@@ -210,14 +210,14 @@ export default function Index() {
           <div className="flex flex-col gap-2 flex-1">
             {users.length ? (
               users.map((workspaceUser: any) => (
-                <Link
+                <NavLink
                   to={"u/" + workspaceUser.username}
-                  className="flex p-2 gap-2 bg-slate-200 dark:bg-slate-900 hover:bg-slate-300 dark:hover:bg-slate-950 rounded-full cursor-pointer"
+                  className="participantLink"
                 >
                   <div className="bg-blue-600 rounded-full size-8"></div>
                   {workspaceUser.username}
                   {workspaceUser.name}
-                </Link>
+                </NavLink>
               ))
             ) : (
               <></>
