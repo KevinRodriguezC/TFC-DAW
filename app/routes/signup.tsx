@@ -6,6 +6,7 @@ import Header from "../components/header";
 import { createUser } from "~/model/user";
 import { Link } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
+import { MainContainer } from "~/components/mainContainer";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
@@ -45,7 +46,7 @@ export default function Index() {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col dark:text-white min-h-screen">
+    <MainContainer>
       <div className="flex flex-1 flex-col dark:text-white container-secondary-bg justify-center items-center">
         <form
           method="post"
@@ -76,6 +77,6 @@ export default function Index() {
           />
         </form>
       </div>
-    </div>
+    </MainContainer>
   );
 }
