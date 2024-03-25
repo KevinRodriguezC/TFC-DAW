@@ -1,13 +1,11 @@
 import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Link, useLoaderData, useRouteError } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 
 import { getSession } from "../sessions";
 
 import Header from "../components/header";
 import { ButtonLink } from "~/components/buttonLink";
-import ErrorPage from "~/components/errorPage";
-import { getUserInfo } from "~/model/user";
 import { MainContainer } from "~/components/mainContainer";
 import { getUserSession } from "~/getUserSession";
 import { useTranslation } from "react-i18next";
@@ -28,10 +26,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function Index() {
   const { userInfo } = useLoaderData<typeof loader>();
-
   const { t } = useTranslation();
 
-  // const t = useTranslation();
   return (
     <MainContainer>
       <Header username={userInfo.username} name={userInfo.name} />
@@ -47,10 +43,6 @@ export default function Index() {
             Ipsam voluptatem officiis in quam cumque, recusandae mollitia,
             repellendus corporis ad, rerum aspernatur eius praesentium eaque!
           </p>
-          {/* <Link to="signup" className="btn-primary self-start">
-            {" "}
-            Create an account
-          </Link> */}
           <ButtonLink to="signup">{t("create_an_account")}</ButtonLink>
         </div>
       </div>
