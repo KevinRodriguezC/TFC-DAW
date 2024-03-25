@@ -13,6 +13,7 @@ import { createWorkspace } from "~/model/workspace";
 import Header from "../components/header";
 import { useTranslation } from "react-i18next";
 import { getUserSession } from "~/getUserSession";
+import { MainContainer } from "~/components/mainContainer";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
@@ -51,13 +52,13 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return json({ userInfo });
 }
 
-export default function Index() {
+export default function NewWorkspace() {
   let { userInfo } = useLoaderData<typeof loader>();
 
   const { t } = useTranslation();
 
   return (
-    <div className="flex-1 flex flex-col dark:text-white dark:bg-slate-700 min-h-screen">
+    <MainContainer>
       <Header username={userInfo.username} name={userInfo.name}></Header>
       <div className="xl:mx-auto xl:w-[1020px] flex flex-col gap-4 m-4 flex-1">
         <form method="POST" className="flex flex-col gap-2">
@@ -80,6 +81,6 @@ export default function Index() {
           ></input>
         </form>
       </div>
-    </div>
+    </MainContainer>
   );
 }
