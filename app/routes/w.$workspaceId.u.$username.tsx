@@ -4,6 +4,7 @@ import { useLoaderData } from "@remix-run/react";
 
 import { getUserByUsername } from "~/model/user";
 import { useTranslation } from "react-i18next";
+import { WorkspaceContentContainer } from "~/components/workspaceContentContainer";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
@@ -28,9 +29,11 @@ export default function Participant() {
 
   return (
     <div className="container-primary-bg flex-1 flex flex-col">
-      <h2>
-        {user.name} {user.lastname}
-      </h2>
+      <WorkspaceContentContainer>
+        <h2>
+          {user.name} {user.lastname}
+        </h2>
+      </WorkspaceContentContainer>
     </div>
   );
 }
