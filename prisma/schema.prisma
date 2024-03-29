@@ -32,13 +32,14 @@ model UserOnWorkspaces {
 }
 
 model Workspace {
-  id          Int                @id @default(autoincrement())
-  createdAt   DateTime           @default(now())
-  name        String
-  description String?
-  directories Directory[]
-  users       UserOnWorkspaces[]
-  visibility  Int
+  id              Int                @id @default(autoincrement())
+  createdAt       DateTime           @default(now())
+  name            String
+  description     String?
+  directories     Directory[]
+  users           UserOnWorkspaces[]
+  visibility      Int
+  InvitationCodes InvitationCodes[]
 }
 
 model Directory {
@@ -69,4 +70,12 @@ model Attribute {
   dataId    Int
   type      Int
   value     String?
+}
+
+model InvitationCodes {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId Int
+  code        String
 }
