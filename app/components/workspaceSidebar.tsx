@@ -25,7 +25,7 @@ export function WorkspaceSidebar({ directories }: { directories: any }) {
       <ul className="flex flex-col gap-2 flex-1">
         {directories.length
           ? directories.map((directory: any) => (
-              <li>
+              <li key={directory.id}>
                 <NavLink className="navbarItem" to={"" + directory.id}>
                   <div className="flex gap-2 p-2 bg-blue-600 text-white rounded-md">
                     <svg
