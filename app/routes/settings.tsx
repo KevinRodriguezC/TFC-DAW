@@ -109,7 +109,7 @@ export default function Settings() {
             defaultValue={userInfo.lastname}
           />
           <label>{t("visibility")}</label>
-          <div className="flex p-2 bg-slate-100 rounded-md items-center pointer">
+          <div className="flex p-2 bg-slate-100 dark:bg-slate-800 rounded-md items-center pointer">
             <label className="flex-1" htmlFor="visibility">
               {t("public_profile")}
             </label>

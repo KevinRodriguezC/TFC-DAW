@@ -16,7 +16,7 @@ export function Toogle({
       defaultChecked={defaultValue}
       onChange={setEnabled}
       className={`${
-        enabled ? "bg-blue-600" : "bg-slate-300"
+        enabled ? "bg-blue-600" : "bg-slate-300 dark:bg-slate-700"
       } relative inline-flex h-6 w-11 items-center rounded-full transition`}
       name={inputName}
     >
