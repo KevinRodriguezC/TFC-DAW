@@ -79,3 +79,14 @@ model InvitationCodes {
   workspaceId Int
   code        String
 }
+
+model Events {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  type        Int
+  row         Int
+  workspaceId Int?
+  userId      Int
+  name        String?
+  value       String?
+}

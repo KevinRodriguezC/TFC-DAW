@@ -15,6 +15,7 @@ import { WorkspaceSidebar } from "~/components/workspaceSidebar";
 import { WorkspaceInfobar } from "~/components/workspaceInfobar";
 import { useState } from "react";
 import { HistoryInfobar } from "~/components/historyInfobar";
+import { getEventsByWorkspaceId } from "~/model/events";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const { userInfo } = await getUserSession(
@@ -27,6 +28,7 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const workspaceIdNumber = +workspaceId;
   const workspace = await getWorkspaceById(workspaceIdNumber);
   const workspaceUsers = await getWorkspaceUsers(workspaceIdNumber);
+  const workspaceEvents = await getEventsByWorkspaceId(workspaceIdNumber);
   if (!workspace || !workspaceUsers) {
     throw new Response("Workspace not found", { status: 404 });
   }
@@ -39,11 +41,11 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
     });
   }
   const directories = await getDirectoriesByWorkspace(+workspaceId);
-  return json({ userInfo, workspace, directories, users });
+  return json({ userInfo, workspace, directories, users, workspaceEvents });
 };
 
 export default function Index() {
-  const { userInfo, workspace, directories, users } =
+  const { userInfo, workspace, directories, users, workspaceEvents } =
     useLoaderData<typeof loader>();
   const { t } = useTranslation();
   const [rightBarMenu, setRightBarMenu] = useState(0);
@@ -135,7 +137,7 @@ export default function Index() {
         ) : rightBarMenu == 1 ? (
           <WorkspaceInfobar userInfo={userInfo} users={users} />
         ) : (
-          <HistoryInfobar history={null} />
+          <HistoryInfobar events={workspaceEvents} />
         )}
       </CenterContainer>
     </div>

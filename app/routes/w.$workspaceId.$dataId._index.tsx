@@ -15,8 +15,11 @@ import {
 import { useTranslation } from "react-i18next";
 import { JSX } from "react/jsx-runtime";
 import ErrorComponent from "~/components/errorComponent";
+import { getUserSession } from "~/getUserSession";
 
 import { getDirectoryInfo, updateDirectory } from "~/model/directory";
+import { addEvent } from "~/model/events";
+import { getSession } from "~/sessions";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
@@ -44,20 +47,33 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 };
 
 export async function action({ params, request }: ActionFunctionArgs) {
+  const userId = (await getSession(request.headers.get("Cookie"))).get(
+    "userId"
+  );
   const dataId = params.dataId;
+  const workspaceId = params.workspaceId;
   const formData = await request.formData();
   const name = formData.get("name");
   const description = formData.get("description");
   if (
     !dataId ||
     !+dataId ||
+    !workspaceId ||
+    !+workspaceId ||
     !name ||
     typeof name != "string" ||
     typeof description != "string"
   ) {
     throw new Response("Error", { status: 400 });
   }
+  let userIdNumber;
+  if (!userId || !+userId) {
+    userIdNumber = null;
+  } else {
+    userIdNumber = +userId;
+  }
   updateDirectory(+dataId, name, description);
+  addEvent(0, +dataId, +workspaceId, userIdNumber, name, description);
 
   return redirect("");
 }

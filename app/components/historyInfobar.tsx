@@ -1,6 +1,7 @@
+import { NavLink } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 
-export function HistoryInfobar({ history }: { history: any }) {
+export function HistoryInfobar({ events }: { events: any }) {
   const { t } = useTranslation();
 
   return (
@@ -23,28 +24,19 @@ export function HistoryInfobar({ history }: { history: any }) {
         <h3 className="text-md self-center font-bold">{t("edit_history")}</h3>
       </div>
       <div className="flex flex-col gap-2 flex-1">
-        {/* {users.length ? (
-          users.map((workspaceUser: any) => (
-            <NavLink
-              key={workspaceUser.id}
-              to={"u/" + workspaceUser.username}
-              className="participantLink"
+        {events && events.length ? (
+          events.map((event: any) => (
+            <div
+              key={event.id}
+              className="p-2 bg-slate-200 dark:bg-slate-800 rounded-lg flex flex-col gap-2"
             >
-              <div className="bg-blue-600 rounded-full size-8"></div>
-              {workspaceUser.username}
-              {workspaceUser.name}
-              {userInfo.username == workspaceUser.username ? (
-                <div className="bg-blue-600 text-white rounded-full px-3 self-center">
-                  {t("you")}
-                </div>
-              ) : (
-                <></>
-              )}
-            </NavLink>
+              <h4 className="text-xl">{event.name}</h4>
+              {event.value}
+            </div>
           ))
         ) : (
           <></>
-        )} */}
+        )}
       </div>
     </div>
   );
