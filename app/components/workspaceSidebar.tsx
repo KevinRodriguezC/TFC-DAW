@@ -19,7 +19,7 @@ export function WorkspaceSidebar({ directories }: { directories: any }) {
     <div
       className={
         (leftBarMenu == 1 ? "w-80 " : "") +
-        "container-secondary-bg border-r-2 container-secondary-border p-2 flex flex-col gap-2 overflow-y-auto"
+        "container-secondary-bg border-r-2 container-secondary-border p-2 flex flex-col gap-2 overflow-y-auto flex-shrink-0"
       }
     >
       <div className="flex gap-2 align-middle">
