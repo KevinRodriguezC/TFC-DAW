@@ -31,7 +31,7 @@ export function WorkspaceInfobar({
         {users.length ? (
           users.map((workspaceUser: any) => (
             <NavLink
-              key={workspaceUser.id}
+              key={workspaceUser.name}
               to={"u/" + workspaceUser.username}
               className="participantLink"
             >
