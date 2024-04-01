@@ -13,6 +13,8 @@ import { TopContainer } from "~/components/topContainer";
 import { CenterContainer } from "~/components/centerContainer";
 import { WorkspaceSidebar } from "~/components/workspaceSidebar";
 import { WorkspaceInfobar } from "~/components/workspaceInfobar";
+import { useState } from "react";
+import { HistoryInfobar } from "~/components/historyInfobar";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const { userInfo } = await getUserSession(
@@ -44,6 +46,14 @@ export default function Index() {
   const { userInfo, workspace, directories, users } =
     useLoaderData<typeof loader>();
   const { t } = useTranslation();
+  const [rightBarMenu, setRightBarMenu] = useState(0);
+  const setRightBarMenuToggle = (newState: number) => {
+    if (rightBarMenu == newState) {
+      setRightBarMenuToggle(0);
+    } else {
+      setRightBarMenu(newState);
+    }
+  };
 
   return (
     <MainContainer>
@@ -69,7 +79,10 @@ export default function Index() {
             <button className="bg-blue-600 btn-user-icon">B</button>
             <button className="bg-red-600 btn-user-icon">C</button>
             <span className="w-[2px] bg-slate-300 dark:bg-slate-900"></span>
-            <button className="btn-icon">
+            <button
+              className="btn-icon"
+              onClick={() => setRightBarMenuToggle(1)}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -81,7 +94,10 @@ export default function Index() {
                 <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
               </svg>
             </button>
-            <button className="btn-icon">
+            <button
+              className="btn-icon"
+              onClick={() => setRightBarMenuToggle(2)}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -114,7 +130,13 @@ export default function Index() {
       <CenterContainer>
         <WorkspaceSidebar directories={directories} />
         <Outlet />
-        <WorkspaceInfobar userInfo={userInfo} users={users} />
+        {rightBarMenu == 0 ? (
+          <></>
+        ) : rightBarMenu == 1 ? (
+          <WorkspaceInfobar userInfo={userInfo} users={users} />
+        ) : (
+          <HistoryInfobar history={null} />
+        )}
       </CenterContainer>
     </MainContainer>
   );
