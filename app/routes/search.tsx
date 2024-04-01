@@ -44,6 +44,7 @@ export default function Index() {
         {usersSearch.length ? (
           usersSearch.map((userSearch: any) => (
             <UserCardInfo
+              key={userSearch.username}
               name={userSearch.name + " " + userSearch.lastname}
               username={userSearch.username}
             />

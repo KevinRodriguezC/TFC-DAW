@@ -43,6 +43,7 @@ export default function Index() {
       {workspaces ? (
         workspaces.map((workspace: any) => (
           <Link
+            key={workspace.id}
             to={"/w/" + workspace.id}
             className="bg-slate-100 dark:bg-slate-800 py-2 px-4 flex flex-col gap-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-900 active:bg-slate-300 dark:active:bg-slate-950"
           >
