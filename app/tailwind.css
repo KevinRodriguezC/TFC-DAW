@@ -8,27 +8,35 @@
 /* width */
 ::-webkit-scrollbar {
   width: 16px;
-  @apply bg-slate-700;
+  @apply bg-white dark:bg-slate-700;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
-  @apply bg-slate-700;
+  @apply bg-white dark:bg-slate-700;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-300 border-4 border-solid border-slate-700 rounded-full cursor-auto;
+  @apply bg-slate-300 border-4 border-solid border-white dark:border-slate-700 rounded-full cursor-auto;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-slate-400 border-2;
+  @apply bg-slate-500 dark:bg-slate-400 border-2;
 }
 
 ::-webkit-scrollbar-thumb:active {
-  @apply bg-blue-300;
+  @apply bg-blue-600 dark:bg-blue-300;
+}
+
+.container-secondary-bg::-webkit-scrollbar-thumb {
+  @apply border-slate-100 dark:border-slate-800;
+}
+
+.container-secondary-bg::-webkit-scrollbar-track {
+  @apply bg-slate-100 dark:bg-slate-800;
 }
 
 @layer components {

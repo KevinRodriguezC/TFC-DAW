@@ -4,7 +4,7 @@ export function HistoryInfobar({ history }: { history: any }) {
   const { t } = useTranslation();
 
   return (
-    <div className="container-secondary-bg border-l-2 container-secondary-border p-2 w-96 flex flex-col gap-2">
+    <div className="container-secondary-bg border-l-2 container-secondary-border p-2 w-96 flex flex-col gap-2 overflow-auto">
       <div className="flex gap-2 align-middle">
         <div className="rounded-md p-2 flex bg-slate-200 dark:bg-slate-900 justify-center items-center">
           <svg

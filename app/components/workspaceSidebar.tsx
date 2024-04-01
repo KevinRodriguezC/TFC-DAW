@@ -96,7 +96,7 @@ export function WorkspaceSidebar({ directories }: { directories: any }) {
                         <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
                       </svg>
                     </div>
-                    <div>{directory.name}</div>
+                    <div className=" self-center">{directory.name}</div>
                   </NavLink>
                 ) : (
                   <NavLink className="navbarItemSmall" to={"" + directory.id}>
@@ -123,7 +123,7 @@ export function WorkspaceSidebar({ directories }: { directories: any }) {
         to="new"
         className={
           (leftBarMenu == 0 ? "btn-primary-small-square " : "btn-primary ") +
-          "flex gap-2"
+          "flex gap-2 flex-shrink-0"
         }
       >
         <svg
