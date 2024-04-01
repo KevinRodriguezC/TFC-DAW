@@ -58,6 +58,7 @@ i18next
           delete_directory: "Delete directory",
           you: "You",
           language: "Language",
+          new: "New",
         },
       },
       es: {
@@ -109,6 +110,7 @@ i18next
           delete_directory: "Borrar directorio",
           you: "Tu",
           language: "Idioma",
+          new: "Nueva",
         },
       },
     },
