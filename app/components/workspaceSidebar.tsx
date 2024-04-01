@@ -24,8 +24,8 @@ export function WorkspaceSidebar({ directories }: { directories: any }) {
     >
       <div className="flex gap-2 align-middle">
         {leftBarMenu == 1 ? (
-          <div className="flex gap-2 flex-1">
-            <div className="rounded-md p-2 flex bg-slate-200 dark:bg-slate-900 justify-center items-center ">
+          <div className="flex gap-2 flex-1 self-center">
+            <div className="rounded-md p-2 flex bg-slate-200 dark:bg-slate-900 justify-center items-center w-8 h-8">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
