@@ -61,6 +61,7 @@ i18next
           new: "New",
           there_is_not_invitation_codes: "There is not invitation codes",
           new_invitation_code: "New invitation code",
+          edit_history: "Edit history",
         },
       },
       es: {
@@ -115,6 +116,7 @@ i18next
           new: "Nueva",
           there_is_not_invitation_codes: "No hay códigos de invitación",
           new_invitation_code: "Nuevo código de invitación",
+          edit_history: "Historial de edición",
         },
       },
     },

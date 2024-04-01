@@ -20,7 +20,7 @@ export function HistoryInfobar({ history }: { history: any }) {
             <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5" />
           </svg>
         </div>
-        <h3 className="text-md self-center font-bold">{t("history")}</h3>
+        <h3 className="text-md self-center font-bold">{t("edit_history")}</h3>
       </div>
       <div className="flex flex-col gap-2 flex-1">
         {/* {users.length ? (
