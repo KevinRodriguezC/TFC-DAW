@@ -28,13 +28,6 @@ export function UserDropdown({
         </div>
         <Menu.Item>
           {({ active }) => (
-            <Link className="btn-header-secondary" to="/app">
-              {t("workspaces")}
-            </Link>
-          )}
-        </Menu.Item>
-        <Menu.Item>
-          {({ active }) => (
             <Link className="btn-header-secondary" to="/">
               {t("home")}
             </Link>
@@ -42,8 +35,8 @@ export function UserDropdown({
         </Menu.Item>
         <Menu.Item>
           {({ active }) => (
-            <Link className="btn-header-secondary" to="/settings">
-              {t("manage_account")}
+            <Link className="btn-header-secondary" to="/app">
+              {t("workspaces")}
             </Link>
           )}
         </Menu.Item>
@@ -51,6 +44,13 @@ export function UserDropdown({
           {({ active }) => (
             <Link className="btn-header-secondary" to="/u">
               {t("view_profile")}
+            </Link>
+          )}
+        </Menu.Item>
+        <Menu.Item>
+          {({ active }) => (
+            <Link className="btn-header-secondary" to="/settings">
+              {t("manage_account")}
             </Link>
           )}
         </Menu.Item>
