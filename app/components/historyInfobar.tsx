@@ -4,6 +4,16 @@ import { useTranslation } from "react-i18next";
 export function HistoryInfobar({ events }: { events: any }) {
   const { t } = useTranslation();
 
+  const formatDate = (date: any) => {
+    const actualDate = new Date(Date.now());
+    if (actualDate.getDay() < date.getDay()) {
+      return "Yesterday";
+    } else if (actualDate.getDay() < date.getDay()) {
+    } else {
+      return `${date.getHours()}:${date.getMinutes()}`;
+    }
+  };
+
   return (
     <div className="container-secondary-bg border-l-2 container-secondary-border p-2 w-96 flex flex-col gap-2 overflow-auto">
       <div className="flex gap-2 align-middle">
@@ -45,7 +55,7 @@ export function HistoryInfobar({ events }: { events: any }) {
                 >
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
                 </svg>
-                {event.createdAt}
+                {formatDate(new Date(event.createdAt))}
               </div>
             </Link>
           ))
