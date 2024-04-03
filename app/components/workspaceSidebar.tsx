@@ -82,16 +82,7 @@ export function WorkspaceSidebar({ directories }: { directories: any }) {
           ? directories.map((directory: any) => (
               <li key={directory.id}>
                 {leftBarMenu == 1 ? (
-                  <NavLink
-                    className="navbarItem"
-                    to={({
-                      isActive,
-                      isPending,
-                    }: {
-                      isActive: any;
-                      isPending: any;
-                    }) => (isActive ? "" : "" + directory.id)}
-                  >
+                  <NavLink className="navbarItem" to={"" + directory.id}>
                     <div className="p-2 flex gap-2 bg-blue-600 text-white rounded-md">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
