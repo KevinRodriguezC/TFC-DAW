@@ -14,6 +14,7 @@ import Header from "../components/header";
 import { useTranslation } from "react-i18next";
 import { getUserSession } from "~/getUserSession";
 import { MainContainer } from "~/components/mainContainer";
+import { addEvent } from "~/model/events";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
@@ -40,7 +41,21 @@ export async function action({ params, request }: ActionFunctionArgs) {
   ) {
     throw new Response("Error", { status: 400 });
   }
-  createWorkspace(+userId, workspaceName, workspaceDescription, 0);
+  const workspace = await createWorkspace(
+    +userId,
+    workspaceName,
+    workspaceDescription,
+    0
+  );
+  addEvent(
+    0,
+    0,
+    workspace.id,
+    workspace.id,
+    +userId,
+    workspaceName,
+    workspaceDescription
+  );
 
   return redirect("/app");
 }

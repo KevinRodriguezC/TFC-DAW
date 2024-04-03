@@ -45,6 +45,7 @@ export async function createWorkspace(
       role: 0,
     },
   });
+  return workspace;
 }
 
 export async function updateWorkspace(
