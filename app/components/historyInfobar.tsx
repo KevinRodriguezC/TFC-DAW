@@ -1,5 +1,6 @@
 import { Link, NavLink } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
+import { HistoryCard } from "./historyCard";
 
 export function HistoryInfobar({ events }: { events: any }) {
   const { t } = useTranslation();
@@ -35,30 +36,7 @@ export function HistoryInfobar({ events }: { events: any }) {
       </div>
       <div className="flex flex-col gap-2 flex-1">
         {events && events.length ? (
-          events.map((event: any) => (
-            <Link
-              key={event.id}
-              to={event.type == 0 ? String(event.row) : "/helloworld"}
-              className="p-2 bg-slate-200 hover:bg-slate-300 dark:bg-slate-900 hover:dark:bg-slate-950 rounded-lg flex flex-col gap-2"
-            >
-              {event.type == 0 ? event.row : "/helloworld"}
-              <h4 className="text-xl">{event.name}</h4>
-              <p>{event.value}</p>
-              <div className="flex gap-2 items-center text-sm font-bold">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  className="bi bi-clock-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
-                </svg>
-                {formatDate(new Date(event.createdAt))}
-              </div>
-            </Link>
-          ))
+          events.map((event: any) => <HistoryCard event={event} />)
         ) : (
           <></>
         )}

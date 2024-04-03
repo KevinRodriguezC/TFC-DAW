@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { action } from "~/routes/login";
 const prisma = new PrismaClient();
 
 export async function getEventsByWorkspaceId(workspaceId: number) {
@@ -25,6 +26,7 @@ export async function getEventsByUserId(userId: number) {
 
 export async function addEvent(
   type: number,
+  actionType: number,
   row: number,
   userId: number,
   workspaceId: number | null,
@@ -39,6 +41,7 @@ export async function addEvent(
       workspaceId: workspaceId,
       name: name,
       value: value,
+      actionType: actionType,
     },
   });
 }
