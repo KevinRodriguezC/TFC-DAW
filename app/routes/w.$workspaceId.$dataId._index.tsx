@@ -66,14 +66,11 @@ export async function action({ params, request }: ActionFunctionArgs) {
   ) {
     throw new Response("Error", { status: 400 });
   }
-  let userIdNumber;
   if (!userId || !+userId) {
-    userIdNumber = null;
-  } else {
-    userIdNumber = +userId;
+    throw new Response("Error");
   }
   updateDirectory(+dataId, name, description);
-  addEvent(0, +dataId, +workspaceId, userIdNumber, name, description);
+  addEvent(1, 1, +dataId, +userId, +workspaceId, name, description);
 
   return redirect("");
 }
