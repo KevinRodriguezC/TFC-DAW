@@ -31,20 +31,24 @@ export function WorkspaceInfobar({
         {users.length ? (
           users.map((workspaceUser: any) => (
             <NavLink
-              key={workspaceUser.name}
+              key={workspaceUser.username}
               to={"u/" + workspaceUser.username}
               className="participantLink"
             >
-              <div className="bg-blue-600 rounded-full size-8"></div>
-              {workspaceUser.username}
-              {workspaceUser.name}
-              {userInfo.username == workspaceUser.username ? (
-                <div className="bg-blue-600 text-white rounded-full px-3 self-center">
-                  {t("you")}
-                </div>
-              ) : (
-                <></>
-              )}
+              <div className="bg-blue-600 rounded-full size-11"></div>
+              <div className="flex flex-col">
+                <h4 className="flex gap-1">
+                  {userInfo.username == workspaceUser.username ? (
+                    <div className="bg-blue-600 text-white rounded-full px-3 self-center text-sm">
+                      {t("you")}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                  {workspaceUser.name}
+                </h4>
+                <h5 className="text-sm">@{workspaceUser.username}</h5>
+              </div>
             </NavLink>
           ))
         ) : (
