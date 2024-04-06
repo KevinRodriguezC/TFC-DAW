@@ -1,10 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export async function getInvitationByCode(code: string) {
-  return await prisma.invitationCodes.findMany({
+export async function getCodeFromWorkspace(workspaceId: number, code: string) {
+  return await prisma.invitationCodes.findFirst({
     where: {
       code: code,
+      workspaceId: workspaceId,
     },
   });
 }

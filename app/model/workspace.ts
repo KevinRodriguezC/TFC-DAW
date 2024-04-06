@@ -76,3 +76,26 @@ export async function getWorkspaceUsers(workspaceId: number) {
     },
   });
 }
+
+export async function addUserToWorkspace(
+  workspaceId: number,
+  userId: number,
+  role: number
+) {
+  return await prisma.userOnWorkspaces.create({
+    data: {
+      workspaceId: workspaceId,
+      userId: userId,
+      role: role,
+    },
+  });
+}
+
+export async function getUserInWorkspace(workspaceId: number, userId: number) {
+  return await prisma.userOnWorkspaces.findFirst({
+    where: {
+      workspaceId: workspaceId,
+      userId: userId,
+    },
+  });
+}

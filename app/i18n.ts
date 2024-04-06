@@ -62,6 +62,11 @@ i18next
           there_is_not_invitation_codes: "There is not invitation codes",
           new_invitation_code: "New invitation code",
           edit_history: "Edit history",
+          you_dont_have_any_workspace_yet: "You don't have any workspace yet",
+          join_a_workspace: "Join a workspace",
+          join: "Join",
+          you_dont_have_any_invitation_code_yet:
+            "You don't have any invitation code yet",
         },
       },
       es: {
@@ -117,6 +122,12 @@ i18next
           there_is_not_invitation_codes: "No hay códigos de invitación",
           new_invitation_code: "Nuevo código de invitación",
           edit_history: "Historial de edición",
+          you_dont_have_any_workspace_yet:
+            "No tienes ningún espacio de trabajo",
+          join_a_workspace: "Unirse a un espacio de trabajo",
+          join: "Unirse",
+          you_dont_have_any_invitation_code_yet:
+            "Tu no tienes ningún código de invitación",
         },
       },
     },

@@ -29,11 +29,11 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
     return new Response("Workspace not found", { status: 404 });
   }
 
-  return json({ invitationCodes });
+  return json({ invitationCodes, workspaceId });
 };
 
 export default function Invitations() {
-  const { invitationCodes } = useLoaderData<typeof loader>();
+  const { invitationCodes, workspaceId } = useLoaderData<typeof loader>();
 
   const { t } = useTranslation();
 
@@ -46,7 +46,9 @@ export default function Invitations() {
             key={invitationCode.id}
             className="rounded-lg bg-slate-100 dark:bg-slate-800 p-2 flex justify-between"
           >
-            <h3 className="text-xl font-bold">{invitationCode.code}</h3>
+            <h3 className="text-xl font-bold">
+              {workspaceId + "/" + invitationCode.code}
+            </h3>
             <div className="self-center">
               <Form method="post" action={`${invitationCode.id}/delete`}>
                 <input
@@ -59,7 +61,7 @@ export default function Invitations() {
           </div>
         ))
       ) : (
-        <div>{t("no_invitation_codes")}</div>
+        <div>{t("you_dont_have_any_invitation_code_yet")}</div>
       )}
       <ButtonLink to="new">{t("new")}</ButtonLink>
     </WorkspaceContentContainer>
