@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 export async function getEventsByWorkspaceId(workspaceId: number) {
   return await prisma.events.findMany({
     where: {
-      userId: workspaceId,
+      workspaceId: workspaceId,
     },
     orderBy: {
       createdAt: "desc",

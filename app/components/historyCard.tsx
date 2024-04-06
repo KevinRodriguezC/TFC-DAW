@@ -36,7 +36,7 @@ export function HistoryCard({ event }: { event: any }) {
   return (
     <Link
       key={event.id}
-      to={event.type <= 2 ? String(event.row) : "/helloworld"}
+      to={event.type == 1 || event.type == 2 ? String(event.row) : ""}
       className="p-2 bg-slate-200 hover:bg-slate-300 dark:bg-slate-900 hover:dark:bg-slate-950 rounded-lg flex flex-col gap-2"
     >
       {message(event)}
