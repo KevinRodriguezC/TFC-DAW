@@ -42,7 +42,7 @@ export function UserDropdown({
         </Menu.Item>
         <Menu.Item>
           {({ active }) => (
-            <Link className="btn-header-secondary" to="/u">
+            <Link className="btn-header-secondary" to={"/u/" + username}>
               {t("view_profile")}
             </Link>
           )}
