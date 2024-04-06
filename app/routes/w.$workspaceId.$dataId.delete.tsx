@@ -25,11 +25,11 @@ export const meta: MetaFunction = () => {
 };
 
 export async function action({ params, request }: ActionFunctionArgs) {
-  const dataId = params.dataId;
-  if (!dataId || !+dataId) {
+  const directoryId = params.dataId;
+  if (!directoryId || !+directoryId) {
     throw new Response("Error", { status: 400 });
   }
-  deleteDirectory(+dataId);
+  deleteDirectory(+directoryId);
 
   return redirect("../../");
 }
