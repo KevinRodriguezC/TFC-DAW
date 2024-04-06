@@ -5,6 +5,8 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { getWorkspacesByUser } from "~/model/workspace";
 import { getUserByUsername } from "~/model/user";
 import { useTranslation } from "react-i18next";
+import { getUserSession } from "~/getUserSession";
+import { getSession } from "~/sessions";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
@@ -15,13 +17,17 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const loader = async ({ params }: LoaderFunctionArgs) => {
-  // const url = new URL(request.url);
-  // invariant(params.usernane, "User not found")
+export const loader = async ({ request, params }: LoaderFunctionArgs) => {
+  const { userId } = await getUserSession(
+    await getSession(request.headers.get("Cookie"))
+  );
   const username = params.username;
   const user = await getUserByUsername(username);
   if (!user) {
     throw new Error("User not found");
+  }
+  if (user.visibility == 0 && user.id != userId) {
+    throw new Response("This user is a private user", { status: 403 });
   }
   const userWorkspaces = await getWorkspacesByUser(user.id);
   let workspaces = [];

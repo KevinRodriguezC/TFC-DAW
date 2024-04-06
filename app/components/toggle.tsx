@@ -8,7 +8,7 @@ export function Toogle({
   inputName: string;
   defaultValue: boolean;
 }) {
-  const [enabled, setEnabled] = useState(false);
+  const [enabled, setEnabled] = useState(defaultValue);
 
   return (
     <Switch

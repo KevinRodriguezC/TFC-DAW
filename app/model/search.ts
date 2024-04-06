@@ -21,6 +21,7 @@ export async function searchUsers(q: any) {
           },
         },
       ],
+      visibility: 1,
     },
   });
 }
