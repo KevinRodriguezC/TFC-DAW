@@ -55,7 +55,8 @@ export async function action({ params, request }: ActionFunctionArgs) {
   const workspaceCode = await getCodeFromWorkspace(workspaceId, codeString);
   console.log(workspaceId, codeString, workspaceCode);
   if (workspaceCode) {
-    const userOnWorkspace = getUserInWorkspace(+workspaceId, +userId);
+    const userOnWorkspace = await getUserInWorkspace(+workspaceId, +userId);
+    console.log(userOnWorkspace);
     if (!userOnWorkspace) {
       await addUserToWorkspace(+workspaceId, +userId, 0);
     }
