@@ -36,7 +36,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
   }
   updateWorkspace(+workspaceId, workspaceName, workspaceDescription);
 
-  return redirect("../");
+  return redirect("");
 }
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
