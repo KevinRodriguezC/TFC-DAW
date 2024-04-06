@@ -1,6 +1,7 @@
 import { ActionFunctionArgs, redirect } from "@remix-run/node";
 import { Form, MetaFunction } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
+import { WorkspaceContentContainer } from "~/components/workspaceContentContainer";
 import { createInvitationCode } from "~/model/invitationCodes";
 
 export const meta: MetaFunction = () => {
@@ -30,12 +31,12 @@ export default function Invitations() {
   const { t } = useTranslation();
 
   return (
-    <div className="container-primary-bg flex-1 flex flex-col gap-2 p-2">
+    <WorkspaceContentContainer>
       <h2 className="text-2xl font-bold">{t("new_invitation_code")}</h2>
       <Form method="post" className="flex flex-col gap-2">
         <input type="text" className="form-control" name="code" />
         <input type="submit" className="btn-primary" value={t("create")} />
       </Form>
-    </div>
+    </WorkspaceContentContainer>
   );
 }

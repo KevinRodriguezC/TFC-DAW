@@ -28,12 +28,11 @@ export default function Participant() {
   let { user } = useLoaderData<typeof loader>();
 
   return (
-    <div className="container-primary-bg flex-1 flex flex-col">
-      <WorkspaceContentContainer>
-        <h2>
-          {user.name} {user.lastname}
-        </h2>
-      </WorkspaceContentContainer>
-    </div>
+    <WorkspaceContentContainer>
+      <h2 className="text-2xl font-bold">
+        {user.name} {user.lastname}
+      </h2>
+      <h3 className="text-xl">Activity</h3>
+    </WorkspaceContentContainer>
   );
 }

@@ -26,7 +26,8 @@ export const meta: MetaFunction = () => {
 
 export async function action({ params, request }: ActionFunctionArgs) {
   const directoryId = params.dataId;
-  if (!directoryId || !+directoryId) {
+  const workspaceId = params.workspaceId;
+  if (!directoryId || !+directoryId || !workspaceId || !+workspaceId) {
     throw new Response("Error", { status: 400 });
   }
   deleteDirectory(+directoryId);

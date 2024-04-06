@@ -2,6 +2,7 @@ import { LoaderFunctionArgs, json, type MetaFunction } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { ButtonLink } from "~/components/buttonLink";
+import { WorkspaceContentContainer } from "~/components/workspaceContentContainer";
 import { getUserSession } from "~/getUserSession";
 import { getInvitationCodesByWorkspace } from "~/model/invitationCodes";
 import { getSession } from "~/sessions";
@@ -37,7 +38,7 @@ export default function Invitations() {
   const { t } = useTranslation();
 
   return (
-    <div className="container-primary-bg flex-1 flex flex-col gap-2 p-2">
+    <WorkspaceContentContainer>
       <h2 className="text-2xl font-bold">{t("manage_invitations")}</h2>
       {invitationCodes.length ? (
         invitationCodes.map((invitationCode: any) => (
@@ -61,6 +62,6 @@ export default function Invitations() {
         <div>{t("no_invitation_codes")}</div>
       )}
       <ButtonLink to="new">{t("new")}</ButtonLink>
-    </div>
+    </WorkspaceContentContainer>
   );
 }

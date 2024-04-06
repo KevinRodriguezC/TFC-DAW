@@ -5,6 +5,7 @@ import type {
 } from "@remix-run/node";
 import { Form, json, redirect, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
+import { WorkspaceContentContainer } from "~/components/workspaceContentContainer";
 import { getWorkspaceById, updateWorkspace } from "~/model/workspace";
 
 export const meta: MetaFunction = () => {
@@ -59,9 +60,9 @@ export default function Index() {
   const { t } = useTranslation();
 
   return (
-    <div className="container-primary-bg flex-1 flex flex-col gap-2 p-2 font-bold">
-      <h2 className="text-2xl">{t("settings")}</h2>
-      <Form method="POST" className="flex flex-col gap-2">
+    <WorkspaceContentContainer>
+      <h2 className="text-2xl font-bold">{t("settings")}</h2>
+      <Form method="POST" className="flex flex-col gap-4">
         <label htmlFor="workspaceName">{t("name")}</label>
         <input
           name="workspaceName"
@@ -77,6 +78,6 @@ export default function Index() {
         ></textarea>
         <input type="submit" value={t("save")} className="btn-primary" />
       </Form>
-    </div>
+    </WorkspaceContentContainer>
   );
 }
