@@ -1,6 +1,6 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Outlet, Link, NavLink, useLoaderData } from "@remix-run/react";
+import { Outlet, Link, useLoaderData } from "@remix-run/react";
 
 import {
   getUserInWorkspace,
@@ -12,7 +12,6 @@ import { UserDropdown } from "~/components/userDropdown";
 import { getUserSession } from "~/getUserSession";
 import { getSession } from "~/sessions";
 import { useTranslation } from "react-i18next";
-import { MainContainer } from "~/components/mainContainer";
 import { TopContainer } from "~/components/topContainer";
 import { CenterContainer } from "~/components/centerContainer";
 import { WorkspaceSidebar } from "~/components/workspaceSidebar";
@@ -22,23 +21,39 @@ import { HistoryInfobar } from "~/components/historyInfobar";
 import { getEventsByWorkspaceId } from "~/model/events";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
+  // Get the user session info
   const { userId, userInfo } = await getUserSession(
     await getSession(request.headers.get("Cookie"))
   );
+
+  // Check if the parameter "workspaceId" exist
   const workspaceId = params.workspaceId;
   if (!workspaceId || !+workspaceId) {
     throw new Response("Workspace not found", { status: 404 });
   }
-  const userOnWorkspace = await getUserInWorkspace(+workspaceId, +userId);
+
+  // Check if the workspace exist
   const workspaceIdNumber = +workspaceId;
-  const workspace = await getWorkspaceById(workspaceIdNumber);
   const workspaceUsers = await getWorkspaceUsers(workspaceIdNumber);
+  const workspace = await getWorkspaceById(workspaceIdNumber);
   if (!workspace || !workspaceUsers) {
     throw new Response("Workspace not found", { status: 404 });
   }
+
+  // Check if the user has privileges to view the workspace
+
+  // If the user isn't loged in and the workspace is private, it sends a 404 message
+  if (!userId && workspace.visibility == 0) {
+    throw new Response("Error", { status: 404 });
+  }
+
+  // If the user isn't a member of the workspace, it sends a 404 message
+  const userOnWorkspace = await getUserInWorkspace(+workspaceId, +userId);
   if (!userOnWorkspace && workspace.visibility == 0) {
     throw new Response("Error", { status: 404 });
   }
+
+  // Load the workspace
   const workspaceEvents = await getEventsByWorkspaceId(workspaceIdNumber);
   let users = [];
   for (let i = 0; i < workspaceUsers.length; i++) {
@@ -49,10 +64,12 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
     });
   }
   const directories = await getDirectoriesByWorkspace(+workspaceId);
+
+  // Send the data of the workspace to the client
   return json({ userInfo, workspace, directories, users, workspaceEvents });
 };
 
-export default function Index() {
+export default function Workspace() {
   const { userInfo, workspace, directories, users, workspaceEvents } =
     useLoaderData<typeof loader>();
   const { t } = useTranslation();
