@@ -30,7 +30,7 @@ export default function Header({
             /> */}
       </Form>
       <div className="bg-slate-300 dark:bg-slate-900 w-[2px] xl:hidden"></div>
-      <div className="flex gap-2 justify-end xl:flex-1">
+      <div className="flex gap-2justify-end xl:flex-1">
         {username && name ? (
           <UserDropdown username={username} name={name} />
         ) : (
