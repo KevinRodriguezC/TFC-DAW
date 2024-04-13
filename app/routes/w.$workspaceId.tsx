@@ -2,7 +2,11 @@ import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Outlet, Link, NavLink, useLoaderData } from "@remix-run/react";
 
-import { getWorkspaceById, getWorkspaceUsers } from "~/model/workspace";
+import {
+  getUserInWorkspace,
+  getWorkspaceById,
+  getWorkspaceUsers,
+} from "~/model/workspace";
 import { getDirectoriesByWorkspace } from "~/model/directory";
 import { UserDropdown } from "~/components/userDropdown";
 import { getUserSession } from "~/getUserSession";
@@ -18,20 +22,24 @@ import { HistoryInfobar } from "~/components/historyInfobar";
 import { getEventsByWorkspaceId } from "~/model/events";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
-  const { userInfo } = await getUserSession(
+  const { userId, userInfo } = await getUserSession(
     await getSession(request.headers.get("Cookie"))
   );
   const workspaceId = params.workspaceId;
   if (!workspaceId || !+workspaceId) {
     throw new Response("Workspace not found", { status: 404 });
   }
+  const userOnWorkspace = await getUserInWorkspace(+workspaceId, +userId);
   const workspaceIdNumber = +workspaceId;
   const workspace = await getWorkspaceById(workspaceIdNumber);
   const workspaceUsers = await getWorkspaceUsers(workspaceIdNumber);
-  const workspaceEvents = await getEventsByWorkspaceId(workspaceIdNumber);
   if (!workspace || !workspaceUsers) {
     throw new Response("Workspace not found", { status: 404 });
   }
+  if (!userOnWorkspace && workspace.visibility == 0) {
+    throw new Response("Error", { status: 404 });
+  }
+  const workspaceEvents = await getEventsByWorkspaceId(workspaceIdNumber);
   let users = [];
   for (let i = 0; i < workspaceUsers.length; i++) {
     users.push({
