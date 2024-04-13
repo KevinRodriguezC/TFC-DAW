@@ -35,7 +35,9 @@ export function WorkspaceInfobar({
               to={"u/" + workspaceUser.username}
               className="participantLink"
             >
-              <div className="bg-blue-600 rounded-full size-11"></div>
+              <div className="bg-purple-600 rounded-full size-11 btn-user-icon">
+                {workspaceUser.username.charAt(0)}
+              </div>
               <div className="flex flex-col">
                 <h4 className="flex gap-1">
                   {userInfo.username == workspaceUser.username ? (
