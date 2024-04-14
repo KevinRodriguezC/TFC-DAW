@@ -17,7 +17,7 @@ export default function ErrorPage(error: any) {
         {isRouteErrorResponse(error) ? error.status : "Unknown error"}
       </h1>
       <p>Something went wrong</p>
-      <Link to="/app">Go back</Link>
+      <Link to="/">Go back</Link>
     </div>
   );
 }

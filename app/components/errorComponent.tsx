@@ -16,7 +16,7 @@ export default function ErrorComponent(error: any) {
       <h1 className=" text-5xl font-bold">
         {isRouteErrorResponse(error) ? error.status : "Unknown error"}
       </h1>
-      <p>Something went wrong</p>
+      <p>{error.status == 404 ? "Page not found" : "Something went wrong"}</p>
     </div>
   );
 }
