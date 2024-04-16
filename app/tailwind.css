@@ -332,4 +332,8 @@
     outline
     outline-4;
   }
+
+  .word-wrap-anywhere {
+    word-wrap: anywhere;
+  }
 }
