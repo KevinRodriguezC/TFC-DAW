@@ -24,6 +24,21 @@ export async function getEventsByUserId(userId: number) {
   });
 }
 
+export async function getWorkspaceEventsByUserId(
+  workspaceId: number,
+  userId: number
+) {
+  return await prisma.events.findMany({
+    where: {
+      userId: userId,
+      workspaceId: workspaceId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+}
+
 export async function addEvent(
   type: number,
   actionType: number,
