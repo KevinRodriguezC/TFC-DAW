@@ -8,6 +8,9 @@ export async function getDirectoriesByWorkspace(workspaceId: number) {
         equals: workspaceId,
       },
     },
+    orderBy: {
+      name: "asc",
+    },
   });
 }
 
