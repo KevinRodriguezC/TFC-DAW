@@ -67,6 +67,7 @@ i18next
           join: "Join",
           you_dont_have_any_invitation_code_yet:
             "You don't have any invitation code yet",
+          there_are_no_events: "There are no events",
         },
       },
       es: {
@@ -128,6 +129,7 @@ i18next
           join: "Unirse",
           you_dont_have_any_invitation_code_yet:
             "Tu no tienes ningún código de invitación",
+          there_are_no_events: "No hay eventos",
         },
       },
     },

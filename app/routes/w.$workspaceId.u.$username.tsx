@@ -34,6 +34,8 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 export default function Participant() {
   let { user, events } = useLoaderData<typeof loader>();
 
+  const { t } = useTranslation();
+
   return (
     <WorkspaceContentContainer>
       <div className="flex gap-2">
@@ -47,14 +49,18 @@ export default function Participant() {
           <h4 className="text-md font-bold">@{user.username}</h4>
         </div>
       </div>
-      <h3 className="text-xl">Activity</h3>
-      <div className="flex flex-col gap-2">
-        {events && events.length ? (
-          events.map((event) => <HistoryCard event={event} route="../" />)
-        ) : (
-          <h3>No events</h3>
-        )}
-      </div>
+      {events && events.length ? (
+        <>
+          <h3 className="text-xl">Activity</h3>
+          <div className="flex flex-col gap-2">
+            {events.map((event) => (
+              <HistoryCard event={event} route="../" />
+            ))}
+          </div>
+        </>
+      ) : (
+        <h3>{t("there_are_no_events")}</h3>
+      )}
     </WorkspaceContentContainer>
   );
 }
