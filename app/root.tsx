@@ -15,10 +15,7 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
 
-import "./i18n";
-
-import { useTranslation } from "react-i18next";
-
+// If an error happends
 export function ErrorBoundary() {
   const error = useRouteError();
   console.log(error);
@@ -40,9 +37,8 @@ export function ErrorBoundary() {
   );
 }
 
+// Main react function
 export default function App() {
-  const t = useTranslation();
-
   return (
     <html lang="en">
       <head>
