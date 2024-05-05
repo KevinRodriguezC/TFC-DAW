@@ -11,6 +11,7 @@ import {
 
 import stylesheet from "~/tailwind.css";
 import ErrorPage from "./components/errorPage";
+import i18n from "./i18n";
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
@@ -37,6 +38,7 @@ export function ErrorBoundary() {
   );
 }
 
+i18n.changeLanguage("en");
 // Main react function
 export default function App() {
   return (
