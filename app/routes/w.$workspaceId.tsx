@@ -47,10 +47,12 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
     throw new Response("Workspace not found", { status: 404 });
   }
 
-  // If the user isn't a member of the workspace, it sends a 404 message
-  const userOnWorkspace = await getUserInWorkspace(+workspaceId, +userId);
-  if (!userOnWorkspace && workspace.visibility == 0) {
-    throw new Response("Workspace not found", { status: 404 });
+  // If the user isn't a member of the workspace and the workspace is a private workspace, it sends a 404 message
+  if (workspace.visibility == 0) {
+    const userOnWorkspace = await getUserInWorkspace(+workspaceId, +userId);
+    if (!userOnWorkspace) {
+      throw new Response("Workspace not found", { status: 404 });
+    }
   }
 
   // Load the workspace

@@ -77,7 +77,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     username: userArray.username,
     name: userArray.name,
     lastname: userArray.lastname ? userArray.lastname : "",
-    visibility: userArray.visibility == 0 ? false : true,
+    visibility: userArray.visibility != 0,
   };
   return json({ userInfo });
 }

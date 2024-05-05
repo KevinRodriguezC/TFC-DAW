@@ -51,7 +51,8 @@ export async function createWorkspace(
 export async function updateWorkspace(
   workspaceId: number,
   workspaceName: string,
-  workspaceDescription = ""
+  workspaceDescription = "",
+  workspaceVisibility: number
 ) {
   return await prisma.workspace.update({
     where: {
@@ -60,6 +61,7 @@ export async function updateWorkspace(
     data: {
       name: workspaceName,
       description: workspaceDescription,
+      visibility: workspaceVisibility,
     },
   });
 }

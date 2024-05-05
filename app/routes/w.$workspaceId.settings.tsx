@@ -5,6 +5,7 @@ import type {
 } from "@remix-run/node";
 import { Form, json, redirect, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
+import { Toogle } from "~/components/toggle";
 import { WorkspaceContentContainer } from "~/components/workspaceContentContainer";
 import { getWorkspaceById, updateWorkspace } from "~/model/workspace";
 
@@ -19,22 +20,25 @@ export const meta: MetaFunction = () => {
 
 export async function action({ params, request }: ActionFunctionArgs) {
   const workspaceId = params.workspaceId;
-  console.log(workspaceId);
-  console.log(workspaceId);
   if (!workspaceId || !+workspaceId) {
     throw new Response("Error", { status: 400 });
   }
   const formData = await request.formData();
   const workspaceName = formData.get("workspaceName");
   let workspaceDescription = formData.get("workspaceDescription");
+  const workspaceVisibility = formData.get("visibility");
   if (!workspaceName || typeof workspaceName != "string") {
     throw new Response("Error", { status: 400 });
   }
-  console.log("Hello world");
   if (!workspaceDescription || typeof workspaceDescription != "string") {
     workspaceDescription = "";
   }
-  updateWorkspace(+workspaceId, workspaceName, workspaceDescription);
+  updateWorkspace(
+    +workspaceId,
+    workspaceName,
+    workspaceDescription,
+    workspaceVisibility ? 1 : 0
+  );
 
   return redirect("");
 }
@@ -50,12 +54,15 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     throw new Response("Workspace not found", { status: 404 });
   }
   const name = workspaceInfo.name;
-  const description = workspaceInfo.description;
-  return json({ name, description });
+  const description = workspaceInfo.description
+    ? workspaceInfo.description
+    : "";
+  const visibility = workspaceInfo.visibility != 0;
+  return json({ name, description, visibility });
 };
 
 export default function Index() {
-  const { name, description } = useLoaderData<typeof loader>();
+  const { name, description, visibility } = useLoaderData<typeof loader>();
 
   const { t } = useTranslation();
 
@@ -63,7 +70,7 @@ export default function Index() {
     <WorkspaceContentContainer>
       <h2 className="text-2xl font-bold">{t("settings")}</h2>
       <Form method="POST" className="flex flex-col gap-4">
-        <label htmlFor="workspaceName">{t("name")}</label>
+        <label htmlFor="workspdescriptionaceName">{t("name")}</label>
         <input
           name="workspaceName"
           id="workspaceName"
@@ -75,7 +82,15 @@ export default function Index() {
           name="workspaceDescription"
           id="workspaceDescription"
           className="form-control"
+          defaultValue={description}
         ></textarea>
+        <label>{t("visibility")}</label>
+        <div className="flex p-2 bg-slate-100 dark:bg-slate-800 rounded-md items-center pointer">
+          <label className="flex-1" htmlFor="visibility">
+            {t("public_profile")}
+          </label>
+          <Toogle inputName="visibility" defaultValue={visibility}></Toogle>
+        </div>
         <input type="submit" value={t("save")} className="btn-primary" />
       </Form>
     </WorkspaceContentContainer>
