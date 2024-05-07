@@ -68,11 +68,18 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const directories = await getDirectoriesByWorkspace(+workspaceId);
 
   // Send the data of the workspace to the client
-  return json({ userInfo, workspace, directories, users, workspaceEvents });
+  return json({
+    userInfo,
+    workspace,
+    directories,
+    users,
+    workspaceEvents,
+    canEdit: userId != undefined,
+  });
 };
 
 export default function Workspace() {
-  const { userInfo, workspace, directories, users, workspaceEvents } =
+  const { userInfo, workspace, directories, users, workspaceEvents, canEdit } =
     useLoaderData<typeof loader>();
   const { t } = useTranslation();
   const [rightBarMenu, setRightBarMenu] = useState(0);
@@ -89,18 +96,22 @@ export default function Workspace() {
       <TopContainer>
         <div className="border-r-2 border-b-2 container-secondary-border p-2 w-80 flex justify-between items-center gap-2">
           <h2 className="font-bold text-xl">{workspace.name}</h2>
-          <Link to="settings" className="btn-icon">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="currentColor"
-              className="bi bi-gear-fill"
-              viewBox="0 0 16 16"
-            >
-              <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
-            </svg>
-          </Link>
+          {canEdit ? (
+            <Link to="settings" className="btn-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="currentColor"
+                className="bi bi-gear-fill"
+                viewBox="0 0 16 16"
+              >
+                <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
+              </svg>
+            </Link>
+          ) : (
+            ""
+          )}
         </div>
         <div className="container-secondary-bg border-b-2 container-secondary-border flex-1 p-2 flex gap-2 justify-between">
           <div className="flex gap-2 "></div>
@@ -157,7 +168,7 @@ export default function Workspace() {
         </div>
       </TopContainer>
       <CenterContainer>
-        <WorkspaceSidebar directories={directories} />
+        <WorkspaceSidebar directories={directories} canEdit={canEdit} />
         <Outlet />
         {rightBarMenu == 0 ? (
           <></>
