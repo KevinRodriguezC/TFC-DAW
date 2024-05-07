@@ -70,6 +70,7 @@ i18next.use(initReactI18next).init({
           "You don't have any invitation code yet",
         there_are_no_events: "There are no events",
         activity: "Activity",
+        public_workspace: "Public workspace",
       },
     },
     es: {
@@ -132,6 +133,7 @@ i18next.use(initReactI18next).init({
           "Tu no tienes ningún código de invitación",
         there_are_no_events: "No hay eventos",
         activity: "Actividad",
+        public_workspace: "Espacio de trabajo público",
       },
     },
   },
