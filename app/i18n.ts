@@ -71,6 +71,7 @@ i18next.use(initReactI18next).init({
         there_are_no_events: "There are no events",
         activity: "Activity",
         public_workspace: "Public workspace",
+        no_go_back: "No, go back",
       },
     },
     es: {
@@ -134,6 +135,7 @@ i18next.use(initReactI18next).init({
         there_are_no_events: "No hay eventos",
         activity: "Actividad",
         public_workspace: "Espacio de trabajo público",
+        no_go_back: "No, retroceder",
       },
     },
   },
