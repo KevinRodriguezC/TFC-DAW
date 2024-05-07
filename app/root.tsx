@@ -38,7 +38,7 @@ export function ErrorBoundary() {
   );
 }
 
-i18n.changeLanguage("en");
+i18n.changeLanguage("es");
 // Main react function
 export default function App() {
   return (

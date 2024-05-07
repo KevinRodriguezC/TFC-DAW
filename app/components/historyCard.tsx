@@ -1,6 +1,7 @@
 import { Link } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { formatDistanceToNow } from "date-fns";
+// import { es } from "date-fns/locale";
 
 export function HistoryCard({ event, route }: { event: any; route: string }) {
   const { t } = useTranslation();
@@ -8,13 +9,13 @@ export function HistoryCard({ event, route }: { event: any; route: string }) {
   const message = (event: any) => {
     if (event.actionType == 0) {
       // Create
-      return `Se creo ${event.name}`;
+      return t("created_event", { name: event.name });
     } else if (event.actionType == 1) {
       // Edit
-      return `Se edito ${event.name}`;
+      return t("edited_event", { name: event.name });
     } else if (event.actionType == 2) {
       // Delete
-      return `Se elimino ${event.name}`;
+      return t("deleted_event", { name: event.name });
     } else {
       return event.actionType;
     }
@@ -52,7 +53,10 @@ export function HistoryCard({ event, route }: { event: any; route: string }) {
         >
           <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
         </svg>
-        {formatDistanceToNow(new Date(event.createdAt))}
+        {formatDistanceToNow(new Date(event.createdAt), {
+          addSuffix: true,
+          // locale: es,
+        })}
       </div>
       {/* <div className="flex gap-2 items-center text-sm font-bold">
         <svg
