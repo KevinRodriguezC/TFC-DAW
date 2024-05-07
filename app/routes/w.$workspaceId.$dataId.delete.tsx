@@ -6,6 +6,7 @@ import type {
 import { json, redirect } from "@remix-run/node";
 
 import {
+  Form,
   Link,
   isRouteErrorResponse,
   useLoaderData,
@@ -75,12 +76,12 @@ export default function Index() {
             directoryName: data.name,
           })}
         </p>
-        <form method="POST" className="flex gap-4 flex-wrap justify-center">
+        <Form method="POST" className="flex gap-4 flex-wrap justify-center">
           <Link to="../" className="btn-primary">
             {t("no_go_back")}
           </Link>
           <input type="submit" className="btn-danger" value={t("yes")}></input>
-        </form>
+        </Form>
       </div>
     </div>
   );
