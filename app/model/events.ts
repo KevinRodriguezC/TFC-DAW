@@ -25,8 +25,8 @@ export async function getEventsByUserId(userId: number) {
 }
 
 export async function getWorkspaceEventsByUserId(
-  workspaceId: number,
-  userId: number
+  userId: number,
+  workspaceId: number
 ) {
   return await prisma.events.findMany({
     where: {
