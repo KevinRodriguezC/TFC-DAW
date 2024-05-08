@@ -27,23 +27,34 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function Index() {
   const { userInfo } = useLoaderData<typeof loader>();
   const { t } = useTranslation();
-
+  ButtonLink;
   return (
     <MainContainer>
       <Header username={userInfo.username} name={userInfo.name} />
       <div className="container-primary-bg flex-1 flex flex-col">
         <div className=" self-center max-w-5xl flex flex-col gap-6 mt-10 m">
-          <h1 className="  text-7xl font-bold">Lorem ipsum</h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi,
-            libero aliquam beatae enim aperiam quas ipsum neque! Facere nobis
-            veritatis accusantium, rem quod modi, numquam perspiciatis esse ut
-            iusto optio? Lorem ipsum dolor sit, amet consectetur adipisicing
-            elit. Asperiores beatae necessitatibus velit molestias mollitia.
-            Ipsam voluptatem officiis in quam cumque, recusandae mollitia,
-            repellendus corporis ad, rerum aspernatur eius praesentium eaque!
-          </p>
-          <ButtonLink to="signup">{t("create_an_account")}</ButtonLink>
+          {userInfo && userInfo.username ? (
+            <>
+              <h1 className="text-2xl font-bold">Welcome {userInfo.name}</h1>
+              <ButtonLink to="app">Workspaces</ButtonLink>
+              <ButtonLink to="settings">Settings</ButtonLink>
+            </>
+          ) : (
+            <>
+              <h1 className="text-7xl font-bold">Lorem ipsum</h1>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Excepturi, libero aliquam beatae enim aperiam quas ipsum neque!
+                Facere nobis veritatis accusantium, rem quod modi, numquam
+                perspiciatis esse ut iusto optio? Lorem ipsum dolor sit, amet
+                consectetur adipisicing elit. Asperiores beatae necessitatibus
+                velit molestias mollitia. Ipsam voluptatem officiis in quam
+                cumque, recusandae mollitia, repellendus corporis ad, rerum
+                aspernatur eius praesentium eaque!
+              </p>
+              <ButtonLink to="signup">{t("create_an_account")}</ButtonLink>
+            </>
+          )}
         </div>
       </div>
     </MainContainer>
