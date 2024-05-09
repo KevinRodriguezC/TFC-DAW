@@ -333,6 +333,23 @@
     outline-4;
   }
 
+  .historyCard {
+    @apply p-2
+    bg-slate-200
+    hover:bg-slate-300
+    dark:bg-slate-900
+    hover:dark:bg-slate-950
+    rounded-lg
+    flex
+    flex-col
+    gap-2
+    word-wrap-anywhere;
+  }
+
+  .historyCardOutline.active {
+    @apply outline outline-blue-600;
+  }
+
   .word-wrap-anywhere {
     word-wrap: anywhere;
   }

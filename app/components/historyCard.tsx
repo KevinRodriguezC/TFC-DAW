@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { NavLink } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { formatDistanceToNow } from "date-fns";
 // import { es } from "date-fns/locale";
@@ -36,10 +36,12 @@ export function HistoryCard({ event, route }: { event: any; route: string }) {
   };
 
   return (
-    <Link
+    <NavLink
       key={event.id}
       to={event.type == 1 || event.type == 2 ? route + String(event.id) : ""}
-      className="p-2 bg-slate-200 hover:bg-slate-300 dark:bg-slate-900 hover:dark:bg-slate-950 rounded-lg flex flex-col gap-2 word-wrap-anywhere"
+      className={
+        "historyCard" + (event.actionType != 0 ? " historyCardOutline" : "")
+      }
     >
       {message(event)}
       <div className="flex gap-2 items-center text-sm font-bold">
@@ -71,6 +73,6 @@ export function HistoryCard({ event, route }: { event: any; route: string }) {
         </svg>
         {formatDate(new Date(event.createdAt))}
       </div> */}
-    </Link>
+    </NavLink>
   );
 }

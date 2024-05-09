@@ -37,7 +37,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   }
   const data = await getDirectoryInfo(oldData.row);
   const editorInfo = await getUserInfo(oldData.userId);
-  if ((!data || data.parentId != +workspaceId, !editorInfo)) {
+  if (!data || data.parentId != +workspaceId || !editorInfo) {
     throw new Response("Directory not found", { status: 404 });
   }
 
@@ -50,35 +50,40 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 };
 
 export async function action({ params, request }: ActionFunctionArgs) {
-  const userId = (await getSession(request.headers.get("Cookie"))).get(
-    "userId"
-  );
-  const versionId = params.versionId;
-  const workspaceId = params.workspaceId;
-  const formData = await request.formData();
-  const name = formData.get("name");
-  const description = formData.get("description");
-  if (
-    !versionId ||
-    !+versionId ||
-    !workspaceId ||
-    !+workspaceId ||
-    !name ||
-    !userId ||
-    !+userId ||
-    typeof name != "string" ||
-    typeof description != "string"
-  ) {
-    throw new Response("Error", { status: 400 });
-  }
-  const versionInfo = await getEventById(+versionId);
-  if (!versionInfo) {
-    throw new Response("Error", { status: 400 });
-  }
-  updateDirectory(+versionInfo.row, name, description);
-  addEvent(1, 1, +versionInfo.row, +userId, +workspaceId, name, description);
+  try {
+    const userId = (await getSession(request.headers.get("Cookie"))).get(
+      "userId"
+    );
+    const versionId = params.versionId;
+    const workspaceId = params.workspaceId;
+    const formData = await request.formData();
+    const name = formData.get("name");
+    const description = formData.get("description");
+    if (
+      !versionId ||
+      !+versionId ||
+      !workspaceId ||
+      !+workspaceId ||
+      !name ||
+      !userId ||
+      !+userId ||
+      typeof name != "string" ||
+      typeof description != "string"
+    ) {
+      throw new Response("Error", { status: 400 });
+    }
+    const versionInfo = await getEventById(+versionId);
+    if (!versionInfo) {
+      throw new Response("Error", { status: 400 });
+    }
+    updateDirectory(+versionInfo.row, name, description);
+    addEvent(1, 1, +versionInfo.row, +userId, +workspaceId, name, description);
 
-  return redirect("../" + versionInfo.row);
+    return redirect("../" + versionInfo.row);
+  } catch (e) {
+    console.log(e);
+    return new Response("Internal server error", { status: 500 });
+  }
 }
 
 export default function VersionPage() {
