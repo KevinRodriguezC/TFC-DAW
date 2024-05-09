@@ -77,6 +77,7 @@ i18next.use(initReactI18next).init({
         deleted_event: "Deleted {{name}}",
         time_ago: "{{time}} ago",
         restore: "Restore",
+        restore_event: "Restored {{name}}",
       },
     },
     es: {
@@ -146,6 +147,7 @@ i18next.use(initReactI18next).init({
         deleted_event: "Se elimino {{name}}",
         time_ago: "Hace {{time}}",
         restore: "Recuperar",
+        restore_event: "Se recupero {{name}}",
       },
     },
   },

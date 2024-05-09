@@ -6,42 +6,34 @@ import { formatDistanceToNow } from "date-fns";
 export function HistoryCard({ event, route }: { event: any; route: string }) {
   const { t } = useTranslation();
 
+  // Get the action message
   const message = (event: any) => {
-    if (event.actionType == 0) {
-      // Create
-      return t("created_event", { name: event.name });
-    } else if (event.actionType == 1) {
-      // Edit
-      return t("edited_event", { name: event.name });
-    } else if (event.actionType == 2) {
-      // Delete
-      return t("deleted_event", { name: event.name });
-    } else {
-      return event.actionType;
+    switch (event.actionType) {
+      case 0:
+        // Create
+        return t("created_event", { name: event.name });
+      case 1:
+        // Edit
+        return t("edited_event", { name: event.name });
+      case 2:
+        // Delete
+        return t("deleted_event", { name: event.name });
+      case 3:
+        // Recover
+        return t("restore_event", { name: event.name });
+      default:
+        return event.actionType;
     }
   };
 
-  const formatTime = (date: any) => {
-    const actualDate = new Date(Date.now());
-    if (actualDate.getDay() < date.getDay()) {
-      return "Yesterday";
-    } else if (actualDate.getDay() < date.getDay()) {
-    } else {
-      return `${date.getHours()}:${date.getMinutes()}`;
-    }
-  };
-
-  const formatDate = (date: any) => {
-    return `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`;
-  };
+  // Determine if the card redirects to the recovery page
+  const redirect = event.actionType == 1 || event.actionType == 3;
 
   return (
     <NavLink
       key={event.id}
-      to={event.type == 1 || event.type == 2 ? route + String(event.id) : ""}
-      className={
-        "historyCard" + (event.actionType != 0 ? " historyCardOutline" : "")
-      }
+      to={redirect ? route + String(event.id) : ""}
+      className={"historyCard" + (redirect ? " historyCardOutline" : "")}
     >
       {message(event)}
       <div className="flex gap-2 items-center text-sm font-bold">
@@ -60,19 +52,6 @@ export function HistoryCard({ event, route }: { event: any; route: string }) {
           // locale: es,
         })}
       </div>
-      {/* <div className="flex gap-2 items-center text-sm font-bold">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          className="bi bi-calendar-fill"
-          viewBox="0 0 16 16"
-        >
-          <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V5h16V4H0V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5" />
-        </svg>
-        {formatDate(new Date(event.createdAt))}
-      </div> */}
     </NavLink>
   );
 }

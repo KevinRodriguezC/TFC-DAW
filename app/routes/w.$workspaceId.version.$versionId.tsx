@@ -77,7 +77,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
       throw new Response("Error", { status: 400 });
     }
     updateDirectory(+versionInfo.row, name, description);
-    addEvent(1, 1, +versionInfo.row, +userId, +workspaceId, name, description);
+    addEvent(1, 3, +versionInfo.row, +userId, +workspaceId, name, description);
 
     return redirect("../" + versionInfo.row);
   } catch (e) {
