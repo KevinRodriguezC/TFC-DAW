@@ -37,7 +37,7 @@ export function HistoryInfobar({ events }: { events: any }) {
       <div className="flex flex-col gap-2 flex-1">
         {events && events.length ? (
           events.map((event: any) => (
-            <HistoryCard key={event.id} event={event} route="" />
+            <HistoryCard key={event.id} event={event} route="version/" />
           ))
         ) : (
           <></>

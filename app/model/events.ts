@@ -60,3 +60,11 @@ export async function addEvent(
     },
   });
 }
+
+export async function getEventById(eventId: number) {
+  return await prisma.events.findFirst({
+    where: {
+      id: eventId,
+    },
+  });
+}

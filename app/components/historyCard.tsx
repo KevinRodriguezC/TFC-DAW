@@ -38,7 +38,7 @@ export function HistoryCard({ event, route }: { event: any; route: string }) {
   return (
     <Link
       key={event.id}
-      to={event.type == 1 || event.type == 2 ? route + String(event.row) : ""}
+      to={event.type == 1 || event.type == 2 ? route + String(event.id) : ""}
       className="p-2 bg-slate-200 hover:bg-slate-300 dark:bg-slate-900 hover:dark:bg-slate-950 rounded-lg flex flex-col gap-2 word-wrap-anywhere"
     >
       {message(event)}
