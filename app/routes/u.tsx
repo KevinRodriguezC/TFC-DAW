@@ -1,7 +1,7 @@
 import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { Outlet, json, useLoaderData, useRouteError } from "@remix-run/react";
 import ErrorPage from "~/components/errorPage";
-import Header from "~/components/header";
+import { Header } from "~/components/header";
 import { MainContainer } from "~/components/mainContainer";
 import { getUserSession } from "~/getUserSession";
 import { getSession } from "~/sessions";

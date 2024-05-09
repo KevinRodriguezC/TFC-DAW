@@ -1,7 +1,7 @@
 import type { ActionFunctionArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 
-import Header from "../components/header";
+import { Header } from "../components/header";
 
 import { createUser } from "~/model/user";
 import { Link } from "@remix-run/react";

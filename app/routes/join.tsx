@@ -14,7 +14,7 @@ import {
   getWorkspacesByUser,
 } from "~/model/workspace";
 
-import Header from "../components/header";
+import { Header } from "../components/header";
 import { getUserSession } from "~/getUserSession";
 import { MainContainer } from "~/components/mainContainer";
 import { useTranslation } from "react-i18next";

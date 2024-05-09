@@ -8,7 +8,7 @@ import { useLoaderData } from "@remix-run/react";
 
 import { getSession } from "../sessions";
 
-import Header from "../components/header";
+import { Header } from "../components/header";
 import { Switch } from "@headlessui/react";
 import { Toogle } from "~/components/toggle";
 import { getUserInfo, updateUser } from "~/model/user";

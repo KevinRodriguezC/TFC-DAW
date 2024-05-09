@@ -10,7 +10,7 @@ import { getSession } from "../sessions";
 
 import { createWorkspace } from "~/model/workspace";
 
-import Header from "../components/header";
+import { Header } from "../components/header";
 import { useTranslation } from "react-i18next";
 import { getUserSession } from "~/getUserSession";
 import { MainContainer } from "~/components/mainContainer";

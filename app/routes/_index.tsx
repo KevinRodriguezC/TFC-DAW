@@ -1,10 +1,8 @@
 import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-
 import { getSession } from "../sessions";
-
-import Header from "../components/header";
+import { Header } from "../components/header";
 import { ButtonLink } from "~/components/buttonLink";
 import { MainContainer } from "~/components/mainContainer";
 import { getUserSession } from "~/getUserSession";

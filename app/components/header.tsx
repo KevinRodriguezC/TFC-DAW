@@ -2,7 +2,7 @@ import { Form, Link } from "@remix-run/react";
 import { UserDropdown } from "./userDropdown";
 import { useTranslation } from "react-i18next";
 
-export default function Header({
+export function Header({
   username,
   name,
 }: {

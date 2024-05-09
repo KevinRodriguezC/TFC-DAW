@@ -2,7 +2,7 @@ import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
-import Header from "~/components/header";
+import { Header } from "~/components/header";
 import { MainContainer } from "~/components/mainContainer";
 import { UserCardInfo } from "~/components/userCardInfo";
 import { getUserSession } from "~/getUserSession";
