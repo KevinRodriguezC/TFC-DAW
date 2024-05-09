@@ -43,11 +43,7 @@ export default function Index() {
         <h2 className="text-xl">{t("results_for_the_term", { term: q })}</h2>
         {usersSearch.length ? (
           usersSearch.map((userSearch: any) => (
-            <UserCardInfo
-              key={userSearch.username}
-              name={userSearch.name + " " + userSearch.lastname}
-              username={userSearch.username}
-            />
+            <UserCardInfo key={userSearch.username} user={userSearch} />
           ))
         ) : (
           <p>{t("no_results")}</p>
