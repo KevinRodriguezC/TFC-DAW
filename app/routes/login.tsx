@@ -4,7 +4,7 @@ import type {
   ActionFunctionArgs,
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Form, Link, useLoaderData } from "@remix-run/react";
 
 import { getSession, commitSession } from "../sessions";
 
@@ -79,7 +79,7 @@ export default function Login() {
   return (
     <div className="flex flex-col dark:text-white min-h-screen bg-slate-200">
       <div className="flex flex-col dark:text-white flex-1 container-secondary-bg justify-center items-center">
-        <form
+        <Form
           className="container-primary-bg container-secondary-border border-2 rounded-md p-4 flex flex-col gap-4 min-w-96"
           method="POST"
         >
@@ -96,7 +96,7 @@ export default function Login() {
             .
           </p>
           <input type="submit" value={t("log_in")} className="btn-primary" />
-        </form>
+        </Form>
       </div>
     </div>
   );
