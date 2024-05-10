@@ -15,6 +15,7 @@ import { getUserInfo, updateUser } from "~/model/user";
 import { MainContainer } from "~/components/mainContainer";
 import { useTranslation } from "react-i18next";
 import i18n from "./../i18n";
+import { UserProfilePicture } from "~/components/userProfilePicture";
 
 const lngs = {
   en: { nativeName: "English" },
@@ -36,6 +37,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
   const formData = await request.formData();
   let name = formData.get("name");
   let lastname = formData.get("lastname");
+  let profilePictureColor = formData.get("profilePictureColor");
 
   let visibilityString = formData.get("visibility");
   let visibility;
@@ -49,6 +51,10 @@ export async function action({ params, request }: ActionFunctionArgs) {
     lastname = "";
   }
 
+  if (!profilePictureColor || !+profilePictureColor) {
+    return new Response("Missing parameters", { status: 400 });
+  }
+
   if (
     !userId ||
     !+userId ||
@@ -59,7 +65,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
     throw new Response("Error", { status: 500 });
   }
   let userIdNumber = +userId;
-  updateUser(userIdNumber, name, lastname, visibility);
+  updateUser(userIdNumber, name, lastname, visibility, +profilePictureColor);
   return redirect("/settings");
 }
 
@@ -87,9 +93,15 @@ export default function Settings() {
 
   const { t } = useTranslation();
 
+  let colors = [
+    { id: 1, name: "color_blue", value: "bg-blue-600" },
+    { id: 2, name: "color_red", value: "bg-red-600" },
+    { id: 3, name: "color_purple", value: "bg-purple-600" },
+  ];
+
   return (
     <MainContainer>
-      <Header username={userInfo.username} name={userInfo.name} />
+      <Header user={userInfo} />
       <div className="xl:mx-auto xl:w-[1020px] flex flex-col gap-4 m-4 flex-1">
         <form method="post" className="flex flex-col gap-2 p-2">
           <h2 className="text-2xl">{t("account_settings")}</h2>
@@ -133,6 +145,19 @@ export default function Settings() {
               </button>
             ))}
           </div>
+          {colors.map((colorInfo) => (
+            <>
+              <input
+                type="radio"
+                name="profilePictureColor"
+                id={"color-" + colorInfo.id}
+                value={colorInfo.id}
+              />
+              <label htmlFor={"color-" + colorInfo.id}>
+                {t(colorInfo.name)}
+              </label>
+            </>
+          ))}
           <input className="btn-primary" type="submit" value="Save changes" />
         </form>
       </div>

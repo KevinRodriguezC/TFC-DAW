@@ -74,7 +74,7 @@ export default function NewWorkspace() {
 
   return (
     <MainContainer>
-      <Header username={userInfo.username} name={userInfo.name}></Header>
+      <Header user={userInfo}></Header>
       <div className="xl:mx-auto xl:w-[1020px] flex flex-col gap-4 m-4 flex-1">
         <form method="POST" className="flex flex-col gap-2">
           <label htmlFor="workspaceName">{t("name")}</label>

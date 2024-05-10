@@ -94,7 +94,7 @@ export default function Index() {
 
   return (
     <MainContainer>
-      <Header username={userInfo.username} name={userInfo.name} />
+      <Header />
       <div className="xl:mx-auto xl:w-[1020px] flex flex-col gap-4 m-4 flex-1">
         <h2 className="text-2xl font-bold">{t("join_a_workspace")}</h2>
         <Form method="POST" className="flex flex-col gap-4">

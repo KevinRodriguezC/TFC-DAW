@@ -19,6 +19,7 @@ import { WorkspaceInfobar } from "~/components/workspaceInfobar";
 import { useState } from "react";
 import { HistoryInfobar } from "~/components/historyInfobar";
 import { getEventsByWorkspaceId } from "~/model/events";
+import { UserProfilePicture } from "~/components/userProfilePicture";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   // Get the user session info
@@ -63,6 +64,7 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
       username: workspaceUsers[i].user.username,
       name: workspaceUsers[i].user.name,
       lastname: workspaceUsers[i].user.lastname,
+      profilePictureColor: workspaceUsers[i].user.profilePictureColor,
     });
   }
   const directories = await getDirectoriesByWorkspace(+workspaceId);
@@ -153,7 +155,7 @@ export default function Workspace() {
             </button>
             {/* <button className="bg-purple-600 flex items-center justify-center rounded-full text-white w-10 h-10 font-bold text-lg"> */}
             {userInfo && userInfo.username && userInfo.name ? (
-              <UserDropdown username={userInfo.username} name={userInfo.name} />
+              <UserDropdown user={{ user: userInfo }} />
             ) : (
               <>
                 <Link to="/login" className="btn-secondary h-10">

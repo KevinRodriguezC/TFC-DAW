@@ -1,15 +1,12 @@
 import { Form, Link } from "@remix-run/react";
 import { UserDropdown } from "./userDropdown";
 import { useTranslation } from "react-i18next";
+import { useUser } from "~/hooks/useUser";
 
-export function Header({
-  username,
-  name,
-}: {
-  username: string | null;
-  name: string | null;
-}) {
+export function Header() {
   const { t } = useTranslation();
+
+  const { user } = useUser();
 
   return (
     <div className="container-secondary-bg border-b-2 container-secondary-border p-2 flex gap-2 justify-between">
@@ -31,8 +28,8 @@ export function Header({
       </Form>
       <div className="bg-slate-300 dark:bg-slate-900 w-[2px] xl:hidden"></div>
       <div className="flex gap-2 justify-end xl:flex-1">
-        {username && name ? (
-          <UserDropdown username={username} name={name} />
+        {user ? (
+          <UserDropdown />
         ) : (
           <>
             <Link to="/login" className="btn-secondary h-10">

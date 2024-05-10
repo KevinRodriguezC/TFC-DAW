@@ -22,23 +22,20 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  let { userInfo } = await getUserSession(
-    await getSession(request.headers.get("Cookie"))
-  );
   const url = new URL(request.url);
   const q = url.searchParams.get("inputQuery");
   const usersSearch = await searchUsers(q);
-  return json({ usersSearch, q, userInfo });
+  return json({ usersSearch, q });
 };
 
 export default function Index() {
-  let { usersSearch, q, userInfo } = useLoaderData<typeof loader>();
+  let { usersSearch, q } = useLoaderData<typeof loader>();
 
   const { t } = useTranslation();
 
   return (
     <MainContainer>
-      <Header username={userInfo.username} name={userInfo.name} />
+      <Header />
       <div className="xl:mx-auto xl:w-[1020px] flex flex-col gap-4 m-4 flex-1">
         <h2 className="text-xl">{t("results_for_the_term", { term: q })}</h2>
         {usersSearch.length ? (

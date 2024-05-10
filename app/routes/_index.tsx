@@ -7,6 +7,7 @@ import { ButtonLink } from "~/components/buttonLink";
 import { MainContainer } from "~/components/mainContainer";
 import { getUserSession } from "~/getUserSession";
 import { useTranslation } from "react-i18next";
+import { useUser } from "~/hooks/useUser";
 
 export const meta: MetaFunction = () => {
   return [
@@ -24,11 +25,18 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function Index() {
   const { userInfo } = useLoaderData<typeof loader>();
+
+  const { login, logout } = useUser();
+
+  const checkLogin = async () =>
+    userInfo && userInfo.username ? login(userInfo) : logout();
+
+  checkLogin();
+
   const { t } = useTranslation();
-  ButtonLink;
   return (
     <MainContainer>
-      <Header username={userInfo.username} name={userInfo.name} />
+      <Header />
       <div className="container-primary-bg flex-1 flex flex-col">
         <div className=" self-center max-w-5xl flex flex-col gap-6 mt-10 m">
           {userInfo && userInfo.username ? (

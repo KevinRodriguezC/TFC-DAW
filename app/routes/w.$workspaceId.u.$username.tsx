@@ -11,6 +11,7 @@ import { ButtonLink } from "~/components/buttonLink";
 import { getUserSession } from "~/getUserSession";
 import { getSession } from "~/sessions";
 import { getUserInWorkspace } from "~/model/workspace";
+import { UserProfilePicture } from "~/components/userProfilePicture";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
@@ -59,6 +60,7 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
       lastname: user.lastname,
       username: user.username,
       visibility: user.visibility,
+      profilePictureColor: user.profilePictureColor,
     },
     userInfo,
     events,
@@ -74,9 +76,7 @@ export default function Participant() {
     <WorkspaceContentContainer>
       <div className="flex justify-between">
         <div className="flex gap-2">
-          <div className="bg-purple-600 rounded-full size-16 text-2xl btn-user-icon">
-            {user.username.charAt(0)}
-          </div>
+          <UserProfilePicture user={user} size="size-16 text-2xl" />
           <div className="flex flex-col gap-1">
             <h2 className="text-2xl font-bold">
               {user.name} {user.lastname}

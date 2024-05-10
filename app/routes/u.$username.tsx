@@ -45,7 +45,7 @@ export default function Index() {
   return (
     <>
       <div className="flex gap-2">
-        <UserProfilePicture user={user} size={"size-16"} />
+        <UserProfilePicture user={user} size={"size-16 text-2xl"} />
         <div className="flex flex-col justify-center">
           <h2 className="text-xl font-bold">
             {user.name} {user.lastname}

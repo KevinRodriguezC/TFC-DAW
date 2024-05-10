@@ -18,6 +18,7 @@ export async function getUserSession(session: any) {
       userInfo: {
         username: userQueryInfo.username,
         name: userQueryInfo.name + " " + userQueryInfo.lastname,
+        profilePictureColor: userQueryInfo.profilePictureColor,
       },
     };
   }

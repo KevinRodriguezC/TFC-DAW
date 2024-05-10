@@ -12,6 +12,7 @@ import {
 import stylesheet from "~/tailwind.css";
 import ErrorPage from "./components/errorPage";
 import i18n from "./i18n";
+import { UserProvider } from "./context/user";
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
@@ -50,7 +51,9 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <UserProvider>
+          <Outlet />
+        </UserProvider>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

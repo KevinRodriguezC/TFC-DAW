@@ -34,6 +34,7 @@ export async function createUser(
       lastname: lastname,
       visibility: 0,
       password: password,
+      profilePictureColor: 1,
     },
   });
 }
@@ -42,7 +43,8 @@ export async function updateUser(
   id: number,
   name: string,
   lastname: string,
-  visibility: number
+  visibility: number,
+  profilePictureColor: number
 ) {
   return await prisma.user.update({
     where: {
@@ -52,6 +54,7 @@ export async function updateUser(
       name: name,
       lastname: lastname,
       visibility: visibility,
+      profilePictureColor: profilePictureColor,
     },
   });
 }

@@ -22,7 +22,7 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const { userId, userInfo } = await getUserSession(
+  const { userId } = await getUserSession(
     await getSession(request.headers.get("Cookie"))
   );
   const userWorkspaces = await getWorkspacesByUser(+userId);
@@ -30,17 +30,17 @@ export async function loader({ request }: LoaderFunctionArgs) {
   for (let i = 0; i < userWorkspaces.length; i++) {
     workspaces.push(userWorkspaces[i].workspace);
   }
-  return json({ userInfo, workspaces });
+  return json({ workspaces });
 }
 
 export default function Index() {
-  const { userInfo, workspaces } = useLoaderData<typeof loader>();
+  const { workspaces } = useLoaderData<typeof loader>();
 
   const { t } = useTranslation();
 
   return (
     <MainContainer>
-      <Header username={userInfo.username} name={userInfo.name} />
+      <Header />
       <div className="xl:mx-auto xl:w-[1020px] flex flex-col gap-4 m-4 flex-1">
         {workspaces.length ? (
           <>

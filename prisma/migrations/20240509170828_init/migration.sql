@@ -8,6 +8,7 @@ CREATE TABLE `User` (
     `lastname` VARCHAR(191) NULL,
     `visibility` INTEGER NOT NULL,
     `password` VARCHAR(191) NOT NULL,
+    `profilePictureColor` INTEGER NOT NULL,
 
     UNIQUE INDEX `User_email_key`(`email`),
     UNIQUE INDEX `User_username_key`(`username`),
@@ -47,29 +48,6 @@ CREATE TABLE `Directory` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Data` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `name` VARCHAR(191) NOT NULL,
-    `parentId` INTEGER NOT NULL,
-    `type` INTEGER NOT NULL,
-    `data` VARCHAR(191) NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `Attribute` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `dataId` INTEGER NOT NULL,
-    `type` INTEGER NOT NULL,
-    `value` VARCHAR(191) NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
 CREATE TABLE `InvitationCodes` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -102,12 +80,6 @@ ALTER TABLE `UserOnWorkspaces` ADD CONSTRAINT `UserOnWorkspaces_workspaceId_fkey
 
 -- AddForeignKey
 ALTER TABLE `Directory` ADD CONSTRAINT `Directory_parentId_fkey` FOREIGN KEY (`parentId`) REFERENCES `Workspace`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Data` ADD CONSTRAINT `Data_parentId_fkey` FOREIGN KEY (`parentId`) REFERENCES `Directory`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Attribute` ADD CONSTRAINT `Attribute_dataId_fkey` FOREIGN KEY (`dataId`) REFERENCES `Data`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `InvitationCodes` ADD CONSTRAINT `InvitationCodes_workspaceId_fkey` FOREIGN KEY (`workspaceId`) REFERENCES `Workspace`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

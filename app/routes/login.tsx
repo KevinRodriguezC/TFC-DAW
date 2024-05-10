@@ -10,6 +10,7 @@ import { getSession, commitSession } from "../sessions";
 
 import { getUserByUsername } from "~/model/user";
 import { useTranslation } from "react-i18next";
+import { useUser } from "~/hooks/useUser";
 
 export const meta: MetaFunction = () => {
   return [
@@ -30,9 +31,9 @@ async function validateCredentials(username: any, password: any) {
 export async function loader({ request }: LoaderFunctionArgs) {
   const session = await getSession(request.headers.get("Cookie"));
 
-  if (session.has("userId")) {
-    return redirect("/");
-  }
+  // if (session.has("userId")) {
+  //   return redirect("/");
+  // }
 
   const data = { error: session.get("error") };
 

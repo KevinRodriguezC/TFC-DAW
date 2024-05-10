@@ -1,8 +1,9 @@
 import type { MetaFunction, ActionFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
-import { Link } from "@remix-run/react";
+import { Form, Link } from "@remix-run/react";
 
 import { getSession, destroySession } from "../sessions";
+import { useUser } from "../hooks/useUser";
 
 export const meta: MetaFunction = () => {
   return [
@@ -22,11 +23,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function LogoutRoute() {
+  const { logout } = useUser();
+
   return (
     <>
       <div className="flex flex-col dark:text-white min-h-screen">
         <div className="flex flex-1 flex-col dark:text-white container-secondary-bg justify-center items-center">
-          <form
+          <Form
             method="post"
             className="container-primary-bg container-secondary-border border-2 rounded-md p-4 flex flex-col gap-4 min-w-96"
           >
@@ -35,9 +38,11 @@ export default function LogoutRoute() {
               <Link to="/" className="btn-secondary">
                 Never mind
               </Link>
-              <button className="btn-primary">Logout</button>
+              <button className="btn-primary" onClick={logout}>
+                Logout
+              </button>
             </div>
-          </form>
+          </Form>
         </div>
       </div>
     </>
