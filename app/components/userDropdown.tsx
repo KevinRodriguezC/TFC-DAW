@@ -20,7 +20,7 @@ export function UserDropdown() {
       >
         {user.username && user.username.charAt(0)}
       </Menu.Button>
-      <Menu.Items className="absolute top-16 right-1 p-2 bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-900 border-2 rounded-2xl flex flex-col gap-2 min-w-72 z-10">
+      <Menu.Items className="absolute bottom-0 left-0 right-0 sm:top-16 sm:right-1 sm:bottom-auto sm:left-auto p-2 bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-900 border-2 rounded-t-2xl sm:rounded-2xl flex flex-col gap-2 min-w-72 z-10">
         <div className="flex gap-2">
           {/* <div className="btn-user-icon-infobar bg-purple-600"> */}
           {/* {user.username.charAt(0)} */}

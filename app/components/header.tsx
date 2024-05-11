@@ -16,7 +16,7 @@ export function Header() {
       {/* <div className="flex gap-2"> */}
       <Form action="/search" method="get" className="flex gap-2">
         <input
-          className="form-control h-10 w-96"
+          className="form-control h-10 sm:w-96"
           name="inputQuery"
           placeholder={t("search")}
         />
