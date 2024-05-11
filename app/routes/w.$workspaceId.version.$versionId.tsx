@@ -6,6 +6,7 @@ import type {
 import { json, redirect } from "@remix-run/node";
 import { Form, Link, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
+import { UserProfilePicture } from "~/components/userProfilePicture";
 import { getUserSession } from "~/getUserSession";
 import { getDirectoryInfo, updateDirectory } from "~/model/directory";
 import { addEvent, getEventById } from "~/model/events";
@@ -45,7 +46,11 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     oldData,
     data,
     canEdit: userId != undefined,
-    editorInfo: { name: editorInfo.name, username: editorInfo.username },
+    editorInfo: {
+      name: editorInfo.name,
+      username: editorInfo.username,
+      profilePictureColor: editorInfo.profilePictureColor,
+    },
   });
 };
 
@@ -87,19 +92,36 @@ export async function action({ params, request }: ActionFunctionArgs) {
 }
 
 export default function VersionPage() {
-  const { oldData, data, canEdit } = useLoaderData<typeof loader>();
+  const { oldData, data, canEdit, editorInfo } = useLoaderData<typeof loader>();
   const { t } = useTranslation();
   console.log(oldData);
 
   return (
     <Form className="flex flex-col flex-1" method="POST" key={oldData.id}>
-      <div className="p-2">
+      <div className="p-2 flex gap-2 justify-between container-secondary-border border-b-2">
+        <div className="flex gap-2 items-center">
+          {t("edited_by")}
+          <UserProfilePicture user={editorInfo} size={" size-14 text-xl"} />
+          <div className="flex flex-col justify-center">
+            <h2 className="text-lg font-bold">{editorInfo.name}</h2>
+            <h3 className="text-md">@{editorInfo.username}</h3>
+          </div>
+        </div>
         {canEdit && (
           <input type="submit" value={t("restore")} className="btn-primary" />
         )}
       </div>
-      <div className="grid grid-rows-[50px_1fr] grid-cols-2 flex-1 grid-flow-col">
+      <div className="grid grid-cols-2">
+        <h3 className="flex items-center justify-center p-1 font-bold">
+          {t("actual")}
+        </h3>
+        <h3 className="flex items-center justify-center p-1 font-bold">
+          {t("previous")}
+        </h3>
+      </div>
+      <div className="grid grid-rows-[50px_2px_1fr] grid-cols-2 flex-1 grid-flow-col">
         <div className="data-input resize-none">{data && data.name}</div>
+        <span className="container-secondary-bg"></span>
         <div className="data-input resize-none">{data && data.description}</div>
         <input
           type="text"
@@ -108,6 +130,7 @@ export default function VersionPage() {
           className="data-input text-xl font-bold"
           disabled={!canEdit}
         />
+        <span className="container-secondary-bg"></span>
         <textarea
           name="description"
           className="data-input flex-1 resize-none"
