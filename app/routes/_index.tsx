@@ -8,6 +8,7 @@ import { MainContainer } from "~/components/mainContainer";
 import { getUserSession } from "~/getUserSession";
 import { useTranslation } from "react-i18next";
 import { useUser } from "~/hooks/useUser";
+import { manageLogin } from "~/manageLogin";
 
 export const meta: MetaFunction = () => {
   return [
@@ -26,12 +27,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function Index() {
   const { userInfo } = useLoaderData<typeof loader>();
 
-  const { login, logout } = useUser();
-
-  const checkLogin = async () =>
-    userInfo && userInfo.username ? login(userInfo) : logout();
-
-  checkLogin();
+  manageLogin(userInfo);
 
   const { t } = useTranslation();
   return (

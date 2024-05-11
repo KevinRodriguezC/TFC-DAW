@@ -12,6 +12,9 @@ import { getUserInfo, updateUser } from "~/model/user";
 import { MainContainer } from "~/components/mainContainer";
 import { useTranslation } from "react-i18next";
 import i18n from "./../i18n";
+import { UserProfilePicture } from "~/components/userProfilePicture";
+import { manageLogin } from "~/manageLogin";
+import { colorsArray } from "~/profilePictureColors";
 
 const lngs = {
   en: { nativeName: "English" },
@@ -80,6 +83,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     name: userArray.name,
     lastname: userArray.lastname ? userArray.lastname : "",
     visibility: userArray.visibility != 0,
+    profilePictureColor: userArray.profilePictureColor,
   };
   return json({ userInfo });
 }
@@ -89,11 +93,7 @@ export default function Settings() {
 
   const { t } = useTranslation();
 
-  let colors = [
-    { id: 1, name: "color_blue", value: "bg-blue-600" },
-    { id: 2, name: "color_red", value: "bg-red-600" },
-    { id: 3, name: "color_purple", value: "bg-purple-600" },
-  ];
+  manageLogin(userInfo);
 
   return (
     <MainContainer>
@@ -141,19 +141,36 @@ export default function Settings() {
               </button>
             ))}
           </div>
-          {colors.map((colorInfo) => (
-            <>
-              <input
-                type="radio"
-                name="profilePictureColor"
-                id={"color-" + colorInfo.id}
-                value={colorInfo.id}
-              />
-              <label htmlFor={"color-" + colorInfo.id}>
-                {t(colorInfo.name)}
-              </label>
-            </>
-          ))}
+          <label>{t("profile_picture_color")}</label>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2">
+            {colorsArray.map((colorInfo) => (
+              <>
+                <div className="select-none">
+                  <input
+                    type="radio"
+                    name="profilePictureColor"
+                    className="profilePictureColor"
+                    id={"color-" + colorInfo.id}
+                    value={colorInfo.id}
+                    hidden
+                  />
+                  <label
+                    htmlFor={"color-" + colorInfo.id}
+                    className="profilePictureSelector"
+                  >
+                    <UserProfilePicture
+                      user={{
+                        username: userInfo.username,
+                        profilePictureColor: colorInfo.id,
+                      }}
+                      size={"size-11 text-lg"}
+                    />
+                    {t(colorInfo.name)}
+                  </label>
+                </div>
+              </>
+            ))}
+          </div>
           <input className="btn-primary" type="submit" value="Save changes" />
         </Form>
       </div>

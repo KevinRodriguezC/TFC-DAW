@@ -4,17 +4,20 @@ import { useTranslation } from "react-i18next";
 import { UserProfilePicture } from "./userProfilePicture";
 import { useContext } from "react";
 import { UserContext } from "../context/user";
+import { colorStringArray } from "../profilePictureColors";
 
 export function UserDropdown() {
   const { t } = useTranslation();
 
   const { user } = useContext<any>(UserContext);
 
-  console.log(user);
-
   return user ? (
     <Menu>
-      <Menu.Button className="btn-user-icon bg-purple-600">
+      <Menu.Button
+        className={
+          "btn-user-icon " + colorStringArray[user.profilePictureColor - 1]
+        }
+      >
         {user.username && user.username.charAt(0)}
       </Menu.Button>
       <Menu.Items className="absolute top-16 right-1 p-2 bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-900 border-2 rounded-2xl flex flex-col gap-2 min-w-72 z-10">

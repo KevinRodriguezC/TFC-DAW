@@ -353,4 +353,12 @@
   .word-wrap-anywhere {
     word-wrap: anywhere;
   }
+
+  .profilePictureColor ~ .profilePictureSelector {
+    @apply flex flex-col gap-2 items-center min-w-20 cursor-pointer p-4 rounded-md bg-slate-100 dark:bg-slate-800;
+  }
+
+  .profilePictureColor:checked ~ .profilePictureSelector {
+    @apply outline outline-blue-600 outline-4;
+  }
 }
