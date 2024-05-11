@@ -86,7 +86,7 @@ export default function Participant() {
         </div>
         <div>
           {user.visibility == 1 || user.username == userInfo.username ? (
-            <ButtonLink to={"../../../../u/" + user.username}>
+            <ButtonLink to={"/u/" + user.username}>
               Go to {user.visibility == 1 ? "public" : "private"} profile
             </ButtonLink>
           ) : (
