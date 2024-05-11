@@ -38,7 +38,7 @@ export default function Index() {
           {userInfo && userInfo.username ? (
             <>
               <h1 className="text-2xl font-bold">Welcome {userInfo.name}</h1>
-              <ButtonLink to="app">Workspaces</ButtonLink>
+              <ButtonLink to="w">Workspaces</ButtonLink>
               <ButtonLink to="settings">Settings</ButtonLink>
             </>
           ) : (

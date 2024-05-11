@@ -57,7 +57,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
     workspaceDescription
   );
 
-  return redirect("/app");
+  return redirect("/w");
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
