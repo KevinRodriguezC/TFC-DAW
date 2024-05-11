@@ -20,6 +20,7 @@ import { useState } from "react";
 import { HistoryInfobar } from "~/components/historyInfobar";
 import { getEventsByWorkspaceId } from "~/model/events";
 import { UserProfilePicture } from "~/components/userProfilePicture";
+import { manageLogin } from "~/manageLogin";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   // Get the user session info
@@ -93,6 +94,8 @@ export default function Workspace() {
     }
   };
 
+  manageLogin(userInfo);
+
   return (
     <div className="container-primary-bg dark:text-white h-screen flex flex-col">
       <TopContainer>
@@ -155,7 +158,7 @@ export default function Workspace() {
             </button>
             {/* <button className="bg-purple-600 flex items-center justify-center rounded-full text-white w-10 h-10 font-bold text-lg"> */}
             {userInfo && userInfo.username && userInfo.name ? (
-              <UserDropdown user={{ user: userInfo }} />
+              <UserDropdown />
             ) : (
               <>
                 <Link to="/login" className="btn-secondary h-10">

@@ -69,6 +69,6 @@ export function UserDropdown() {
       </Menu.Items>
     </Menu>
   ) : (
-    ""
+    <div className={"btn-user-icon animate-pulse"}></div>
   );
 }
