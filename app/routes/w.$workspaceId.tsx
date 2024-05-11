@@ -119,7 +119,9 @@ export default function Workspace() {
           )}
         </div>
         <div className="container-secondary-bg border-b-2 container-secondary-border flex-1 p-2 flex gap-2 justify-between">
-          <div className="flex gap-2 "></div>
+          <div className="flex items-center">
+            {!canEdit && t("cant_edit_message")}
+          </div>
           <div className="flex gap-2">
             <button className="bg-blue-600 btn-user-icon">B</button>
             <button className="bg-red-600 btn-user-icon">C</button>
