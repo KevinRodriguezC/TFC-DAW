@@ -41,6 +41,7 @@ export async function createUser(
 
 export async function updateUser(
   id: number,
+  username: string,
   name: string,
   lastname: string,
   visibility: number,
@@ -51,6 +52,7 @@ export async function updateUser(
       id: id,
     },
     data: {
+      username: username,
       name: name,
       lastname: lastname,
       visibility: visibility,

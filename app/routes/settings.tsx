@@ -15,6 +15,8 @@ import i18n from "./../i18n";
 import { UserProfilePicture } from "~/components/userProfilePicture";
 import { manageLogin } from "~/manageLogin";
 import { colorsArray } from "~/profilePictureColors";
+import { getUserByUsername } from "~/model/user";
+import { getUserSession } from "~/getUserSession";
 
 const lngs = {
   en: { nativeName: "English" },
@@ -31,9 +33,11 @@ export const meta: MetaFunction = () => {
 };
 
 export async function action({ params, request }: ActionFunctionArgs) {
-  const session = await getSession(request.headers.get("Cookie"));
-  let userId = session.get("userId");
+  let { userId, userInfo } = await getUserSession(
+    await getSession(request.headers.get("Cookie"))
+  );
   const formData = await request.formData();
+  let username = formData.get("username");
   let name = formData.get("name");
   let lastname = formData.get("lastname");
   let profilePictureColor = formData.get("profilePictureColor");
@@ -44,6 +48,12 @@ export async function action({ params, request }: ActionFunctionArgs) {
     visibility = 1;
   } else {
     visibility = 0;
+  }
+  if (username != userInfo.username) {
+    let getUser = await getUserByUsername(username);
+    if (!username || getUser) {
+      throw new Response("Username not valid", { status: 400 });
+    }
   }
 
   if (!lastname) {
@@ -64,7 +74,14 @@ export async function action({ params, request }: ActionFunctionArgs) {
     throw new Response("Error", { status: 500 });
   }
   let userIdNumber = +userId;
-  updateUser(userIdNumber, name, lastname, visibility, +profilePictureColor);
+  updateUser(
+    userIdNumber,
+    username,
+    name,
+    lastname,
+    visibility,
+    +profilePictureColor
+  );
   return redirect("/settings");
 }
 
@@ -101,6 +118,14 @@ export default function Settings() {
       <div className="xl:mx-auto xl:w-[1020px] flex flex-col gap-4 m-4 flex-1">
         <Form method="post" className="flex flex-col gap-2 p-2">
           <h2 className="text-2xl">{t("account_settings")}</h2>
+          <label htmlFor="name">{t("username")}</label>
+          <input
+            type="text"
+            name="username"
+            className="form-control"
+            defaultValue={userInfo.username}
+            required
+          />
           <label htmlFor="name">{t("name")}</label>
           <input
             type="text"
