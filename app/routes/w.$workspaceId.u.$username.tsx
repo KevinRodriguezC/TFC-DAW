@@ -101,7 +101,7 @@ export default function Participant() {
           <h3 className="text-xl">{t("activity")}</h3>
           <div className="flex flex-col gap-2">
             {events.map((event) => (
-              <HistoryCard key={event.id} event={event} route="../" />
+              <HistoryCard key={event.id} event={event} route="../version/" />
             ))}
           </div>
         </>
