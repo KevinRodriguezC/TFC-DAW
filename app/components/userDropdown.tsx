@@ -40,7 +40,7 @@ export function UserDropdown() {
         </Menu.Item>
         <Menu.Item>
           {({ active }) => (
-            <Link className="btn-header-secondary" to="/app">
+            <Link className="btn-header-secondary" to="/w">
               {t("workspaces")}
             </Link>
           )}
