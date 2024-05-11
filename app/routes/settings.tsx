@@ -117,15 +117,16 @@ export default function Settings() {
             defaultValue={userInfo.lastname}
           />
           <label>{t("visibility")}</label>
-          <div className="flex p-2 bg-slate-100 dark:bg-slate-800 rounded-md items-center pointer">
-            <label className="flex-1" htmlFor="visibility">
-              {t("public_profile")}
-            </label>
+          <label
+            htmlFor="visibility"
+            className="flex p-2 bg-slate-100 dark:bg-slate-800 rounded-md items-center cursor-pointer select-none"
+          >
+            <p className="flex-1">{t("public_profile")}</p>
             <Toogle
               inputName="visibility"
               defaultValue={userInfo.visibility}
             ></Toogle>
-          </div>
+          </label>
           <label>{t("language")}</label>
           <div className="flex gap-2">
             {Object.keys(lngs).map((lng) => (
@@ -153,6 +154,9 @@ export default function Settings() {
                     id={"color-" + colorInfo.id}
                     value={colorInfo.id}
                     hidden
+                    defaultChecked={
+                      userInfo.profilePictureColor == colorInfo.id
+                    }
                   />
                   <label
                     htmlFor={"color-" + colorInfo.id}
