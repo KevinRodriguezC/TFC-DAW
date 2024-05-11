@@ -4,18 +4,14 @@ import type {
   ActionFunctionArgs,
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
-
+import { Form, useLoaderData } from "@remix-run/react";
 import { getSession } from "../sessions";
-
 import { Header } from "../components/header";
-import { Switch } from "@headlessui/react";
 import { Toogle } from "~/components/toggle";
 import { getUserInfo, updateUser } from "~/model/user";
 import { MainContainer } from "~/components/mainContainer";
 import { useTranslation } from "react-i18next";
 import i18n from "./../i18n";
-import { UserProfilePicture } from "~/components/userProfilePicture";
 
 const lngs = {
   en: { nativeName: "English" },
@@ -101,9 +97,9 @@ export default function Settings() {
 
   return (
     <MainContainer>
-      <Header user={userInfo} />
+      <Header />
       <div className="xl:mx-auto xl:w-[1020px] flex flex-col gap-4 m-4 flex-1">
-        <form method="post" className="flex flex-col gap-2 p-2">
+        <Form method="post" className="flex flex-col gap-2 p-2">
           <h2 className="text-2xl">{t("account_settings")}</h2>
           <label htmlFor="name">{t("name")}</label>
           <input
@@ -159,7 +155,7 @@ export default function Settings() {
             </>
           ))}
           <input className="btn-primary" type="submit" value="Save changes" />
-        </form>
+        </Form>
       </div>
     </MainContainer>
   );
