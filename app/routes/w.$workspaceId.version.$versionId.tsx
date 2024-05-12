@@ -119,10 +119,12 @@ export default function VersionPage() {
           {t("previous")}
         </h3>
       </div>
-      <div className="grid grid-rows-[50px_2px_1fr] grid-cols-2 flex-1 grid-flow-col">
+      <div className="grid grid-rows-[50px_2px_1fr] grid-cols-2 flex-1 grid-flow-col overflow-hidden">
         <div className="data-input resize-none">{data && data.name}</div>
         <span className="container-secondary-bg"></span>
-        <div className="data-input resize-none">{data && data.description}</div>
+        <textarea className="data-input resize-none overflow-y-auto" disabled>
+          {data && data.description}
+        </textarea>
         <input
           type="text"
           name="name"
