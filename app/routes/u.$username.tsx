@@ -8,14 +8,27 @@ import { useTranslation } from "react-i18next";
 import { getUserSession } from "~/getUserSession";
 import { getSession } from "~/sessions";
 import { UserProfilePicture } from "~/components/userProfilePicture";
+import { cardInfo } from "~/cardGenerator";
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const { t } = useTranslation();
 
-  return [
-    { title: t("user_info") + " | TFC App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
+  if (!data) {
+    return [
+      { title: t("user_info") + " | TFC App" },
+      { name: "description", content: "Welcome to Remix!" },
+    ];
+  } else {
+    const { user, workspaces } = data;
+    return cardInfo(
+      user.name + " " + user.lastname + " | TFC App",
+      "Username: u/" +
+        user.username +
+        ", Workspaces: " +
+        workspaces.length +
+        " | TFC App"
+    );
+  }
 };
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
@@ -38,7 +51,7 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   return json({ user, workspaces });
 };
 
-export default function Index() {
+export default function UserInfo() {
   let { user, workspaces } = useLoaderData<typeof loader>();
   const { t } = useTranslation();
 

@@ -7,14 +7,11 @@ import { ButtonLink } from "~/components/buttonLink";
 import { MainContainer } from "~/components/mainContainer";
 import { getUserSession } from "~/getUserSession";
 import { useTranslation } from "react-i18next";
-import { useUser } from "~/hooks/useUser";
 import { manageLogin } from "~/manageLogin";
+import { cardInfo } from "~/cardGenerator";
 
 export const meta: MetaFunction = () => {
-  return [
-    { title: "TFC app" },
-    { name: "description", content: "This is my TFC" },
-  ];
+  return cardInfo("TFC App", "This is my TFC App", "/preview.png");
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {

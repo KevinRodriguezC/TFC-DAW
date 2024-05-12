@@ -1,14 +1,26 @@
-import type { MetaFunction } from "@remix-run/node";
-import { Link } from "@remix-run/react";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import { Link, json } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
+import { cardInfo } from "~/cardGenerator";
+import { getWorkspaceInfo } from "~/getWorkspaceInfo";
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const { t } = useTranslation();
 
-  return [
-    { title: t("workspace") + " | TFC App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
+  if (!data) {
+    return cardInfo(t("workspace") + " | TFC App", "Workspace", "/preview.png");
+  }
+  const { workspace } = data;
+
+  return cardInfo(
+    workspace.name + " | TFC App",
+    workspace.description ? workspace.description : "Workspace",
+    "/preview.png"
+  );
+};
+
+export const loader = async ({ request, params }: LoaderFunctionArgs) => {
+  return json(await getWorkspaceInfo(request, params));
 };
 
 export default function Index() {
