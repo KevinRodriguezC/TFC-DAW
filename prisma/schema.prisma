@@ -36,7 +36,7 @@ model Workspace {
   id              Int                @id @default(autoincrement())
   createdAt       DateTime           @default(now())
   name            String
-  description     String?
+  description     String?            @db.LongText
   directories     Directory[]
   users           UserOnWorkspaces[]
   visibility      Int
@@ -47,7 +47,7 @@ model Directory {
   id          Int       @id @default(autoincrement())
   createdAt   DateTime  @default(now())
   name        String
-  description String?
+  description String?   @db.LongText
   parent      Workspace @relation(fields: [parentId], references: [id])
   parentId    Int
   // data        Data[]
@@ -90,5 +90,5 @@ model Events {
   workspaceId Int?
   userId      Int
   name        String?
-  value       String?
+  value       String?  @db.LongText
 }
