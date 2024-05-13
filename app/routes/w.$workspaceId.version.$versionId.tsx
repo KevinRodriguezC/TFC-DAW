@@ -111,20 +111,36 @@ export default function VersionPage() {
           <input type="submit" value={t("restore")} className="btn-primary" />
         )}
       </div>
-      <div className="grid grid-cols-2">
+      <div className={"grid" + (!data.deleted ? " grid-cols-2" : "")}>
         <h3 className="flex items-center justify-center p-1 font-bold">
-          {t("actual")}
+          {data.deleted ? t("before_being_deleted") : t("actual")}
         </h3>
-        <h3 className="flex items-center justify-center p-1 font-bold">
-          {t("previous")}
-        </h3>
+        {!data.deleted ? (
+          <h3 className="flex items-center justify-center p-1 font-bold">
+            {t("previous")}
+          </h3>
+        ) : (
+          ""
+        )}
       </div>
-      <div className="grid grid-rows-[50px_2px_1fr] grid-cols-2 flex-1 grid-flow-col overflow-hidden">
-        <div className="data-input resize-none">{data && data.name}</div>
-        <span className="container-secondary-bg"></span>
-        <textarea className="data-input resize-none overflow-y-auto" disabled>
-          {data && data.description}
-        </textarea>
+      <div
+        className={
+          "grid grid-rows-[50px_2px_1fr] flex-1 grid-flow-col overflow-hidden" +
+          (!data.deleted ? " grid-cols-2" : " ")
+        }
+      >
+        {!data.deleted && (
+          <>
+            <div className="data-input resize-none">{data && data.name}</div>
+            <span className="container-secondary-bg"></span>
+            <textarea
+              className="data-input resize-none overflow-y-auto"
+              disabled
+            >
+              {data && data.description}
+            </textarea>
+          </>
+        )}
         <input
           type="text"
           name="name"

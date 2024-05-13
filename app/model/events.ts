@@ -40,8 +40,8 @@ export async function getWorkspaceEventsByUserId(
 }
 
 export async function addEvent(
-  type: number,
-  actionType: number,
+  type: number, // 0: workspace, 1: directory
+  actionType: number, // 0 : create, 1: edit, 2: destroy, 3: restore
   row: number,
   userId: number,
   workspaceId: number | null,

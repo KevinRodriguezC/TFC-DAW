@@ -27,7 +27,7 @@ export function HistoryCard({ event, route }: { event: any; route: string }) {
   };
 
   // Determine if the card redirects to the recovery page
-  const redirect = event.actionType == 1 || event.actionType == 3;
+  const redirect = event.type != 0;
 
   return (
     <NavLink

@@ -4,11 +4,14 @@ import {
   type MetaFunction,
   ActionFunctionArgs,
 } from "@remix-run/node";
-import { Form } from "@remix-run/react";
+import { Form, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { WorkspaceContentContainer } from "~/components/workspaceContentContainer";
 import { MyRadioGroup } from "~/components/radioSelect";
 import { createDirectory } from "~/model/directory";
+import { getUserSession } from "~/getUserSession";
+import { getSession } from "~/sessions";
+import { addEvent } from "~/model/events";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
@@ -20,18 +23,30 @@ export const meta: MetaFunction = () => {
 };
 
 export async function action({ params, request }: ActionFunctionArgs) {
+  let { userId } = await getUserSession(
+    await getSession(request.headers.get("Cookie"))
+  );
   const formData = await request.formData();
   const workspaceId = params.workspaceId;
-  const workspaceName = formData.get("directoryName");
+  const directoryName = formData.get("directoryName");
   if (
     !workspaceId ||
     !+workspaceId ||
-    !workspaceName ||
-    typeof workspaceName != "string"
+    !directoryName ||
+    typeof directoryName != "string"
   ) {
     throw new Response("Error", { status: 400 });
   }
-  const newDirectory = await createDirectory(+workspaceId, workspaceName);
+  const newDirectory = await createDirectory(+workspaceId, directoryName);
+  await addEvent(
+    1,
+    0,
+    newDirectory.id,
+    +userId,
+    +workspaceId,
+    directoryName,
+    ""
+  );
 
   return redirect("../" + newDirectory.id);
 }

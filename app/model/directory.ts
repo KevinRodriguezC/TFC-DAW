@@ -7,6 +7,7 @@ export async function getDirectoriesByWorkspace(workspaceId: number) {
       parentId: {
         equals: workspaceId,
       },
+      deleted: false,
     },
     orderBy: {
       name: "asc",
@@ -33,6 +34,7 @@ export async function createDirectory(
       name: directoryName,
       description: "",
       parentId: workspaceId,
+      deleted: false,
     },
   });
 }
@@ -54,9 +56,20 @@ export async function updateDirectory(
 }
 
 export async function deleteDirectory(directoryId: number) {
-  return await prisma.directory.delete({
+  return await prisma.directory.update({
     where: {
       id: directoryId,
     },
+    data: {
+      deleted: true,
+    },
   });
 }
+
+// export async function deleteDirectory(directoryId: number) {
+//   return await prisma.directory.delete({
+//     where: {
+//       id: directoryId,
+//     },
+//   });
+// }

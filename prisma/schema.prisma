@@ -50,6 +50,7 @@ model Directory {
   description String?   @db.LongText
   parent      Workspace @relation(fields: [parentId], references: [id])
   parentId    Int
+  deleted     Boolean
   // data        Data[]
 }
 

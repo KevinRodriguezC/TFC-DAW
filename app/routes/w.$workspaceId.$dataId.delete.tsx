@@ -13,8 +13,11 @@ import {
   useRouteError,
 } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
+import { getUserSession } from "~/getUserSession";
 
 import { deleteDirectory, getDirectoryInfo } from "~/model/directory";
+import { addEvent } from "~/model/events";
+import { getSession } from "~/sessions";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
@@ -26,12 +29,28 @@ export const meta: MetaFunction = () => {
 };
 
 export async function action({ params, request }: ActionFunctionArgs) {
+  let { userId } = await getUserSession(
+    await getSession(request.headers.get("Cookie"))
+  );
   const directoryId = params.dataId;
   const workspaceId = params.workspaceId;
   if (!directoryId || !+directoryId || !workspaceId || !+workspaceId) {
     throw new Response("Error", { status: 400 });
   }
+  const directoryInfo = await getDirectoryInfo(+directoryId);
+  if (!directoryInfo) {
+    throw new Response("Error", { status: 400 });
+  }
   deleteDirectory(+directoryId);
+  await addEvent(
+    1,
+    2,
+    +directoryId,
+    +userId,
+    +workspaceId,
+    directoryInfo.name,
+    directoryInfo.description
+  );
 
   return redirect("../../");
 }
