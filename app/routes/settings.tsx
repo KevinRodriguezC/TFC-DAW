@@ -200,7 +200,7 @@ export default function Settings() {
               </>
             ))}
           </div>
-          <input className="btn-primary" type="submit" value="Save changes" />
+          <input className="btn-primary" type="submit" value={t("save")} />
         </Form>
       </div>
     </MainContainer>
