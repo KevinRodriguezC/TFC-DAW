@@ -90,6 +90,7 @@ i18next.use(initReactI18next).init({
         actual: "Actual",
         previous: "Previous",
         cant_edit_message: "You don't have edit privileges",
+        before_being_deleted: "Before being deleted",
       },
     },
     es: {
@@ -172,6 +173,7 @@ i18next.use(initReactI18next).init({
         actual: "Actual",
         previous: "Previo",
         cant_edit_message: "No tienes permisos de edición",
+        before_being_deleted: "Antes de ser eliminado",
       },
     },
   },
