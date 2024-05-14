@@ -42,7 +42,8 @@ export async function createDirectory(
 export async function updateDirectory(
   directoryId: number,
   name: string,
-  description: string = ""
+  description: string = "",
+  deleted: boolean = false
 ) {
   return await prisma.directory.update({
     where: {
@@ -51,6 +52,7 @@ export async function updateDirectory(
     data: {
       name: name,
       description: description,
+      deleted: deleted,
     },
   });
 }
