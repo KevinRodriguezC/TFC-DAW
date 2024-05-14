@@ -31,10 +31,6 @@ async function validateCredentials(username: any, password: any) {
 export async function loader({ request }: LoaderFunctionArgs) {
   const session = await getSession(request.headers.get("Cookie"));
 
-  // if (session.has("userId")) {
-  //   return redirect("/");
-  // }
-
   const data = { error: session.get("error") };
 
   return json(data, {
@@ -49,9 +45,7 @@ export async function action({ request }: ActionFunctionArgs) {
   const form = await request.formData();
   const username = form.get("email");
   const password = form.get("password");
-
   const user = await validateCredentials(username, password);
-
   if (user == null) {
     session.flash("error", "Invalid username/password");
 
@@ -85,16 +79,29 @@ export default function Login() {
         >
           <h1 className="text-3xl font-bold">{t("log_in")}</h1>
           <label htmlFor="email">{t("username")}</label>
-          <input type="text" className="form-control" name="email" />
+          <input type="text" className="form-control" name="email" required />
           <label htmlFor="email">{t("password")}</label>
-          <input type="password" className="form-control" name="password" />
+          <input
+            type="password"
+            className="form-control"
+            name="password"
+            required
+          />
           <p>
             {t("dont_have_an_account")},{" "}
-            <Link to="/signup" className="  text-blue-800 underline">
+            <Link
+              to="/signup"
+              className="text-blue-800 dark:text-blue-300 underline"
+            >
               {t("create_an_account")}
             </Link>
             .
           </p>
+          {error && (
+            <div className="bg-red-200 dark:bg-red-800 text-red-900 dark:text-red-200 rounded-md p-2">
+              {error}
+            </div>
+          )}
           <input type="submit" value={t("log_in")} className="btn-primary" />
         </Form>
       </div>
