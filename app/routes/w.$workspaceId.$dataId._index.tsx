@@ -5,16 +5,8 @@ import type {
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 
-import {
-  Form,
-  Link,
-  isRouteErrorResponse,
-  useLoaderData,
-  useRouteError,
-} from "@remix-run/react";
+import { Form, Link, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
-import { JSX } from "react/jsx-runtime";
-import ErrorComponent from "~/components/errorComponent";
 import { getUserSession } from "~/getUserSession";
 
 import { getDirectoryInfo, updateDirectory } from "~/model/directory";
@@ -90,6 +82,7 @@ export default function Index() {
           name="name"
           defaultValue={data.name}
           className="data-input text-xl font-bold flex-1"
+          maxLength={191}
           disabled={!canEdit}
         />
         {canEdit ? (

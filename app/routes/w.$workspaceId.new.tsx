@@ -64,6 +64,7 @@ export default function Index() {
           className="form-control"
           id="directoryMame"
           name="directoryName"
+          maxLength={191}
         />
         {/* <label htmlFor="directoryName">{t("type")}</label>
         <MyRadioGroup

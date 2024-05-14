@@ -81,7 +81,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
     if (!versionInfo) {
       throw new Response("Error", { status: 400 });
     }
-    updateDirectory(+versionInfo.row, name, description);
+    updateDirectory(+versionInfo.row, name, description, false);
     addEvent(1, 3, +versionInfo.row, +userId, +workspaceId, name, description);
 
     return redirect("../" + versionInfo.row);
@@ -131,7 +131,13 @@ export default function VersionPage() {
       >
         {!data.deleted && (
           <>
-            <div className="data-input resize-none">{data && data.name}</div>
+            <input
+              type="text"
+              className="data-input resize-none"
+              value={data && data.name}
+              disabled
+              maxLength={191}
+            />
             <span className="container-secondary-bg"></span>
             <textarea
               className="data-input resize-none overflow-y-auto"
