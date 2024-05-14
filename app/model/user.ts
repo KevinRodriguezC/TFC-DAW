@@ -11,6 +11,16 @@ export async function getUserByUsername(username: any) {
   });
 }
 
+export async function getUserByEmail(email: string) {
+  return await prisma.user.findFirst({
+    where: {
+      email: {
+        equals: email,
+      },
+    },
+  });
+}
+
 export async function getUserInfo(id: any) {
   return await prisma.user.findFirst({
     where: {

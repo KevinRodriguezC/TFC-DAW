@@ -91,6 +91,7 @@ i18next.use(initReactI18next).init({
         previous: "Previous",
         cant_edit_message: "You don't have edit privileges",
         before_being_deleted: "Before being deleted",
+        are_you_sure_you_want_to_log_out: "Are you sure you want to log out?",
       },
     },
     es: {
@@ -174,6 +175,8 @@ i18next.use(initReactI18next).init({
         previous: "Previo",
         cant_edit_message: "No tienes permisos de edición",
         before_being_deleted: "Antes de ser eliminado",
+        are_you_sure_you_want_to_log_out:
+          "¿Estas seguro de que deseas cerrar sesión?",
       },
     },
   },

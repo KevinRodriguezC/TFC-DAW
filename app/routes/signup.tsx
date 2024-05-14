@@ -1,12 +1,15 @@
-import type { ActionFunctionArgs, MetaFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import type {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 
-import { Header } from "../components/header";
-
-import { createUser } from "~/model/user";
-import { Link } from "@remix-run/react";
+import { createUser, getUserByEmail, getUserByUsername } from "~/model/user";
+import { Form, Link, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { MainContainer } from "~/components/mainContainer";
+import { commitSession, getSession } from "~/sessions";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
@@ -17,38 +20,101 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+export async function loader({ request }: LoaderFunctionArgs) {
+  const session = await getSession(request.headers.get("Cookie"));
+
+  const data = { error: session.get("error") };
+
+  return json(data, {
+    headers: {
+      "Set-Cookie": await commitSession(session),
+    },
+  });
+}
+
 export async function action({ request }: ActionFunctionArgs) {
-  const formData = await request.formData();
-  let email = formData.get("email");
-  let username = formData.get("username");
-  let name = formData.get("name");
-  let lastname = formData.get("lastname");
-  let password = formData.get("password");
-  if (
-    !email ||
-    !username ||
-    !name ||
-    !lastname ||
-    !password ||
-    typeof email != "string" ||
-    typeof username != "string" ||
-    typeof name != "string" ||
-    typeof lastname != "string" ||
-    typeof password != "string"
-  ) {
-    throw new Response("Error", { status: 400 });
+  const session = await getSession(request.headers.get("Cookie"));
+  try {
+    const formData = await request.formData();
+    let email = formData.get("email");
+    let username = formData.get("username");
+    let name = formData.get("name");
+    let lastname = formData.get("lastname");
+    let password = formData.get("password");
+    if (
+      !email ||
+      !username ||
+      !name ||
+      !lastname ||
+      !password ||
+      typeof email != "string" ||
+      typeof username != "string" ||
+      typeof name != "string" ||
+      typeof lastname != "string" ||
+      typeof password != "string"
+    ) {
+      session.flash("error", "Missing parameters");
+
+      return redirect("/signup", {
+        headers: {
+          "Set-Cookie": await commitSession(session),
+        },
+      });
+    }
+    const userUsername = await getUserByUsername(username);
+    if (userUsername) {
+      session.flash("error", "The username " + username + " is taken");
+
+      return redirect("/signup", {
+        headers: {
+          "Set-Cookie": await commitSession(session),
+        },
+      });
+    }
+    const userEmail = await getUserByEmail(email);
+    console.log(userEmail);
+    if (userEmail) {
+      session.flash("error", "Email already in use");
+
+      return redirect("/signup", {
+        headers: {
+          "Set-Cookie": await commitSession(session),
+        },
+      });
+    }
+    const user = await createUser(email, username, name, lastname, password);
+
+    session.set("userId", "" + user.id);
+    console.log(user.id);
+    console.log(user);
+
+    return redirect("/", {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    });
+  } catch (error) {
+    console.log(error);
+
+    session.flash("error", "Internal server error");
+
+    return redirect("/signup", {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    });
   }
-  const user = createUser(email, username, name, lastname, password);
-  return json({});
 }
 
 export default function Index() {
+  const { error } = useLoaderData<typeof loader>();
+
   const { t } = useTranslation();
 
   return (
     <MainContainer>
       <div className="flex flex-1 flex-col dark:text-white container-secondary-bg justify-center items-center">
-        <form
+        <Form
           method="post"
           className="container-primary-bg container-secondary-border border-2 rounded-md p-4 flex flex-col gap-2 min-w-96"
         >
@@ -70,12 +136,17 @@ export default function Index() {
             </Link>
             .
           </p>
+          {error && (
+            <div className="bg-red-200 dark:bg-red-800 text-red-900 dark:text-red-200 rounded-md p-2">
+              {error}
+            </div>
+          )}
           <input
             type="submit"
             value={t("create_an_account")}
             className="btn-primary"
           />
-        </form>
+        </Form>
       </div>
     </MainContainer>
   );
