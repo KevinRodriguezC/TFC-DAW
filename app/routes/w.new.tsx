@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { getUserSession } from "~/getUserSession";
 import { MainContainer } from "~/components/mainContainer";
 import { addEvent } from "~/model/events";
+import { Form } from "@remix-run/react";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
@@ -75,7 +76,8 @@ export default function NewWorkspace() {
     <MainContainer>
       <Header />
       <div className="xl:mx-auto xl:w-[1020px] flex flex-col gap-4 m-4 flex-1">
-        <form method="POST" className="flex flex-col gap-2">
+        <h2 className="text-2xl font-bold">{t("new_workspace")}</h2>
+        <Form method="POST" className="flex flex-col gap-4">
           <label htmlFor="workspaceName">{t("name")}</label>
           <input
             type="text"
@@ -94,7 +96,7 @@ export default function NewWorkspace() {
             className="btn-primary"
             value={t("create")}
           ></input>
-        </form>
+        </Form>
       </div>
     </MainContainer>
   );
