@@ -4,7 +4,6 @@ import type {
   MetaFunction,
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
 
 import { getSession } from "../sessions";
 
@@ -31,13 +30,15 @@ export async function action({ params, request }: ActionFunctionArgs) {
   const formData = await request.formData();
   let workspaceName = formData.get("workspaceName");
   let workspaceDescription = formData.get("workspaceDescription");
+  if (!workspaceDescription) {
+    workspaceDescription = "";
+  }
   if (
     !workspaceName ||
-    !workspaceDescription ||
-    !userId ||
     typeof workspaceName != "string" ||
-    typeof workspaceDescription != "string" ||
-    !+userId
+    !userId ||
+    !+userId ||
+    typeof workspaceDescription != "string"
   ) {
     throw new Response("Error", { status: 400 });
   }
@@ -68,13 +69,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export default function NewWorkspace() {
-  let { userInfo } = useLoaderData<typeof loader>();
-
   const { t } = useTranslation();
 
   return (
     <MainContainer>
-      <Header user={userInfo}></Header>
+      <Header />
       <div className="xl:mx-auto xl:w-[1020px] flex flex-col gap-4 m-4 flex-1">
         <form method="POST" className="flex flex-col gap-2">
           <label htmlFor="workspaceName">{t("name")}</label>
@@ -82,6 +81,7 @@ export default function NewWorkspace() {
             type="text"
             className="form-control"
             name="workspaceName"
+            maxLength={191}
             required
           ></input>
           <label htmlFor="workspaceDescription">{t("description")}</label>
