@@ -1,6 +1,6 @@
 import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData, useRouteError } from "@remix-run/react";
 
 import { getWorkspacesByUser } from "~/model/workspace";
 import { getUserByUsername } from "~/model/user";
@@ -9,6 +9,7 @@ import { getUserSession } from "~/getUserSession";
 import { getSession } from "~/sessions";
 import { UserProfilePicture } from "~/components/userProfilePicture";
 import { cardInfo } from "~/cardGenerator";
+import UserPageError from "~/components/userPageError";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const { t } = useTranslation();
@@ -38,7 +39,7 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const username = params.username;
   const user = await getUserByUsername(username);
   if (!user) {
-    throw new Error("User not found");
+    throw new Response("User not found", { status: 404 });
   }
   if (user.visibility == 0 && user.id != userId) {
     throw new Response("This user is a private user", { status: 403 });
@@ -50,6 +51,12 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   }
   return json({ user, workspaces });
 };
+
+export function ErrorBoundary() {
+  let error = useRouteError();
+  console.log(error);
+  return <UserPageError error={error} />;
+}
 
 export default function UserInfo() {
   let { user, workspaces } = useLoaderData<typeof loader>();

@@ -1,10 +1,10 @@
-import { Link, isRouteErrorResponse } from "@remix-run/react";
+import { isRouteErrorResponse } from "@remix-run/react";
 
-export default function ErrorPage(error: any) {
-  let errorData = error.error || null;
+export default function UserPageError(error: any) {
+  const errorData = error.error || null;
 
   return (
-    <div className="min-h-screen p-4 flex flex-col gap-4 items-center justify-center bg-red-100 dark:bg-slate-950 text-red-950 dark:text-red-100">
+    <div className="flex-1 p-4 flex flex-col gap-4 items-center justify-center ">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="128"
@@ -18,8 +18,7 @@ export default function ErrorPage(error: any) {
       <h1 className=" text-5xl font-bold">
         {isRouteErrorResponse(errorData) ? errorData.status : "Unknown error"}
       </h1>
-      <p>{errorData.data}</p>
-      <Link to="/">Go back</Link>
+      <p>{errorData.data || "Something went wrong"}</p>
     </div>
   );
 }
