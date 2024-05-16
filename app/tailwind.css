@@ -361,4 +361,8 @@
   .profilePictureColor:checked ~ .profilePictureSelector {
     @apply outline outline-blue-600 outline-4;
   }
+
+  .word-wrap-break-word {
+    word-wrap: break-word;
+  }
 }

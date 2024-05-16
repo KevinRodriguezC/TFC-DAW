@@ -36,7 +36,9 @@ export default function Workspace() {
     <div className="container-primary-bg dark:text-white h-screen flex flex-col">
       <TopContainer>
         <div className="border-r-2 border-b-2 container-secondary-border p-2 w-80 flex justify-between items-center gap-2">
-          <h2 className="font-bold text-xl">{workspace.name}</h2>
+          <h2 className="font-bold text-xl overflow-hidden">
+            {workspace.name}
+          </h2>
           {canEdit ? (
             <Link to="settings" className="btn-icon">
               <svg

@@ -31,7 +31,7 @@ export default function Index() {
 
   return (
     <MainContainer>
-      <Header user={userInfo}></Header>
+      <Header />
       <div className="xl:mx-auto xl:w-[1020px] flex flex-col gap-4 m-4 flex-1">
         <Outlet />
       </div>
