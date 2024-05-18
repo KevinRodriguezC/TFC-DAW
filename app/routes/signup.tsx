@@ -21,8 +21,10 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
+  // Get the user session cookie
   const session = await getSession(request.headers.get("Cookie"));
 
+  // Get the form errors
   const data = { error: session.get("error") };
 
   return json(data, {

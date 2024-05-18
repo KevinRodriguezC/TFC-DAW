@@ -4,8 +4,9 @@ import type {
   ActionFunctionArgs,
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, Link, useLoaderData } from "@remix-run/react";
+import { Form, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
+import { cardInfo } from "~/cardGenerator";
 import { UserProfilePicture } from "~/components/userProfilePicture";
 import { getUserSession } from "~/getUserSession";
 import { getDirectoryInfo, updateDirectory } from "~/model/directory";
@@ -16,26 +17,31 @@ import { getSession } from "~/sessions";
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
 
-  return [
-    { title: t("directory") + " | TFC App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
+  return cardInfo(t("directory") + " | TFC App", t("directory"));
 };
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
+  // Get user id
   const { userId } = await getUserSession(
     await getSession(request.headers.get("Cookie"))
   );
+
+  // Get request parameters
   const versionId = params.versionId;
   const workspaceId = params.workspaceId;
   if (!versionId || !+versionId || !workspaceId || !+workspaceId) {
     throw new Response("Directory not found", { status: 404 });
   }
+
+  // Get the older version of the data
   let oldData = await getEventById(+versionId);
-  console.log(oldData);
+
+  // If the old data does not exist
   if (!oldData) {
     throw new Response("Directory not found", { status: 404 });
   }
+
+  // Get data information
   const data = await getDirectoryInfo(oldData.row);
   const editorInfo = await getUserInfo(oldData.userId);
   if (!data || data.parentId != +workspaceId || !editorInfo) {
@@ -93,8 +99,8 @@ export async function action({ params, request }: ActionFunctionArgs) {
 
 export default function VersionPage() {
   const { oldData, data, canEdit, editorInfo } = useLoaderData<typeof loader>();
+
   const { t } = useTranslation();
-  console.log(oldData);
 
   return (
     <Form className="flex flex-col flex-1" method="POST" key={oldData.id}>

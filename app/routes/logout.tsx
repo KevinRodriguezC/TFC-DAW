@@ -12,8 +12,10 @@ export const meta: MetaFunction = () => {
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
+  // Get the user cookie session
   const session = await getSession(request.headers.get("Cookie"));
 
+  // Destroy the cookie session
   return redirect("/login", {
     headers: {
       "Set-Cookie": await destroySession(session),

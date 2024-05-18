@@ -37,11 +37,18 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export async function action({ request }: ActionFunctionArgs) {
+  // Get the cookie session
   const session = await getSession(request.headers.get("Cookie"));
+
+  // Get POST request data
   const form = await request.formData();
   const username = form.get("email");
   const password = form.get("password");
+
+  // Validate the user
   const user = await validateCredentials(username, password);
+
+  // If the username and password aren't valid
   if (user == null) {
     session.flash("error", "Invalid username/password");
 
@@ -52,9 +59,11 @@ export async function action({ request }: ActionFunctionArgs) {
     });
   }
 
+  // Set the user session cookie
   session.set("userId", "" + user.id);
 
-  return redirect("/", {
+  // Redirect to the homepage
+  return redirect("/w", {
     headers: {
       "Set-Cookie": await commitSession(session),
     },

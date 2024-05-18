@@ -17,6 +17,7 @@ import { manageLogin } from "~/manageLogin";
 import { colorsArray } from "~/profilePictureColors";
 import { getUserByUsername } from "~/model/user";
 import { getUserSession } from "~/getUserSession";
+import { cardInfo } from "~/cardGenerator";
 
 const lngs = {
   en: { nativeName: "English" },
@@ -26,54 +27,53 @@ const lngs = {
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
 
-  return [
-    { title: t("settings") + " | TFC App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
+  return cardInfo(t("settings") + " | TFC App", t("settings"));
 };
 
 export async function action({ params, request }: ActionFunctionArgs) {
-  let { userId, userInfo } = await getUserSession(
+  // Get the user information and the user id
+  const { userId, userInfo } = await getUserSession(
     await getSession(request.headers.get("Cookie"))
   );
-  const formData = await request.formData();
-  let username = formData.get("username");
-  let name = formData.get("name");
-  let lastname = formData.get("lastname");
-  let profilePictureColor = formData.get("profilePictureColor");
 
-  let visibilityString = formData.get("visibility");
-  let visibility;
-  if (visibilityString == "on") {
-    visibility = 1;
-  } else {
-    visibility = 0;
-  }
+  // Get the POST request parameters
+  const formData = await request.formData();
+  const username = formData.get("username");
+  const name = formData.get("name");
+  const lastname = formData.get("lastname") || ""; // Set the lastname to "" if there isn't a lastname
+  const profilePictureColor = formData.get("profilePictureColor");
+  const visibilityString = formData.get("visibility");
+
+  // Changet the visibility format
+  const visibility = visibilityString == "on" ? 1 : 0;
+
+  // Check if the username is already taken
   if (username != userInfo.username) {
-    let getUser = await getUserByUsername(username);
+    const getUser = await getUserByUsername(username);
     if (!username || getUser) {
       throw new Response("Username not valid", { status: 400 });
     }
   }
 
-  if (!lastname) {
-    lastname = "";
-  }
-
-  if (!profilePictureColor || !+profilePictureColor) {
-    return new Response("Missing parameters", { status: 400 });
-  }
-
+  // Check if all the form parameters exist
   if (
     !userId ||
     !+userId ||
+    !username ||
     !name ||
     typeof name != "string" ||
-    typeof lastname != "string"
+    typeof lastname != "string" ||
+    typeof username != "string" ||
+    !profilePictureColor ||
+    !+profilePictureColor
   ) {
-    throw new Response("Error", { status: 500 });
+    throw new Response("Missing parameters", { status: 400 });
   }
-  let userIdNumber = +userId;
+
+  // Change the userId variable type
+  const userIdNumber = +userId;
+
+  // Update the user
   updateUser(
     userIdNumber,
     username,
@@ -82,35 +82,40 @@ export async function action({ params, request }: ActionFunctionArgs) {
     visibility,
     +profilePictureColor
   );
+
   return redirect("/settings");
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const session = await getSession(request.headers.get("Cookie"));
-  let userId = session.get("userId");
-  if (!userId || !+userId) {
+  // Get the user information and the user id
+  const { userId } = await getUserSession(
+    await getSession(request.headers.get("Cookie"))
+  );
+
+  // Get all the user information
+  const userInfo = await getUserInfo(+userId);
+  if (!userInfo) {
     throw new Response("Error");
   }
-  let userArray = await getUserInfo(+userId);
-  if (!userArray) {
-    throw new Response("Error");
-  }
-  let userInfo = {
-    username: userArray.username,
-    name: userArray.name,
-    lastname: userArray.lastname ? userArray.lastname : "",
-    visibility: userArray.visibility != 0,
-    profilePictureColor: userArray.profilePictureColor,
+
+  // Generate a custom array for the client
+  let userArray = {
+    username: userInfo.username,
+    name: userInfo.name,
+    lastname: userInfo.lastname || "",
+    visibility: userInfo.visibility != 0,
+    profilePictureColor: userInfo.profilePictureColor,
   };
-  return json({ userInfo });
+
+  return json({ userArray });
 }
 
 export default function Settings() {
-  const { userInfo } = useLoaderData<typeof loader>();
+  const { userArray } = useLoaderData<typeof loader>();
 
   const { t } = useTranslation();
 
-  manageLogin(userInfo);
+  manageLogin(userArray);
 
   return (
     <MainContainer>
@@ -123,7 +128,7 @@ export default function Settings() {
             type="text"
             name="username"
             className="form-control"
-            defaultValue={userInfo.username}
+            defaultValue={userArray.username}
             required
           />
           <label htmlFor="name">{t("name")}</label>
@@ -131,7 +136,7 @@ export default function Settings() {
             type="text"
             name="name"
             className="form-control"
-            defaultValue={userInfo.name}
+            defaultValue={userArray.name}
             required
           />
           <label htmlFor="lastname">{t("lastname")}</label>
@@ -139,7 +144,7 @@ export default function Settings() {
             type="text"
             name="lastname"
             className="form-control"
-            defaultValue={userInfo.lastname}
+            defaultValue={userArray.lastname}
           />
           <label>{t("visibility")}</label>
           <label
@@ -149,7 +154,7 @@ export default function Settings() {
             <p className="flex-1">{t("public_profile")}</p>
             <Toogle
               inputName="visibility"
-              defaultValue={userInfo.visibility}
+              defaultValue={userArray.visibility}
             ></Toogle>
           </label>
           <label>{t("language")}</label>
@@ -180,7 +185,7 @@ export default function Settings() {
                     value={colorInfo.id}
                     hidden
                     defaultChecked={
-                      userInfo.profilePictureColor == colorInfo.id
+                      userArray.profilePictureColor == colorInfo.id
                     }
                   />
                   <label
@@ -189,7 +194,7 @@ export default function Settings() {
                   >
                     <UserProfilePicture
                       user={{
-                        username: userInfo.username,
+                        username: userArray.username,
                         profilePictureColor: colorInfo.id,
                       }}
                       size={"size-11 text-lg"}
