@@ -1,5 +1,15 @@
-import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { Outlet, json, useLoaderData, useRouteError } from "@remix-run/react";
+import type {
+  MetaFunction,
+  LoaderFunctionArgs,
+  ActionFunctionArgs,
+} from "@remix-run/node";
+import {
+  Outlet,
+  json,
+  redirect,
+  useLoaderData,
+  useRouteError,
+} from "@remix-run/react";
 import ErrorPage from "~/components/errorPage";
 import { Header } from "~/components/header";
 import { MainContainer } from "~/components/mainContainer";
@@ -12,6 +22,21 @@ export const meta: MetaFunction = () => {
     { name: "description", content: "Welcome to Remix!" },
   ];
 };
+
+export async function action({ params, request }: ActionFunctionArgs) {
+  let { userId, userInfo } = await getUserSession(
+    await getSession(request.headers.get("Cookie"))
+  );
+
+  const type = params.type;
+  const socket = params.socket;
+
+  if (!type || !socket) {
+    return new Response("Missing parameters", { status: 400 });
+  }
+
+  return { result: "DONE" };
+}
 
 export async function loader({ request }: LoaderFunctionArgs) {
   let { userId, userInfo } = await getUserSession(
