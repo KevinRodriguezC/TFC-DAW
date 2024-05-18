@@ -4,33 +4,20 @@ import type {
   MetaFunction,
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, Link, useLoaderData } from "@remix-run/react";
-
+import { Form, useLoaderData } from "@remix-run/react";
 import { getSession } from "../sessions";
-
-import {
-  addUserToWorkspace,
-  getUserInWorkspace,
-  getWorkspacesByUser,
-} from "~/model/workspace";
-
-import { Header } from "../components/header";
-import { getUserSession } from "~/getUserSession";
-import { MainContainer } from "~/components/mainContainer";
 import { useTranslation } from "react-i18next";
-import { ButtonLink } from "~/components/buttonLink";
-import { getCodeFromWorkspace } from "~/model/invitationCodes";
-import { addEvent } from "~/model/events";
-import Workspace from "./w";
+import { getUserSession } from "~/getUserSession";
 import { manageLogin } from "~/manageLogin";
+import { Header } from "../components/header";
+import { MainContainer } from "~/components/mainContainer";
+import { addUserToWorkspace, getUserInWorkspace } from "~/model/workspace";
+import { getCodeFromWorkspace } from "~/model/invitationCodes";
+import { cardInfo } from "~/cardGenerator";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
-
-  return [
-    { title: t("workspaces") + " | TFC App" },
-    { name: "description", content: "Workspaces" },
-  ];
+  return cardInfo(t("join_workspace"), t("join_workspace") + " | TFC App");
 };
 
 function splitCode(code: String) {
@@ -44,48 +31,51 @@ function splitCode(code: String) {
   return { workspaceId, codeString };
 }
 
-export async function action({ params, request }: ActionFunctionArgs) {
-  const session = await getSession(request.headers.get("Cookie"));
-  let userId = session.get("userId");
+export async function action({ request }: ActionFunctionArgs) {
+  // Get the user session
+  let { userId } = await getUserSession(
+    await getSession(request.headers.get("Cookie"))
+  );
+
+  // Get form data
   const formData = await request.formData();
+
+  // Get code data
   let code = formData.get("code");
   if (!code || typeof code != "string" || !userId || !+userId) {
     throw new Response("Error", { status: 400 });
   }
+
+  // Split the code data
   const { workspaceId, codeString } = splitCode(code);
+
+  // Get the code from the database
   const workspaceCode = await getCodeFromWorkspace(workspaceId, codeString);
-  console.log(workspaceId, codeString, workspaceCode);
   if (workspaceCode) {
+    // If the code is a valid code
+
+    // Check if the user is a participant of the workspace
     const userOnWorkspace = await getUserInWorkspace(+workspaceId, +userId);
-    console.log(userOnWorkspace);
     if (!userOnWorkspace) {
+      // Add the user to the workspace
       await addUserToWorkspace(+workspaceId, +userId, 0);
     }
+
+    // Redirect the user to the workspace
     return redirect("/w/" + workspaceId);
   } else {
+    // If the code isn't a valid code
     return redirect("/join");
   }
-  // addEvent(
-  //   0,
-  //   0,
-  //   workspace.id,
-  //   workspace.id,
-  //   +userId,
-  //   workspaceName,
-  //   workspaceDescription
-  // );
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const { userId, userInfo } = await getUserSession(
+  // Get the user session
+  const { userInfo } = await getUserSession(
     await getSession(request.headers.get("Cookie"))
   );
-  const userWorkspaces = await getWorkspacesByUser(+userId);
-  let workspaces = [];
-  for (let i = 0; i < userWorkspaces.length; i++) {
-    workspaces.push(userWorkspaces[i].workspace);
-  }
-  return json({ userInfo, workspaces });
+
+  return json({ userInfo });
 }
 
 export default function Index() {

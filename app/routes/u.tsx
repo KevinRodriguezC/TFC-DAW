@@ -10,6 +10,7 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
+import { cardInfo } from "~/cardGenerator";
 import ErrorPage from "~/components/errorPage";
 import { Header } from "~/components/header";
 import { MainContainer } from "~/components/mainContainer";
@@ -17,43 +18,19 @@ import { getUserSession } from "~/getUserSession";
 import { getSession } from "~/sessions";
 
 export const meta: MetaFunction = () => {
-  return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
+  return cardInfo("New Remix App", "Welcome to Remix!");
 };
 
-export async function action({ params, request }: ActionFunctionArgs) {
-  let { userId, userInfo } = await getUserSession(
-    await getSession(request.headers.get("Cookie"))
-  );
-
-  const type = params.type;
-  const socket = params.socket;
-
-  if (!type || !socket) {
-    return new Response("Missing parameters", { status: 400 });
-  }
-
-  return { result: "DONE" };
-}
-
-export async function loader({ request }: LoaderFunctionArgs) {
-  let { userId, userInfo } = await getUserSession(
-    await getSession(request.headers.get("Cookie"))
-  );
-  return json({ userInfo });
-}
-
 export function ErrorBoundary() {
-  const error = useRouteError();
+  let error = useRouteError();
+  // Print the error
   console.log(error);
+
+  // Render the error message
   return <ErrorPage error={error} />;
 }
 
 export default function Index() {
-  let { userInfo } = useLoaderData<typeof loader>();
-
   return (
     <MainContainer>
       <Header />

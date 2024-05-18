@@ -29,6 +29,7 @@ export default function Index() {
   manageLogin(userInfo);
 
   const { t } = useTranslation();
+
   return (
     <MainContainer>
       <HomepageHeader />
@@ -61,7 +62,6 @@ export default function Index() {
                 </div>
                 <div className="bg-gray-300 h-[400px] w-[500px] flex-shrink-0 rounded-lg"></div>
               </div>
-              {/* <div className="flex flex-col gap-10"> */}
               <h1 className="text-7xl font-bold text-center">
                 {t("features")}
               </h1>

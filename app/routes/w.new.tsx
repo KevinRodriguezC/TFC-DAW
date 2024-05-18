@@ -4,11 +4,8 @@ import type {
   MetaFunction,
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-
 import { getSession } from "../sessions";
-
 import { createWorkspace } from "~/model/workspace";
-
 import { Header } from "../components/header";
 import { useTranslation } from "react-i18next";
 import { getUserSession } from "~/getUserSession";
@@ -16,25 +13,31 @@ import { MainContainer } from "~/components/mainContainer";
 import { addEvent } from "~/model/events";
 import { Form, useLoaderData } from "@remix-run/react";
 import { manageLogin } from "~/manageLogin";
+import { cardInfo } from "~/cardGenerator";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
 
-  return [
-    { title: t("new_workspace") + " | TFC App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
+  return cardInfo(t("new_workspace") + " | TFC App", t("new_workspace"));
 };
 
 export async function action({ params, request }: ActionFunctionArgs) {
-  const session = await getSession(request.headers.get("Cookie"));
-  let userId = session.get("userId");
+  // Get user id
+  const { userId } = await getUserSession(
+    await getSession(request.headers.get("Cookie"))
+  );
+
+  // Get the POST parameters
   const formData = await request.formData();
   let workspaceName = formData.get("workspaceName");
   let workspaceDescription = formData.get("workspaceDescription");
+
+  // Set the workspace description to "" if it's null
   if (!workspaceDescription) {
     workspaceDescription = "";
   }
+
+  // Check if all parameters exist
   if (
     !workspaceName ||
     typeof workspaceName != "string" ||
@@ -44,12 +47,16 @@ export async function action({ params, request }: ActionFunctionArgs) {
   ) {
     throw new Response("Error", { status: 400 });
   }
+
+  // Create the workspace
   const workspace = await createWorkspace(
     +userId,
     workspaceName,
     workspaceDescription,
     0
   );
+
+  // Create the event
   addEvent(
     0,
     0,
@@ -60,13 +67,16 @@ export async function action({ params, request }: ActionFunctionArgs) {
     workspaceDescription
   );
 
+  // Redirect the user to the workspace
   return redirect("/w");
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
+  // Get the user iformation
   let { userInfo } = await getUserSession(
     await getSession(request.headers.get("Cookie"))
   );
+
   return json({ userInfo });
 }
 

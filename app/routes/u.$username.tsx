@@ -14,13 +14,16 @@ import UserPageError from "~/components/userPageError";
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const { t } = useTranslation();
 
+  // Check if there is loader data
   if (!data) {
-    return [
-      { title: t("user_info") + " | TFC App" },
-      { name: "description", content: "Welcome to Remix!" },
-    ];
+    // If there isn't loader data send a generic response
+
+    return cardInfo(t("user_info") + " | TFC App", t("user_info"));
   } else {
+    // If there is loader data send the user information
+
     const { user, workspaces } = data;
+
     return cardInfo(
       user.name + " " + user.lastname + " | TFC App",
       "Username: u/" +
@@ -33,28 +36,44 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
+  // Get the user id
   const { userId } = await getUserSession(
     await getSession(request.headers.get("Cookie"))
   );
+
+  // Get the username
   const username = params.username;
   const user = await getUserByUsername(username);
+
+  // If the user does not exist
   if (!user) {
     throw new Response("User not found", { status: 404 });
   }
+
+  // If the user is a private user
   if (user.visibility == 0 && user.id != userId) {
     throw new Response("This user is a private user", { status: 403 });
   }
+
+  // Get the user workspaces
   const userWorkspaces = await getWorkspacesByUser(user.id);
+
+  // Add the workspaces to the user information
+  // TODO Hide private workspaces
   let workspaces = [];
   for (let i = 0; i < userWorkspaces.length; i++) {
     workspaces.push(userWorkspaces[i].workspace);
   }
+
   return json({ user, workspaces });
 };
 
 export function ErrorBoundary() {
   let error = useRouteError();
+  // Print the error
   console.log(error);
+
+  // Render the error message
   return <UserPageError error={error} />;
 }
 

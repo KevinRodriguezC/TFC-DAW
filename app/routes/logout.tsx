@@ -5,12 +5,10 @@ import { Form, Link } from "@remix-run/react";
 import { getSession, destroySession } from "../sessions";
 import { useUser } from "../hooks/useUser";
 import { useTranslation } from "react-i18next";
+import { cardInfo } from "~/cardGenerator";
 
 export const meta: MetaFunction = () => {
-  return [
-    { title: "App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
+  return cardInfo("App", "Welcome to Remix!");
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {

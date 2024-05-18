@@ -5,18 +5,13 @@ import type {
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, Link, useLoaderData } from "@remix-run/react";
-
 import { getSession, commitSession } from "../sessions";
-
 import { getUserByUsername } from "~/model/user";
 import { useTranslation } from "react-i18next";
-import { useUser } from "~/hooks/useUser";
+import { cardInfo } from "~/cardGenerator";
 
 export const meta: MetaFunction = () => {
-  return [
-    { title: "Log in | TFC App" },
-    { name: "description", content: "Log in page" },
-  ];
+  return cardInfo("Log in | TFC App", "Log in page");
 };
 
 async function validateCredentials(username: any, password: any) {
@@ -29,10 +24,11 @@ async function validateCredentials(username: any, password: any) {
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
+  // Get the error message if there is an error message
   const session = await getSession(request.headers.get("Cookie"));
-
   const data = { error: session.get("error") };
 
+  // Save the error on a cookie
   return json(data, {
     headers: {
       "Set-Cookie": await commitSession(session),
