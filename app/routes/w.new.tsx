@@ -14,7 +14,8 @@ import { useTranslation } from "react-i18next";
 import { getUserSession } from "~/getUserSession";
 import { MainContainer } from "~/components/mainContainer";
 import { addEvent } from "~/model/events";
-import { Form } from "@remix-run/react";
+import { Form, useLoaderData } from "@remix-run/react";
+import { manageLogin } from "~/manageLogin";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
@@ -70,7 +71,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export default function NewWorkspace() {
+  const { userInfo } = useLoaderData<typeof loader>();
+
   const { t } = useTranslation();
+
+  manageLogin(userInfo);
 
   return (
     <MainContainer>

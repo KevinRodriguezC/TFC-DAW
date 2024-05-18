@@ -11,6 +11,7 @@ import { getUserSession } from "~/getUserSession";
 import { MainContainer } from "~/components/mainContainer";
 import { useTranslation } from "react-i18next";
 import { ButtonLink } from "~/components/buttonLink";
+import { manageLogin } from "~/manageLogin";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
@@ -22,7 +23,7 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const { userId } = await getUserSession(
+  const { userInfo, userId } = await getUserSession(
     await getSession(request.headers.get("Cookie"))
   );
   const userWorkspaces = await getWorkspacesByUser(+userId);
@@ -30,13 +31,15 @@ export async function loader({ request }: LoaderFunctionArgs) {
   for (let i = 0; i < userWorkspaces.length; i++) {
     workspaces.push(userWorkspaces[i].workspace);
   }
-  return json({ workspaces });
+  return json({ userInfo, workspaces });
 }
 
 export default function Index() {
-  const { workspaces } = useLoaderData<typeof loader>();
+  const { userInfo, workspaces } = useLoaderData<typeof loader>();
 
   const { t } = useTranslation();
+
+  manageLogin(userInfo);
 
   return (
     <MainContainer>

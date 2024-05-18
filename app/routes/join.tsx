@@ -22,6 +22,7 @@ import { ButtonLink } from "~/components/buttonLink";
 import { getCodeFromWorkspace } from "~/model/invitationCodes";
 import { addEvent } from "~/model/events";
 import Workspace from "./w";
+import { manageLogin } from "~/manageLogin";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
@@ -91,6 +92,8 @@ export default function Index() {
   const { userInfo } = useLoaderData<typeof loader>();
 
   const { t } = useTranslation();
+
+  manageLogin(userInfo);
 
   return (
     <MainContainer>
