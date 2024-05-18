@@ -1,10 +1,14 @@
+import { useEffect } from "react";
 import { useUser } from "./hooks/useUser";
 
 export function manageLogin(userInfo: any) {
-  const { login, logout } = useUser();
+  const { user, login, logout } = useUser();
 
-  const checkLogin = async () =>
-    userInfo && userInfo.username ? login(userInfo) : logout();
-
-  checkLogin();
+  useEffect(() => {
+    if (userInfo && userInfo.username && !user) {
+      login(userInfo);
+    } else {
+      logout();
+    }
+  }, []);
 }
