@@ -7,6 +7,7 @@ import { Form, json, redirect, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { Toogle } from "~/components/toggle";
 import { WorkspaceContentContainer } from "~/components/workspaceContentContainer";
+// import { useSocket } from "~/hooks/useSocket";
 import { getWorkspaceById, updateWorkspace } from "~/model/workspace";
 
 export const meta: MetaFunction = () => {
@@ -58,18 +59,46 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     ? workspaceInfo.description
     : "";
   const visibility = workspaceInfo.visibility != 0;
-  return json({ name, description, visibility });
+  return json({
+    name,
+    description,
+    visibility,
+    workspaceId: workspaceInfo.id,
+  });
 };
 
 export default function Index() {
-  const { name, description, visibility } = useLoaderData<typeof loader>();
+  const { name, description, visibility, workspaceId } =
+    useLoaderData<typeof loader>();
+  // const { socket } = useSocket();
 
   const { t } = useTranslation();
+
+  // const updateWorkspaceInfo = (e: any) => {
+  //   const form = new FormData(e.target);
+  //   // const form = e.target;
+
+  //   console.log(JSON.stringify(form));
+  //   const response = {
+  //     name: form.get("workspaceName"),
+  //     description: form.get("workspaceDescription"),
+  //     visibility: form.get("visibility"),
+  //   };
+  //   socket.emit(
+  //     "message",
+  //     JSON.stringify({
+  //       type: "UPDATE_WORKSPACE_INFO",
+  //       workspace: response,
+  //       workspaceId: workspaceId,
+  //     })
+  //   );
+  // };
 
   return (
     <WorkspaceContentContainer>
       <h2 className="text-2xl font-bold">{t("settings")}</h2>
       <Form method="POST" className="flex flex-col gap-4">
+        {/* onSubmit={updateWorkspaceInfo} */}
         <label htmlFor="workspdescriptionaceName">{t("name")}</label>
         <input
           name="workspaceName"

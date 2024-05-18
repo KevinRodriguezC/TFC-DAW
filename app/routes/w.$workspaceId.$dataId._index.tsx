@@ -5,7 +5,8 @@ import type {
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 
-import { Form, Link, useLoaderData } from "@remix-run/react";
+import { Form, Link, useFetcher, useLoaderData } from "@remix-run/react";
+// import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getUserSession } from "~/getUserSession";
 
@@ -69,6 +70,18 @@ export async function action({ params, request }: ActionFunctionArgs) {
 export default function Index() {
   const { data, canEdit } = useLoaderData<typeof loader>();
   const { t } = useTranslation();
+
+  // const [name, setName] = useState(data.name);
+  // const [description, useDescription] = useState(data.name);
+
+  // const fetcher = useFetcher();
+
+  // const fetchForm = () => {
+  //   fetcher.submit(
+  //     { name: "values", description: "description" },
+  //     { method: "POST" }
+  //   );
+  // };
 
   return (
     <Form

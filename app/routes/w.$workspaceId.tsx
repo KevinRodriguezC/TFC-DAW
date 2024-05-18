@@ -1,6 +1,10 @@
-import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import type {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Outlet, Link, useLoaderData } from "@remix-run/react";
+import { Outlet, Link, useLoaderData, useFetcher } from "@remix-run/react";
 
 import { UserDropdown } from "~/components/userDropdown";
 import { useTranslation } from "react-i18next";
@@ -8,23 +12,35 @@ import { TopContainer } from "~/components/topContainer";
 import { CenterContainer } from "~/components/centerContainer";
 import { WorkspaceSidebar } from "~/components/workspaceSidebar";
 import { WorkspaceInfobar } from "~/components/workspaceInfobar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HistoryInfobar } from "~/components/historyInfobar";
 import { manageLogin } from "~/manageLogin";
 import { getWorkspaceInfo } from "~/getWorkspaceInfo";
 import { useWorkspace } from "~/hooks/useWorkspace";
 import { manageWorkspace } from "~/manageWorkspace";
+// import { useSocket } from "~/hooks/useSocket";
+import { getUserSession } from "~/getUserSession";
+import { getSession } from "~/sessions";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   return json(await getWorkspaceInfo(request, params));
 };
 
+// export async function action({ params, request }: ActionFunctionArgs) {
+//   let { userId } = await getUserSession(
+//     await getSession(request.headers.get("Cookie"))
+//   );
+
+//   return {};
+// }
+
 export default function Workspace() {
+  // const { socket, configureSocket } = useSocket();
   const { userInfo, workspace, directories, users, workspaceEvents, canEdit } =
     useLoaderData<typeof loader>();
   const { t } = useTranslation();
 
-  const { workspace: contextWorkspace } = useWorkspace();
+  const { workspace: contextWorkspace, setWorkspace } = useWorkspace();
 
   const [rightBarMenu, setRightBarMenu] = useState(0);
   const setRightBarMenuToggle = (newState: number) => {
@@ -38,6 +54,54 @@ export default function Workspace() {
   manageLogin(userInfo);
   manageWorkspace(workspace);
 
+  // useEffect(() => {
+  //   configureSocket();
+  // }, []);
+
+  // const fetcher = useFetcher();
+
+  // if (socket) {
+  //   socket.on("message", (text: any) => {
+  //     console.log(text);
+  //     try {
+  //       const json = JSON.parse(text);
+  //       switch (json.type) {
+  //         case "ADD_USER_TO_SOCKET":
+  //           console.log(`You're ${json.value}`);
+  //           socket.emit(
+  //             "message",
+  //             JSON.stringify({
+  //               type: "ADD_WORKSPACE_SOCKET",
+  //               workspaceId: workspace.id,
+  //             })
+  //           );
+  //           // fetcher.submit(
+  //           //   {
+  //           //     type: "ADD_WORKSPACE_SOCKET",
+  //           //     workspaceId: workspace.id,
+  //           //     socketId: json.value,
+  //           //   },
+  //           //   { method: "POST" }
+  //           // );
+  //           return;
+  //         case "UPDATE_WORKSPACE_INFO":
+  //           setWorkspace(json.workspace);
+  //           return;
+  //       }
+  //     } catch (e) {}
+  //   });
+  // }
+
+  // const sendWorkspaceMessage = () => {
+  //   socket.emit(
+  //     "message",
+  //     JSON.stringify({
+  //       type: "UPDATE_WORKSPACE_INFO",
+  //       workspaceId: workspace,
+  //     })
+  //   );
+  // };
+
   return (
     <div className="container-primary-bg dark:text-white h-screen flex flex-col">
       {contextWorkspace && (
@@ -47,6 +111,9 @@ export default function Workspace() {
               <h2 className="font-bold text-xl overflow-hidden">
                 {contextWorkspace.name}
               </h2>
+              {/* <div>
+                <button onClick={sendWorkspaceMessage}>Hello world</button>
+              </div> */}
               {canEdit ? (
                 <Link to="settings" className="btn-icon">
                   <svg
