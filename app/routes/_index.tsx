@@ -2,7 +2,6 @@ import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { getSession } from "../sessions";
-import { Header } from "../components/header";
 import { ButtonLink } from "~/components/buttonLink";
 import { MainContainer } from "~/components/mainContainer";
 import { getUserSession } from "~/getUserSession";
@@ -17,9 +16,11 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
+  // Get the user information
   let { userInfo } = await getUserSession(
     await getSession(request.headers.get("Cookie"))
   );
+
   return json({ userInfo });
 }
 

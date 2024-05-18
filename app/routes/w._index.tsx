@@ -1,36 +1,40 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-
 import { getSession } from "../sessions";
-
 import { getWorkspacesByUser } from "~/model/workspace";
-
 import { Header } from "../components/header";
 import { getUserSession } from "~/getUserSession";
 import { MainContainer } from "~/components/mainContainer";
 import { useTranslation } from "react-i18next";
 import { ButtonLink } from "~/components/buttonLink";
 import { manageLogin } from "~/manageLogin";
+import { cardInfo } from "~/cardGenerator";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
 
-  return [
-    { title: t("workspaces") + " | TFC App" },
-    { name: "description", content: "Workspaces" },
-  ];
+  return cardInfo(t("workspaces") + " | TFC App", "Workspaces");
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
+  // Get the user information and the user id
   const { userInfo, userId } = await getUserSession(
     await getSession(request.headers.get("Cookie"))
   );
+
+  // Check if the user is logged in
+  if (!userId) {
+    return redirect("/login");
+  }
+
+  // Get the user workspaces and ad it to the workspaces array
   const userWorkspaces = await getWorkspacesByUser(+userId);
   let workspaces = [];
   for (let i = 0; i < userWorkspaces.length; i++) {
     workspaces.push(userWorkspaces[i].workspace);
   }
+
   return json({ userInfo, workspaces });
 }
 

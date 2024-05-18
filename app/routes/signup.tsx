@@ -4,20 +4,17 @@ import type {
   MetaFunction,
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-
 import { createUser, getUserByEmail, getUserByUsername } from "~/model/user";
 import { Form, Link, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { MainContainer } from "~/components/mainContainer";
 import { commitSession, getSession } from "~/sessions";
+import { cardInfo } from "~/cardGenerator";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
 
-  return [
-    { title: "App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
+  return cardInfo(t("signup") + " || TFC app", t("signup"));
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -37,12 +34,15 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export async function action({ request }: ActionFunctionArgs) {
   const session = await getSession(request.headers.get("Cookie"));
   try {
+    // Get the POST request parameters
     const formData = await request.formData();
     let email = formData.get("email");
     let username = formData.get("username");
     let name = formData.get("name");
     let lastname = formData.get("lastname");
     let password = formData.get("password");
+
+    // Check if all parameters are valid
     if (
       !email ||
       !username ||
@@ -63,6 +63,8 @@ export async function action({ request }: ActionFunctionArgs) {
         },
       });
     }
+
+    //Check if the username is already taken
     const userUsername = await getUserByUsername(username);
     if (userUsername) {
       session.flash("error", "The username " + username + " is taken");
@@ -73,6 +75,8 @@ export async function action({ request }: ActionFunctionArgs) {
         },
       });
     }
+
+    // Check if the email is already in use
     const userEmail = await getUserByEmail(email);
     console.log(userEmail);
     if (userEmail) {
@@ -84,11 +88,10 @@ export async function action({ request }: ActionFunctionArgs) {
         },
       });
     }
-    const user = await createUser(email, username, name, lastname, password);
 
+    // Create the user account
+    const user = await createUser(email, username, name, lastname, password);
     session.set("userId", "" + user.id);
-    console.log(user.id);
-    console.log(user);
 
     return redirect("/", {
       headers: {
@@ -96,8 +99,10 @@ export async function action({ request }: ActionFunctionArgs) {
       },
     });
   } catch (error) {
+    // Print the error
     console.log(error);
 
+    // Send the error
     session.flash("error", "Internal server error");
 
     return redirect("/signup", {

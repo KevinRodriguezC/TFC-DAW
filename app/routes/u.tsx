@@ -1,24 +1,12 @@
-import type {
-  MetaFunction,
-  LoaderFunctionArgs,
-  ActionFunctionArgs,
-} from "@remix-run/node";
-import {
-  Outlet,
-  json,
-  redirect,
-  useLoaderData,
-  useRouteError,
-} from "@remix-run/react";
+import type { MetaFunction } from "@remix-run/node";
+import { Outlet, useRouteError } from "@remix-run/react";
 import { cardInfo } from "~/cardGenerator";
 import ErrorPage from "~/components/errorPage";
 import { Header } from "~/components/header";
 import { MainContainer } from "~/components/mainContainer";
-import { getUserSession } from "~/getUserSession";
-import { getSession } from "~/sessions";
 
 export const meta: MetaFunction = () => {
-  return cardInfo("New Remix App", "Welcome to Remix!");
+  return cardInfo("TFC app", "TFC app");
 };
 
 export function ErrorBoundary() {
