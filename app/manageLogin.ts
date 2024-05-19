@@ -5,10 +5,10 @@ export function manageLogin(userInfo: any) {
   const { user, login, logout } = useUser();
 
   useEffect(() => {
-    if (userInfo && userInfo.username && !user) {
+    if (userInfo && userInfo.username) {
       login(userInfo);
     } else {
       logout();
     }
-  }, []);
+  }, [userInfo]);
 }
