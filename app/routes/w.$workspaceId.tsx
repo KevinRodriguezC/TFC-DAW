@@ -108,7 +108,7 @@ export default function Workspace() {
         <>
           <TopContainer>
             <div className="border-r-2 border-b-2 container-secondary-border p-2 w-80 flex justify-between items-center gap-2">
-              <h2 className="font-bold text-xl overflow-hidden">
+              <h2 className="font-bold text-xl overflow-hidden text-nowrap">
                 {contextWorkspace.name}
               </h2>
               {/* <div>
@@ -136,9 +136,9 @@ export default function Workspace() {
                 {!canEdit && t("cant_edit_message")}
               </div>
               <div className="flex gap-2">
-                <button className="bg-blue-600 btn-user-icon">B</button>
-                <button className="bg-red-600 btn-user-icon">C</button>
-                <span className="w-[2px] bg-slate-300 dark:bg-slate-900"></span>
+                {/* <button className="bg-blue-600 btn-user-icon">B</button>
+                <button className="bg-red-600 btn-user-icon">C</button> */}
+                {/* <span className="w-[2px] bg-slate-300 dark:bg-slate-900"></span> */}
                 <button
                   className="btn-icon"
                   onClick={() => setRightBarMenuToggle(1)}
