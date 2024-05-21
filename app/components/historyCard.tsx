@@ -1,7 +1,7 @@
 import { NavLink } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { formatDistanceToNow } from "date-fns";
-// import { es } from "date-fns/locale";
+import { timeFormatterLanguage } from "~/timeFormatterLanguage";
 
 export function HistoryCard({ event, route }: { event: any; route: string }) {
   const { t } = useTranslation();
@@ -49,7 +49,7 @@ export function HistoryCard({ event, route }: { event: any; route: string }) {
         </svg>
         {formatDistanceToNow(new Date(event.createdAt), {
           addSuffix: true,
-          // locale: es,
+          locale: timeFormatterLanguage(),
         })}
       </div>
     </NavLink>
