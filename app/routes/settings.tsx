@@ -175,34 +175,30 @@ export default function Settings() {
           <label>{t("profile_picture_color")}</label>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2">
             {colorsArray.map((colorInfo) => (
-              <>
-                <div className="select-none">
-                  <input
-                    type="radio"
-                    name="profilePictureColor"
-                    className="profilePictureColor"
-                    id={"color-" + colorInfo.id}
-                    value={colorInfo.id}
-                    hidden
-                    defaultChecked={
-                      userArray.profilePictureColor == colorInfo.id
-                    }
+              <div className="select-none" key={colorInfo.id}>
+                <input
+                  type="radio"
+                  name="profilePictureColor"
+                  className="profilePictureColor"
+                  id={"color-" + colorInfo.id}
+                  value={colorInfo.id}
+                  hidden
+                  defaultChecked={userArray.profilePictureColor == colorInfo.id}
+                />
+                <label
+                  htmlFor={"color-" + colorInfo.id}
+                  className="profilePictureSelector"
+                >
+                  <UserProfilePicture
+                    user={{
+                      username: userArray.username,
+                      profilePictureColor: colorInfo.id,
+                    }}
+                    size={"size-11 text-lg"}
                   />
-                  <label
-                    htmlFor={"color-" + colorInfo.id}
-                    className="profilePictureSelector"
-                  >
-                    <UserProfilePicture
-                      user={{
-                        username: userArray.username,
-                        profilePictureColor: colorInfo.id,
-                      }}
-                      size={"size-11 text-lg"}
-                    />
-                    {t(colorInfo.name)}
-                  </label>
-                </div>
-              </>
+                  {t(colorInfo.name)}
+                </label>
+              </div>
             ))}
           </div>
           <input className="btn-primary" type="submit" value={t("save")} />
