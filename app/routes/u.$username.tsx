@@ -2,7 +2,7 @@ import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData, useRouteError } from "@remix-run/react";
 
-import { getWorkspacesByUser } from "~/model/workspace";
+import { getUserInWorkspace, getWorkspacesByUser } from "~/model/workspace";
 import { getUserByUsername } from "~/model/user";
 import { useTranslation } from "react-i18next";
 import { getUserSession } from "~/getUserSession";
@@ -62,8 +62,20 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   // Add the workspaces to the user information
   let workspaces = [];
   for (let i = 0; i < userWorkspaces.length; i++) {
-    if (userWorkspaces[i].workspace.visibility == 0 && userId)
+    if (userWorkspaces[i].workspace.visibility == 1) {
       workspaces.push(userWorkspaces[i].workspace);
+    } else {
+      if (userId) {
+        const userOnWorkspace = await getUserInWorkspace(
+          userWorkspaces[i].workspace.id,
+          +userId
+        );
+        console.log(userOnWorkspace, userId);
+        if (userOnWorkspace) {
+          workspaces.push(userWorkspaces[i].workspace);
+        }
+      }
+    }
   }
 
   return json({ user, workspaces, userInfo });
@@ -95,7 +107,7 @@ export default function UserInfo() {
           <h4 className="text-lg">@{user.username}</h4>
         </div>
       </div>
-      {workspaces ? (
+      {workspaces && workspaces.length > 0 ? (
         <>
           <h2 className="text-2xl">{t("workspaces")}</h2>
           {workspaces.map((workspace: any) => (
