@@ -18,7 +18,7 @@ export default function ErrorPage(error: any) {
       <h1 className=" text-5xl font-bold">
         {isRouteErrorResponse(errorData) ? errorData.status : "Unknown error"}
       </h1>
-      <p>{errorData.data}</p>
+      <p>{errorData.data || "Something went wrong"}</p>
       <Link to="/">Go back</Link>
     </div>
   );
