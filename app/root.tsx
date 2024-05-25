@@ -13,7 +13,7 @@ import stylesheet from "~/tailwind.css";
 import ErrorPage from "./components/errorPage";
 import i18n from "./i18n";
 import { UserProvider } from "./context/user";
-import { SocketProvider } from "./context/socket";
+// import { SocketProvider } from "./context/socket";
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
@@ -40,7 +40,6 @@ export function ErrorBoundary() {
   );
 }
 
-i18n.changeLanguage("es");
 // Main react function
 export default function App() {
   return (
@@ -52,11 +51,9 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <SocketProvider>
-          <UserProvider>
-            <Outlet />
-          </UserProvider>
-        </SocketProvider>
+        <UserProvider>
+          <Outlet />
+        </UserProvider>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

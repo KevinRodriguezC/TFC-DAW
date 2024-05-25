@@ -45,6 +45,7 @@ export async function createUser(
       visibility: 0,
       password: password,
       profilePictureColor: 1,
+      language: "en",
     },
   });
 }
@@ -55,7 +56,8 @@ export async function updateUser(
   name: string,
   lastname: string,
   visibility: number,
-  profilePictureColor: number
+  profilePictureColor: number,
+  language: string
 ) {
   return await prisma.user.update({
     where: {
@@ -67,6 +69,7 @@ export async function updateUser(
       lastname: lastname,
       visibility: visibility,
       profilePictureColor: profilePictureColor,
+      language: language,
     },
   });
 }

@@ -19,6 +19,7 @@ export async function getUserSession(session: any) {
         username: userQueryInfo.username,
         name: userQueryInfo.name + " " + userQueryInfo.lastname,
         profilePictureColor: userQueryInfo.profilePictureColor,
+        language: userQueryInfo.language,
       },
     };
   }

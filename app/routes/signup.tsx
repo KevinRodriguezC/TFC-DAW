@@ -93,7 +93,7 @@ export async function action({ request }: ActionFunctionArgs) {
     const user = await createUser(email, username, name, lastname, password);
     session.set("userId", "" + user.id);
 
-    return redirect("/", {
+    return redirect("/w", {
       headers: {
         "Set-Cookie": await commitSession(session),
       },

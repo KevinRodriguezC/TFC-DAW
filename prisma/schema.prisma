@@ -20,6 +20,7 @@ model User {
   visibility          Int
   password            String
   profilePictureColor Int
+  language            String
   workspaces          UserOnWorkspaces[]
   workspaceSockets    UserSocketsOnWorkspaces[]
 }
@@ -65,26 +66,6 @@ model Directory {
   deleted     Boolean
   // data        Data[]
 }
-
-// model Data {
-//   id         Int         @id @default(autoincrement())
-//   createdAt  DateTime    @default(now())
-//   name       String
-//   parent     Directory   @relation(fields: [parentId], references: [id])
-//   parentId   Int
-//   type       Int
-//   data       String?
-//   atttribute Attribute[]
-// }
-
-// model Attribute {
-//   id        Int      @id @default(autoincrement())
-//   createdAt DateTime @default(now())
-//   data      Data     @relation(fields: [dataId], references: [id])
-//   dataId    Int
-//   type      Int
-//   value     String?
-// }
 
 model InvitationCodes {
   id          Int       @id @default(autoincrement())

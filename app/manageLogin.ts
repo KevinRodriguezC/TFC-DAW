@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useUser } from "./hooks/useUser";
+import i18next from "./i18n";
 
 export function manageLogin(userInfo: any) {
   const { user, login, logout } = useUser();
@@ -9,6 +10,11 @@ export function manageLogin(userInfo: any) {
       login(userInfo);
     } else {
       logout();
+    }
+    if (userInfo && userInfo.language && typeof userInfo.language == "string") {
+      i18next.changeLanguage(userInfo.language);
+    } else {
+      i18next.changeLanguage("en");
     }
   }, [userInfo]);
 }

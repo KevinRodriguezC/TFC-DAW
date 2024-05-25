@@ -5,7 +5,7 @@ import type {
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
-import { getSession } from "../sessions";
+import { commitSession, getSession } from "../sessions";
 import { Header } from "../components/header";
 import { Toogle } from "~/components/toggle";
 import { getUserInfo, updateUser } from "~/model/user";
@@ -18,10 +18,11 @@ import { colorsArray } from "~/profilePictureColors";
 import { getUserByUsername } from "~/model/user";
 import { getUserSession } from "~/getUserSession";
 import { cardInfo } from "~/cardGenerator";
+import { loadLanguage, setLanguage, manageClientLanguage } from "~/setLanguage";
 
 const lngs = {
-  en: { nativeName: "English" },
-  es: { nativeName: "Español" },
+  en: { nativeName: "English", value: "en" },
+  es: { nativeName: "Español", value: "es" },
 };
 
 export const meta: MetaFunction = () => {
@@ -36,6 +37,9 @@ export async function action({ params, request }: ActionFunctionArgs) {
     await getSession(request.headers.get("Cookie"))
   );
 
+  // const cookie = request.headers.get("Cookie");
+  // console.log(cookie);
+
   // Get the POST request parameters
   const formData = await request.formData();
   const username = formData.get("username");
@@ -43,6 +47,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
   const lastname = formData.get("lastname") || ""; // Set the lastname to "" if there isn't a lastname
   const profilePictureColor = formData.get("profilePictureColor");
   const visibilityString = formData.get("visibility");
+  const language = formData.get("language");
 
   // Changet the visibility format
   const visibility = visibilityString == "on" ? 1 : 0;
@@ -61,9 +66,11 @@ export async function action({ params, request }: ActionFunctionArgs) {
     !+userId ||
     !username ||
     !name ||
+    !language ||
     typeof name != "string" ||
     typeof lastname != "string" ||
     typeof username != "string" ||
+    typeof language != "string" ||
     !profilePictureColor ||
     !+profilePictureColor
   ) {
@@ -73,6 +80,9 @@ export async function action({ params, request }: ActionFunctionArgs) {
   // Change the userId variable type
   const userIdNumber = +userId;
 
+  // setLanguage(language, await getSession(request.headers.get("Cookie")));
+  // session.set("language", language);
+
   // Update the user
   updateUser(
     userIdNumber,
@@ -80,7 +90,8 @@ export async function action({ params, request }: ActionFunctionArgs) {
     name,
     lastname,
     visibility,
-    +profilePictureColor
+    +profilePictureColor,
+    language
   );
 
   return redirect("/settings");
@@ -91,6 +102,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const { userId } = await getUserSession(
     await getSession(request.headers.get("Cookie"))
   );
+
+  // Load the language from the user session
+  // const language = loadLanguage(
+  //   await getSession(request.headers.get("Cookie"))
+  // );
 
   // Get all the user information
   const userInfo = await getUserInfo(+userId);
@@ -105,9 +121,17 @@ export async function loader({ request }: LoaderFunctionArgs) {
     lastname: userInfo.lastname || "",
     visibility: userInfo.visibility != 0,
     profilePictureColor: userInfo.profilePictureColor,
+    language: userInfo.language,
   };
 
-  return json({ userArray });
+  return json(
+    { userArray }
+    // {
+    //   headers: {
+    //     "Set-Cookie": await commitSession(session),
+    //   },
+    // }
+  );
 }
 
 export default function Settings() {
@@ -158,20 +182,18 @@ export default function Settings() {
             ></Toogle>
           </label>
           <label>{t("language")}</label>
-          <div className="flex gap-2">
-            {Object.keys(lngs).map((lng) => (
-              <button
-                type="button"
-                className="btn-primary"
-                key={lng}
-                onClick={() => {
-                  i18n.changeLanguage(lng);
-                }}
-              >
-                {lngs[lng].nativeName}
-              </button>
+          {JSON.stringify(userArray.language)}
+          <select
+            name="language"
+            className="flex p-2 bg-slate-100 dark:bg-slate-800 rounded-md items-center cursor-pointer select-none"
+            defaultValue={userArray.language}
+          >
+            {Object.keys(lngs).map((lng: any) => (
+              <option key={lng} value={lng}>
+                {lng}
+              </option>
             ))}
-          </div>
+          </select>
           <label>{t("profile_picture_color")}</label>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2">
             {colorsArray.map((colorInfo) => (

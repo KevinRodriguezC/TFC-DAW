@@ -10,6 +10,7 @@ import { getSession } from "~/sessions";
 import { UserProfilePicture } from "~/components/userProfilePicture";
 import { cardInfo } from "~/cardGenerator";
 import UserPageError from "~/components/userPageError";
+import { manageLogin } from "~/manageLogin";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const { t } = useTranslation();
@@ -28,7 +29,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
       user.name + " " + user.lastname + " | TFC App",
       "Username: u/" +
         user.username +
-        ", Workspaces: " +
+        ", Public workspaces: " +
         workspaces.length +
         " | TFC App"
     );
@@ -37,7 +38,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   // Get the user id
-  const { userId } = await getUserSession(
+  const { userId, userInfo } = await getUserSession(
     await getSession(request.headers.get("Cookie"))
   );
 
@@ -59,13 +60,13 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const userWorkspaces = await getWorkspacesByUser(user.id);
 
   // Add the workspaces to the user information
-  // TODO Hide private workspaces
   let workspaces = [];
   for (let i = 0; i < userWorkspaces.length; i++) {
-    workspaces.push(userWorkspaces[i].workspace);
+    if (userWorkspaces[i].workspace.visibility == 0 && userId)
+      workspaces.push(userWorkspaces[i].workspace);
   }
 
-  return json({ user, workspaces });
+  return json({ user, workspaces, userInfo });
 };
 
 export function ErrorBoundary() {
@@ -78,8 +79,10 @@ export function ErrorBoundary() {
 }
 
 export default function UserInfo() {
-  let { user, workspaces } = useLoaderData<typeof loader>();
+  let { user, workspaces, userInfo } = useLoaderData<typeof loader>();
   const { t } = useTranslation();
+
+  manageLogin(userInfo);
 
   return (
     <>
