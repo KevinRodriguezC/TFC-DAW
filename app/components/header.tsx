@@ -13,18 +13,12 @@ export function Header() {
       <h1 className="text-2xl font-bold self-center flex-1">
         <Link to="/">TFC</Link>
       </h1>
-      {/* <div className="flex gap-2"> */}
       <Form action="/search" method="get" className="flex gap-2">
         <input
           className="form-control h-10 sm:w-96"
           name="inputQuery"
           placeholder={t("search")}
         />
-        {/* <input
-              type="submit"
-              value={t("search")}
-              className="btn-primary h-10"
-            /> */}
       </Form>
       <div className="bg-slate-300 dark:bg-slate-900 w-[2px] xl:hidden"></div>
       <div className="flex gap-2 justify-end xl:flex-1">
@@ -41,7 +35,6 @@ export function Header() {
           </>
         )}
       </div>
-      {/* </div> */}
     </div>
   );
 }

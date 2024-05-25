@@ -1,5 +1,3 @@
-import { Form, Link } from "@remix-run/react";
-import { UserDropdown } from "./userDropdown";
 import { useTranslation } from "react-i18next";
 
 export function Footer() {
