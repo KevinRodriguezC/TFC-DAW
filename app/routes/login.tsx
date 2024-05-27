@@ -9,6 +9,7 @@ import { getSession, commitSession } from "../sessions";
 import { getUserByUsername } from "~/model/user";
 import { useTranslation } from "react-i18next";
 import { cardInfo } from "~/cardGenerator";
+import { manageLogin } from "~/manageLogin";
 
 export const meta: MetaFunction = () => {
   return cardInfo("Log in | TFC App", "Log in page");
@@ -74,6 +75,8 @@ export default function Login() {
   const { error } = useLoaderData<typeof loader>();
 
   const { t } = useTranslation();
+
+  manageLogin();
 
   return (
     <div className="flex flex-col dark:text-white min-h-screen bg-slate-200">

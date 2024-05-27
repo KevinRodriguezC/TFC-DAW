@@ -17,7 +17,7 @@ import { cardInfo } from "~/cardGenerator";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
-  return cardInfo(t("join_workspace"), t("join_workspace") + " | TFC App");
+  return cardInfo(t("join") + " | TFC App", t("join"));
 };
 
 function splitCode(code: String) {

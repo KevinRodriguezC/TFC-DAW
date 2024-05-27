@@ -63,7 +63,7 @@ export default function Invitations() {
       ) : (
         <div>{t("you_dont_have_any_invitation_code_yet")}</div>
       )}
-      <ButtonLink to="new">{t("new")}</ButtonLink>
+      <ButtonLink to="new">{t("new_invitation")}</ButtonLink>
     </WorkspaceContentContainer>
   );
 }

@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { MainContainer } from "~/components/mainContainer";
 import { commitSession, getSession } from "~/sessions";
 import { cardInfo } from "~/cardGenerator";
+import { manageLogin } from "~/manageLogin";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
@@ -118,6 +119,8 @@ export default function Index() {
 
   const { t } = useTranslation();
 
+  manageLogin();
+
   return (
     <MainContainer>
       <div className="flex flex-1 flex-col dark:text-white container-secondary-bg justify-center items-center">
@@ -138,7 +141,10 @@ export default function Index() {
           <input type="password" className="form-control" name="password" />
           <p>
             {t("already_have_an_account")},{" "}
-            <Link to="/login" className="  text-blue-800 underline">
+            <Link
+              to="/login"
+              className="  text-blue-800 dark:text-blue-300 underline"
+            >
               {t("log_in")}
             </Link>
             .

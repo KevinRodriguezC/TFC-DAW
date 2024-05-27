@@ -22,7 +22,7 @@ model User {
   profilePictureColor Int
   language            String
   workspaces          UserOnWorkspaces[]
-  workspaceSockets    UserSocketsOnWorkspaces[]
+  // workspaceSockets    UserSocketsOnWorkspaces[]
 }
 
 model UserOnWorkspaces {
@@ -34,15 +34,15 @@ model UserOnWorkspaces {
   role        Int
 }
 
-model UserSocketsOnWorkspaces {
-  id           Int       @id @default(autoincrement())
-  user         User?     @relation(fields: [userId], references: [id])
-  userId       Int?
-  workspace    Workspace @relation(fields: [workspaceId], references: [id])
-  workspaceId  Int
-  randomNameId Int?
-  socketId     String
-}
+// model UserSocketsOnWorkspaces {
+//   id           Int       @id @default(autoincrement())
+//   user         User?     @relation(fields: [userId], references: [id])
+//   userId       Int?
+//   workspace    Workspace @relation(fields: [workspaceId], references: [id])
+//   workspaceId  Int
+//   randomNameId Int?
+//   socketId     String
+// }
 
 model Workspace {
   id              Int                @id @default(autoincrement())
@@ -53,7 +53,7 @@ model Workspace {
   users           UserOnWorkspaces[]
   visibility      Int
   InvitationCodes InvitationCodes[]
-  userSockets     UserSocketsOnWorkspaces[]
+  // userSockets     UserSocketsOnWorkspaces[]
 }
 
 model Directory {

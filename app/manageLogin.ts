@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useUser } from "./hooks/useUser";
 import i18next from "./i18n";
 
-export function manageLogin(userInfo: any) {
+export function manageLogin(userInfo: any = null) {
   const { user, login, logout } = useUser();
 
   useEffect(() => {

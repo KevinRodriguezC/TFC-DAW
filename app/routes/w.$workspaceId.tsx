@@ -120,7 +120,11 @@ export default function Workspace() {
           {rightBarMenu == 0 ? (
             <></>
           ) : rightBarMenu == 1 ? (
-            <WorkspaceInfobar userInfo={userInfo} users={users} />
+            <WorkspaceInfobar
+              userInfo={userInfo}
+              users={users}
+              canEdit={canEdit}
+            />
           ) : (
             <HistoryInfobar events={workspaceEvents} />
           )}

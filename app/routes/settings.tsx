@@ -182,7 +182,6 @@ export default function Settings() {
             ></Toogle>
           </label>
           <label>{t("language")}</label>
-          {JSON.stringify(userArray.language)}
           <select
             name="language"
             className="flex p-2 bg-slate-100 dark:bg-slate-800 rounded-md items-center cursor-pointer select-none"
