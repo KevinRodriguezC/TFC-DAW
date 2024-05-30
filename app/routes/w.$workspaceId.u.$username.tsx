@@ -1,6 +1,6 @@
 import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Outlet, useLoaderData } from "@remix-run/react";
 
 import { getUserByUsername } from "~/model/user";
 import { useTranslation } from "react-i18next";
@@ -12,6 +12,7 @@ import { getUserSession } from "~/getUserSession";
 import { getSession } from "~/sessions";
 import { getUserInWorkspace } from "~/model/workspace";
 import { UserProfilePicture } from "~/components/userProfilePicture";
+import { Menu } from "@headlessui/react";
 
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
@@ -68,44 +69,7 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 };
 
 export default function Participant() {
-  let { user, userInfo, events } = useLoaderData<typeof loader>();
-
   const { t } = useTranslation();
 
-  return (
-    <WorkspaceContentContainer>
-      <div className="flex justify-between">
-        <div className="flex gap-2">
-          <UserProfilePicture user={user} size="size-16 text-2xl" />
-          <div className="flex flex-col gap-1">
-            <h2 className="text-2xl font-bold">
-              {user.name} {user.lastname}
-            </h2>
-            <h4 className="text-md font-bold">@{user.username}</h4>
-          </div>
-        </div>
-        <div>
-          {user.visibility == 1 || user.username == userInfo.username ? (
-            <ButtonLink to={"/u/" + user.username}>
-              Go to {user.visibility == 1 ? "public" : "private"} profile
-            </ButtonLink>
-          ) : (
-            <h3>{t("this_user_is_a_private_user")}</h3>
-          )}
-        </div>
-      </div>
-      {events && events.length ? (
-        <>
-          <h3 className="text-xl">{t("activity")}</h3>
-          <div className="flex flex-col gap-2">
-            {events.map((event) => (
-              <HistoryCard key={event.id} event={event} route="../version/" />
-            ))}
-          </div>
-        </>
-      ) : (
-        <h3>{t("there_are_no_events")}</h3>
-      )}
-    </WorkspaceContentContainer>
-  );
+  return <Outlet />;
 }

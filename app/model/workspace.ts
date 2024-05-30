@@ -101,3 +101,23 @@ export async function getUserInWorkspace(workspaceId: number, userId: number) {
     },
   });
 }
+
+export async function removeUser(connectionId: number) {
+  return await prisma.userOnWorkspaces.delete({
+    where: {
+      id: connectionId,
+    },
+  });
+}
+
+export async function getUserOnWorkspaceConnection(
+  userId: number,
+  workspaceId: number
+) {
+  return await prisma.userOnWorkspaces.findFirst({
+    where: {
+      workspaceId: workspaceId,
+      userId: userId,
+    },
+  });
+}

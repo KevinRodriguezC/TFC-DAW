@@ -102,6 +102,12 @@ i18next
             "This user is a private user and does not have a public account.",
           you_dont_have_any_directory_selected:
             "You don't have any directory selected",
+          are_you_sure_you_want_to_leave_this_workspace:
+            "Are you sure you want to leave this workspace?",
+          are_you_sure_you_want_to_expel_this_user:
+            "Are you sure you want to expel {{username}}?",
+          expel_user: "Expel user",
+          leave_workspace: "Leave workspace",
         },
       },
       es: {
@@ -195,6 +201,12 @@ i18next
             "Este usuario es un usuario privado y no tiene una cuenta pública.",
           you_dont_have_any_directory_selected:
             "No tienes ningún directorio seleccionado",
+          are_you_sure_you_want_to_leave_this_workspace:
+            "¿Estas seguro de que deseas abandonar este espacio de trabajo?",
+          are_you_sure_you_want_to_expel_this_user:
+            "¿Estas seguro de que deseas expulsar a {{username}}?",
+          expel_user: "Expulsar usuario",
+          leave_workspace: "Abandonar el espacio de trabajo",
         },
       },
     },
