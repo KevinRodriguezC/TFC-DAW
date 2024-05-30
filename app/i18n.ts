@@ -3,18 +3,11 @@ import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-http-backend";
 
-// Defines i18next translations
-// .use(LanguageDetector)
-
-// .use(Backend)
-// .use(LanguageDetector)
 i18next
   .use(initReactI18next)
   .use(Backend)
   .init({
-    // lng: "en",
     debug: true,
-    // languages: ["en", "es"],
     fallbackLng: "en",
     nonExplicitSupportedLngs: true,
     load: "current",

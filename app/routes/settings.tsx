@@ -37,9 +37,6 @@ export async function action({ params, request }: ActionFunctionArgs) {
     await getSession(request.headers.get("Cookie"))
   );
 
-  // const cookie = request.headers.get("Cookie");
-  // console.log(cookie);
-
   // Get the POST request parameters
   const formData = await request.formData();
   const username = formData.get("username");
@@ -79,9 +76,6 @@ export async function action({ params, request }: ActionFunctionArgs) {
 
   // Change the userId variable type
   const userIdNumber = +userId;
-
-  // setLanguage(language, await getSession(request.headers.get("Cookie")));
-  // session.set("language", language);
 
   // Update the user
   updateUser(
