@@ -98,6 +98,10 @@ i18next
           are_you_sure_you_want_to_log_out: "Are you sure you want to log out?",
           welcome_message: "Welcome to TFC app",
           features: "Features",
+          this_user_is_a_private_user:
+            "This user is a private user and does not have a public account.",
+          you_dont_have_any_directory_selected:
+            "You don't have any directory selected",
         },
       },
       es: {
@@ -187,6 +191,10 @@ i18next
             "¿Estas seguro de que deseas cerrar sesión?",
           welcome_message: "Welcome to TFC app",
           features: "Características",
+          this_user_is_a_private_user:
+            "Este usuario es un usuario privado y no tiene una cuenta pública.",
+          you_dont_have_any_directory_selected:
+            "No tienes ningún directorio seleccionado",
         },
       },
     },

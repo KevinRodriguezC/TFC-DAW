@@ -90,9 +90,7 @@ export default function Participant() {
               Go to {user.visibility == 1 ? "public" : "private"} profile
             </ButtonLink>
           ) : (
-            <h3>
-              This user is a private user and doesn't have a public profile
-            </h3>
+            <h3>{t("this_user_is_a_private_user")}</h3>
           )}
         </div>
       </div>
